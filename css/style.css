@@ -14,6 +14,17 @@ body {
     background-color: rgb(255, 255, 255);
     height: 100vh;
     font-family: roboto;
+
+    background: linear-gradient(135deg, 
+    #ffffff 0%,    
+    #ffffff 50%,    
+    #ffffff 100%   
+  );
+  min-height: 100vh;
+  margin: 0;
+
+  background-attachment: fixed;
+  background-size: cover;
 }
 .botao1{
     position: absolute;
@@ -105,7 +116,18 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); /* Sombra mais intensa */
 }
 
+.bg-testimonial {
+background: linear-gradient(135deg, 
+    #1e90ff 0%,    
+    #00c896 50%,    
+    #ffffff 100%   
+  );
+  min-height: 100vh;
+  margin: 0;
 
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 
   
