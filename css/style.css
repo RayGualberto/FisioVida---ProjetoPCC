@@ -26,13 +26,12 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
-.botao1{
-    position: absolute;
-    right: 6%;
+.botao1, .botao2 {
+  /* Tiramos position absolute pra responsividade funcionar */
+  position: static; /* ou pode nem colocar position */
+  margin-left: 0.5rem;
 }
-.botao2{
-    position: absolute;
-    right: 0.5%;
+
 }
 @media screen and (max-width: 768px) {
     header {
@@ -61,6 +60,9 @@ body {
   #servicos h1 {
     font-weight: 700;
     color: #198754; /* verde Bootstrap */
+  }
+  #servicos h4 {
+    color: #198754;
   }
 
   #servicos .card {
@@ -268,6 +270,40 @@ form button.btn-primary:hover {
   form button.btn-primary {
     width: 100%;
   }
+}
+/* Botões de Login e Agendar responsivos */
+@media (max-width: 991px) {
+  .navbar .btn {
+    width: 100%; /* ocupa toda a largura no mobile */
+  }
+}
+
+/* Ajusta textos e botões do carrossel */
+.carousel-caption {
+  top: 10% !important;
+}
+
+.carousel-caption h1 {
+  font-size: clamp(1.2rem, 3vw, 2.5rem); /* texto diminui no mobile */
+}
+
+.carousel-caption h5 {
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+}
+
+/* Corrige posição dos botões */
+.carousel-caption .position-relative {
+  position: static !important; /* remove fixação no canto */
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center; /* centraliza no mobile */
+}
+
+.carousel-caption .btn {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  padding: 0.8rem 1.5rem;
 }
 
 
