@@ -16,9 +16,9 @@ body {
     font-family: roboto;
 
     background: linear-gradient(135deg, 
-    #f7fdc2 0%,    
-    #b4e2c7 50%,    
-    #dfe4ff 100%   
+    #ffffff 0%,    
+    #5ce997 50%,    
+    #6175e9 100%   
   );
   min-height: 100vh;
   margin: 0;
@@ -120,9 +120,9 @@ body {
 
 .bg-testimonial {
 background: linear-gradient(135deg, 
-    #1e90ff 0%,    
-    #00c896 50%,    
-    #ffffff 100%   
+    #f6f893 0%,    
+    #f1c080 50%,    
+    #f18d8d 100%   
   );
   min-height: 100vh;
   margin: 0;
