@@ -306,6 +306,24 @@ form button.btn-primary:hover {
   padding: 0.8rem 1.5rem;
 }
 
+/* Para garantir que a imagem não estoure no mobile */
+@media (max-width: 767px) {
+  .col-lg-6 img {
+    max-height: 300px !important;
+    width: 100% !important;
+    object-fit: cover;
+  }
+}
+.col-lg-6 img {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+
+
+
+
 
 
 
