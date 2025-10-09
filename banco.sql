@@ -5,12 +5,13 @@ USE fisiovida;
 -- Tabela USUARIO
 CREATE TABLE usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VACHAR(100),
+    nome VARCHAR(100),
     email VARCHAR(50),
     senha VARCHAR(100),
     data_nasc DATE,
     telefone VARCHAR(20),
     endereco VARCHAR(200),
+    cpf VARCHAR(11)
 );
 
 -- Tabela PERFIL
