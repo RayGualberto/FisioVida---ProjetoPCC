@@ -8,10 +8,10 @@ CREATE TABLE usuario (
     nome VARCHAR(100),
     email VARCHAR(50),
     senha VARCHAR(100),
+    cpf VARCHAR(11),
     data_nasc DATE,
     telefone VARCHAR(20),
-    endereco VARCHAR(200),
-    cpf VARCHAR(11)
+    endereco VARCHAR(200)
 );
 
 -- Tabela PERFIL
@@ -30,7 +30,7 @@ CREATE TABLE paciente (
     telefone VARCHAR(20),
     endereco VARCHAR(200),
     sexo ENUM('M','F','Outro'),
-    pacienteid VARCHAR(15)
+    cpf VARCHAR(11)
 );
 
 -- Tabela SERVICO
@@ -47,6 +47,7 @@ CREATE TABLE fisioterapeuta (
     nome VARCHAR(100),
     telefone VARCHAR(20),
     endereco VARCHAR(200),
+    cpf VARCHAR(11),
     registro_crefito VARCHAR(50),
     especialidade VARCHAR(100)
 );
