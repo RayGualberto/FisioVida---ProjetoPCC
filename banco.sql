@@ -11,8 +11,10 @@ CREATE TABLE usuario (
     cpf VARCHAR(11),
     data_nasc DATE,
     telefone VARCHAR(20),
-    endereco VARCHAR(200)
+    endereco VARCHAR(200),
+    tipo ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
 );
+
 
 -- Tabela PERFIL
 CREATE TABLE perfil (
