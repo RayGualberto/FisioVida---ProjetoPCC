@@ -42,7 +42,7 @@ $_SESSION['usuario_tipo'] = $tipo_usuario;
 // Redireciona conforme tipo
 switch ($tipo_usuario) {
     case 'paciente':
-        header("Location: ../paciente/paciente_dashboard.php");
+        header("Location: ../pa_paciente/paciente_dashboard.php");
         break;
     case 'admin':
         header("Location: ../admin/admin_dashboard.php");
