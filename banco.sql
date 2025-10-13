@@ -12,7 +12,7 @@ CREATE TABLE usuario (
     data_nasc DATE,
     telefone VARCHAR(20),
     endereco VARCHAR(200),
-    tipo ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
+    tipo_usuario ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
 );
 
 
