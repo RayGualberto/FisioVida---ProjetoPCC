@@ -7,12 +7,13 @@ $nome = htmlspecialchars(trim($_POST['nome']));
 $email = htmlspecialchars(trim($_POST['email']));
 $senha = $_POST['senha']; // senha será tratada depois
 $telefone = htmlspecialchars(trim($_POST['telefone']));
-$endereco = htmlspecialchars(trim($_POST['endereco']));
+$cep = htmlspecialchars(trim($_POST['cep']));
 $cpf = htmlspecialchars(trim($_POST['cpf']));
 $sexo = htmlspecialchars(trim($_POST['sexo']));
+$data_nasc = htmlspecialchars(trim($_POST['data_nasc']));
 
 // Validações básicas
-if (empty($nome) || empty($email) || empty($senha) || empty($cpf) || empty($sexo)) {
+if (empty($nome) || empty($email) || empty($senha) || empty($cpf) || empty($sexo) || empty($data_nasc)){
     die("Por favor, preencha todos os campos obrigatórios.");
 }
 
@@ -46,11 +47,11 @@ $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 $tipo_usuario = 'paciente';
 
 // Preparar e executar inserção
-$stmt = $conn->prepare("INSERT INTO usuario (nome, email, senha, cpf, telefone, endereco, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO usuario (nome, email, senha, cpf, telefone, cep, tipo_usuario, data_nasc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 if (!$stmt) {
     die("Falha no prepare: (" . $conn->errno . ") " . $conn->error);
 }
-$stmt->bind_param("sssssss", $nome, $email, $senhaHash, $cpf, $telefone, $endereco, $tipo_usuario);
+$stmt->bind_param("ssssssss", $nome, $email, $senhaHash, $cpf, $telefone, $cep, $tipo_usuario, $data_nasc);
 
 if ($stmt->execute()) {
     // Cadastro realizado com sucesso, redirecionar para login

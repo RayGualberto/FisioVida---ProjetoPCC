@@ -11,7 +11,7 @@ CREATE TABLE usuario (
     cpf VARCHAR(11),
     data_nasc DATE,
     telefone VARCHAR(20),
-    endereco VARCHAR(200),
+    cep VARCHAR(200),
     tipo_usuario ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
 );
 

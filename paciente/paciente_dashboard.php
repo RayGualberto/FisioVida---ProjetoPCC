@@ -18,6 +18,7 @@ $stmt->bind_result($id_paciente);
 $stmt->fetch();
 $stmt->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -117,6 +118,7 @@ $stmt->close();
         <label class="form-label">Serviço</label>
         <select class="form-select" name="servico_id" required>
           <option disabled selected>Escolha...</option>
+          <option value="Fisioterapia aquatica">Fisioterapia aquatica</option>
           <?php
           $result = $conn->query("SELECT id_servico, nome_servico FROM servico WHERE status = 'Ativo'");
           while ($row = $result->fetch_assoc()) {
@@ -184,7 +186,6 @@ $stmt->close();
   <div class="container p-4">
     <div class="row">
       <div class="col-lg-3 col-md-12 mb-4">
-        <h5 class="text
         <h5 class="text-uppercase">Fisiovida</h5>
         <p>
           Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
