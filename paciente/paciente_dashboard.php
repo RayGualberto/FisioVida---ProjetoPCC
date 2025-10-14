@@ -118,7 +118,7 @@ $stmt->close();
         <label class="form-label">Serviço</label>
         <select class="form-select" name="servico_id" required>
           <option disabled selected>Escolha...</option>
-          <option value="Fisioterapia aquatica">Fisioterapia aquatica</option>
+
           <?php
           $result = $conn->query("SELECT id_servico, nome_servico FROM servico WHERE status = 'Ativo'");
           while ($row = $result->fetch_assoc()) {

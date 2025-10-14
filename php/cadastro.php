@@ -46,19 +46,37 @@ $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 // Tipo de usuário fixo para paciente
 $tipo_usuario = 'paciente';
 
+
+
+
 // Preparar e executar inserção
-$stmt = $conn->prepare("INSERT INTO usuario (nome, email, senha, cpf, telefone, cep, tipo_usuario, data_nasc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-if (!$stmt) {
+$stmt1 = $conn->prepare("INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+if (!$stmt1) {
     die("Falha no prepare: (" . $conn->errno . ") " . $conn->error);
 }
-$stmt->bind_param("ssssssss", $nome, $email, $senhaHash, $cpf, $telefone, $cep, $tipo_usuario, $data_nasc);
+$stmt1->bind_param("ssssssss", $nome, $email, $senhaHash, $cpf, $data_nasc, $telefone, $cep, $tipo_usuario);
 
-if ($stmt->execute()) {
+if ($stmt1->execute()) {
+    // Pega o ID do usuário recém-criado
+    $id = $stmt1->insert_id;
+
+// Inserir dados na tabela paciente
+$stmt2 = $conn->prepare("INSERT INTO paciente (nome, telefone, cep, sexo, cpf) VALUES (?, ?, ?, ?, ?)");
+if (!$stmt2) {
+    die("Falha no prepare: (" . $conn->errno . ") " . $conn->error);
+}
+$stmt2->bind_param("sssss", $nome, $telefone, $cep, $sexo, $cpf);
+
+if ($stmt2->execute()) {
     // Cadastro realizado com sucesso, redirecionar para login
     header("Location: ../site/login.html");
     exit();
 } else {
-    echo "Erro no cadastro: " . $stmt->error;
+    echo "Erro no cadastro: " . $stmt2->error;
+}
+$stmt2->close();
+} else {
+    echo "Erro no cadastro: " . $stmt1->error;
 }
 
 $stmt->close();
