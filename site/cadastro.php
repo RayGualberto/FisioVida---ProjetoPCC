@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -144,7 +146,7 @@
       </div>
     
       <div class="col-12 text-center">
-        <p class="mt-3">Já tem uma conta? <a href="./login.html">Faça login</a></p>
+        <p class="mt-3">Já tem uma conta? <a href="./login.php">Faça login</a></p>
       </div>
     </form>
   </div>
@@ -158,4 +160,39 @@
   <script src="/FisioVida/js/main.js"></script>
 
 </body>
+
+<!-- Modal de erro -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="errorModalLabel">Erro no Cadastro</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <?php
+        if (!empty($_SESSION['error_msg'])) {
+            echo htmlspecialchars($_SESSION['error_msg']);
+            unset($_SESSION['error_msg']);
+        }
+        ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var modalEl = document.getElementById('errorModal');
+    if (modalEl && modalEl.querySelector('.modal-body').textContent.trim() !== '') {
+        var modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    }
+});
+</script>
+
+
 </html>

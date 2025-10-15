@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_tipo'] !== 'paciente') {
-    header("Location: ../site/login.html");
+    header("Location: ../site/login.php");
     exit();
 }
 
@@ -70,6 +70,9 @@ $stmt->close();
         <li class="nav-item"><a href="#agendar" class="nav-link">AGENDAR</a></li>
         <li class="nav-item"><a href="#meusagendamentos" class="nav-link">MEUS AGENDAMENTOS</a></li>
       </ul>
+      <div class="d-flex justify-content-center justify-content-lg-start gap-2 ms-lg-3 mt-3 mt-lg-0">
+        <a href="../php/logout.php"><button type="button" class="btn btn-outline-danger"> Logout</button></a>
+      </div>
     </div>
   </div>
 </nav>

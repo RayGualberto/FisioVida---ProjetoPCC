@@ -22,7 +22,7 @@
           Acesse sua conta para agendar sessões e acompanhar sua evolução.
         </p>
 
-        <form class="row g-3 mt-4" method="POST" action="../php/login.php">
+        <form class="row g-3 mt-4" method="POST" action="../php/logar.php">
           <div class="col-12">
             <label for="email" class="form-label">Email:</label>
             <input
@@ -57,7 +57,7 @@
           </div>
           <div class="col-12 text-center">
             <p class="mt-3">
-              Não tem uma conta? <a href="./cadastro.html">Cadastre-se</a>
+              Não tem uma conta? <a href="../site/cadastro.php">Cadastre-se</a>
             </p>
           </div>
         </form>
