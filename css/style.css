@@ -17,8 +17,8 @@ body {
 
     background: linear-gradient(135deg, 
     #ffffff 0%,    
-    #5ce997 50%,    
-    #6175e9 100%   
+    #9df7c2 50%,    
+    #acb7f7 100%   
   );
   min-height: 100vh;
   margin: 0;
@@ -32,7 +32,6 @@ body {
   margin-left: 0.5rem;
 }
 
-}
 @media screen and (max-width: 768px) {
     header {
       font-size: 18px;
@@ -120,9 +119,9 @@ body {
 
 .bg-testimonial {
 background: linear-gradient(135deg, 
-    #f6f893 0%,    
-    #f1c080 50%,    
-    #f18d8d 100%   
+    #7bfbff 0%,    
+    #66f861 50%,    
+    #5589fa 100%   
   );
   min-height: 100vh;
   margin: 0;
@@ -320,7 +319,31 @@ form button.btn-primary:hover {
   border-radius: 0 !important;
 }
 
+.texto-animado {
+  background: linear-gradient(270deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animacaoCor 6s ease infinite;
+  font-weight: bold;
+}
 
+@keyframes animacaoCor {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bg-danger {
+    background-color: #80ac78 !important; /* verde Bootstrap */
+    border: none;
+}
 
 
 
