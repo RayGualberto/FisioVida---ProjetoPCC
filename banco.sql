@@ -1,4 +1,3 @@
--- Criação do Banco de Dados
 CREATE DATABASE IF NOT EXISTS fisiovida;
 USE fisiovida;
 
@@ -25,12 +24,16 @@ CREATE TABLE paciente (
     cpf VARCHAR(14)
 );
 
--- Tabela SERVICO
-CREATE TABLE servico (
-    id_servico INT PRIMARY KEY AUTO_INCREMENT,
-    nome_servico VARCHAR(100),
-    descricao_servico VARCHAR(100),
-    status ENUM('Ativo', 'Inativo')
+-- Tabela ADMIN
+
+CREATE TABLE admin (
+
+	id_admin INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    sexo ENUM('M','F','Outro'),
+    cpf VARCHAR(14),
+	email VARCHAR(50),
+    	senha VARCHAR(100)
 );
 
 -- Tabela FISIOTERAPEUTA
@@ -42,6 +45,14 @@ CREATE TABLE fisioterapeuta (
     cpf VARCHAR(14),
     registro_crefito VARCHAR(50),
     especialidade VARCHAR(100)
+);
+
+-- Tabela SERVICO
+CREATE TABLE servico (
+    id_servico INT PRIMARY KEY AUTO_INCREMENT,
+    nome_servico VARCHAR(100),
+    descricao_servico VARCHAR(100),
+    status ENUM('Ativo', 'Inativo')
 );
 
 -- Tabela AGENDA
@@ -97,3 +108,4 @@ CREATE TABLE agenda (
 --     usuario_id INT,
 --     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 -- );
+
