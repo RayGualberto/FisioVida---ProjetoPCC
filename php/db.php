@@ -1,13 +1,22 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fisiovida";
+$host = 'localhost';
+$db   = 'fisiovida';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
-// Verifica conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+
+try {
+    $conn = new PDO($dsn, $user, $pass, $options);
+} catch (PDOException $e) {
+    die("Erro de conexão: " . $e->getMessage());
 }
+?>

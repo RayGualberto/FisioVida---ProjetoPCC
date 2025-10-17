@@ -14,47 +14,44 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     die("Email inválido.");
 }
 
-$stmt = $conn->prepare("SELECT id, nome, senha, tipo_usuario FROM usuario WHERE email = ?");
-if (!$stmt) {
-    die("Erro na consulta: (" . $conn->errno . ") " . $conn->error);
+try {
+    // Consulta com PDO
+    $stmt = $conn->prepare("SELECT id, nome, senha, tipo_usuario FROM usuario WHERE email = ?");
+    $stmt->execute([$email]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usuario) {
+        die("Email ou senha inválidos.");
+    }
+
+    // Verifica senha
+    if (!password_verify($senha, $usuario['senha'])) {
+        die("Email ou senha inválidos.");
+    }
+
+    // Login OK - grava dados na sessão
+    $_SESSION['usuario_id'] = $usuario['id'];
+    $_SESSION['usuario_nome'] = $usuario['nome'];
+    $_SESSION['usuario_tipo'] = $usuario['tipo_usuario'];
+
+    // Redireciona conforme tipo de usuário
+    switch ($usuario['tipo_usuario']) {
+        case 'paciente':
+            header("Location: ../paciente/paciente_dashboard.php");
+            break;
+        case 'admin':
+            header("Location: ../admin/admin_dashboard.php");
+            break;
+        case 'fisioterapeuta':
+            header("Location: ../fisioterapeuta/fisio_dashboard.php");
+            break;
+        default:
+            die("Tipo de usuário inválido.");
+    }
+
+    exit();
+
+} catch (PDOException $e) {
+    die("Erro ao acessar o banco de dados: " . $e->getMessage());
 }
-
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$stmt->store_result();
-
-if ($stmt->num_rows == 0) {
-    die("Email ou senha inválidos.");
-}
-
-$stmt->bind_result($id, $nome, $senha_hash, $tipo_usuario);
-$stmt->fetch();
-
-if (!password_verify($senha, $senha_hash)) {
-    die("Email ou senha inválidos.");
-}
-
-// Login OK - grava dados na sessão
-$_SESSION['usuario_id'] = $id;
-$_SESSION['usuario_nome'] = $nome;
-$_SESSION['usuario_tipo'] = $tipo_usuario;
-
-// Redireciona conforme tipo
-switch ($tipo_usuario) {
-    case 'paciente':
-        header("Location: ../paciente/paciente_dashboard.php");
-        break;
-    case 'admin':
-        header("Location: ../admin/admin_dashboard.php");
-        break;
-    case 'fisioterapeuta':
-        header("Location: ../fisioterapeuta/fisio_dashboard.php");
-        break;
-    default:
-        die("Tipo de usuário inválido.");
-}
-
-$stmt->close();
-$conn->close();
-exit();
 ?>

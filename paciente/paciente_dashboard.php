@@ -1,23 +1,38 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_tipo'] !== 'paciente') {
-    header("Location: ../site/login.php");
+    header("Location: ../site/login.html");
     exit();
 }
 
-include '../php/db.php';
+require_once '../php/db.php'; // Certifique-se que $conn é PDO
 
 $usuarioId = $_SESSION['usuario_id'];
 $nomePaciente = $_SESSION['usuario_nome'];
 
-// Buscar id_paciente
-$stmt = $conn->prepare("SELECT id_paciente FROM paciente WHERE cpf = (SELECT cpf FROM usuario WHERE id = ?)");
-$stmt->bind_param("i", $usuarioId);
-$stmt->execute();
-$stmt->bind_result($id_paciente);
-$stmt->fetch();
-$stmt->close();
+try {
+    // Buscar id_paciente via CPF do usuário
+    $stmt = $conn->prepare("
+        SELECT p.id_paciente
+        FROM paciente p
+        INNER JOIN usuario u ON p.cpf = u.cpf
+        WHERE u.id = ?
+        LIMIT 1
+    ");
+    $stmt->execute([$usuarioId]);
+    $id_paciente = $stmt->fetchColumn(); // Retorna apenas a primeira coluna (id_paciente)
+
+    if (!$id_paciente) {
+        throw new Exception("Paciente não encontrado para o usuário informado.");
+    }
+
+} catch (PDOException $e) {
+    die("Erro ao buscar ID do paciente: " . $e->getMessage());
+} catch (Exception $e) {
+    die("Erro: " . $e->getMessage());
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -70,9 +85,6 @@ $stmt->close();
         <li class="nav-item"><a href="#agendar" class="nav-link">AGENDAR</a></li>
         <li class="nav-item"><a href="#meusagendamentos" class="nav-link">MEUS AGENDAMENTOS</a></li>
       </ul>
-      <div class="d-flex justify-content-center justify-content-lg-start gap-2 ms-lg-3 mt-3 mt-lg-0">
-        <a href="../php/logout.php"><button type="button" class="btn btn-outline-danger"> Logout</button></a>
-      </div>
     </div>
   </div>
 </nav>
@@ -91,8 +103,9 @@ $stmt->close();
     <h2 class="text-center mb-5">Nossos Serviços</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <?php
-      $result = $conn->query("SELECT nome_servico, descricao_servico FROM servico WHERE status = 'Ativo'");
-      while ($row = $result->fetch_assoc()):
+      // Consulta usando PDO
+      $stmt = $conn->query("SELECT nome_servico, descricao_servico FROM servico WHERE status = 'Ativo'");
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
       ?>
       <div class="col">
         <div class="card h-100 shadow">
@@ -123,8 +136,9 @@ $stmt->close();
           <option disabled selected>Escolha...</option>
 
           <?php
-          $result = $conn->query("SELECT id_servico, nome_servico FROM servico WHERE status = 'Ativo'");
-          while ($row = $result->fetch_assoc()) {
+          // Consulta usando PDO
+          $stmt = $conn->query("SELECT id_servico, nome_servico FROM servico WHERE status = 'Ativo'");
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
               echo '<option value="' . $row['id_servico'] . '">' . htmlspecialchars($row['nome_servico']) . '</option>';
           }
           ?>
@@ -145,6 +159,7 @@ $stmt->close();
   </div>
 </section>
 
+
 <!-- Seção MEUS AGENDAMENTOS -->
 <section id="meusagendamentos" class="py-5">
   <div class="container">
@@ -161,13 +176,19 @@ $stmt->close();
         </thead>
         <tbody>
           <?php
-          $stmt = $conn->prepare("SELECT data, hora, descricao_servico FROM agenda WHERE paciente_id_paciente = ?");
-          $stmt->bind_param("i", $id_paciente);
-          $stmt->execute();
-          $result = $stmt->get_result();
+          // Consulta usando PDO corrigida
+          $stmt = $conn->prepare("
+            SELECT a.data, a.hora, s.descricao_servico
+            FROM agenda a
+            INNER JOIN servico s ON a.servico_id_servico = s.id_servico
+            WHERE a.paciente_id_paciente = ?
+            ORDER BY a.data ASC, a.hora ASC
+          ");
+          $stmt->execute([$id_paciente]);
+          $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-          if ($result->num_rows > 0):
-              while ($row = $result->fetch_assoc()):
+          if (count($agendamentos) > 0):
+              foreach ($agendamentos as $row):
           ?>
           <tr>
             <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>
@@ -175,14 +196,18 @@ $stmt->close();
             <td><?= htmlspecialchars($row['descricao_servico']) ?></td>
             <td><span class="badge bg-success">Confirmado</span></td>
           </tr>
-          <?php endwhile; else: ?>
+          <?php 
+              endforeach; 
+          else: ?>
           <tr><td colspan="4">Nenhum agendamento encontrado.</td></tr>
-          <?php endif; $stmt->close(); ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
   </div>
 </section>
+
+
 
 <!-- Rodapé -->
 <footer class="bg-light text-center text-lg-start mt-auto">
