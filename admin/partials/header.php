@@ -36,7 +36,7 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;   // tipo de usuário (paciente, 
       </ul>
       <div class="ms-3 d-flex">
         <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="btn btn-outline-danger btn-sm" href="logout.php">Sair</a></li>
+        <li class="nav-item"><a class="btn btn-outline-danger btn-sm" href="../php/logout.php">Sair</a></li>
         </ul>
          <div class="ms-3 d-flex">
         <button id="themeToggle" class="btn btn-sm btn-outline-primary" type="button" title="Alternar tema">Tema</button>
