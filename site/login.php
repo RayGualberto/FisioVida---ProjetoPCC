@@ -50,7 +50,7 @@
               <input class="form-check-input" type="checkbox" id="lembrar" name="lembrar" />
               <label class="form-check-label" for="lembrar">Lembrar de mim</label>
             </div>
-            <a href="#" class="text-decoration-none">Esqueceu a senha?</a>
+            <a href="../php/esqueci_senha.php" class="text-decoration-none">Esqueceu a senha?</a>
           </div>
           <div class="col-12 text-center">
             <button type="submit" class="btn btn-primary px-5">Entrar</button>

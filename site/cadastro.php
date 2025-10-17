@@ -84,7 +84,7 @@
     <h2 class="text-center mb-4">Cadastro</h2>
     <p class="text-center">Crie sua conta para agendar sessões e acompanhar sua evolução.</p>
   
-    <form class="row g-3 mt-4" novalidate action="../php/cadastro.php" method="POST">
+    <form class="row g-3 mt-4" novalidate action="../php/cadastrar.php" method="POST">
       <div class="col-md-6">
         <label for="nome" class="form-label">Nome Completo:</label>
         <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome completo" required />
