@@ -40,7 +40,7 @@ try {
             header("Location: ../paciente/paciente_dashboard.php");
             break;
         case 'admin':
-            header("Location: ../admin/admin_dashboard.php");
+            header("Location: ../admin/admin.php");
             break;
         case 'fisioterapeuta':
             header("Location: ../fisioterapeuta/fisio_dashboard.php");

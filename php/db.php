@@ -19,4 +19,6 @@ try {
 } catch (PDOException $e) {
     die("Erro de conexão: " . $e->getMessage());
 }
+
+$pdo = $conn; // Adicione isto no final do db.php
 ?>
