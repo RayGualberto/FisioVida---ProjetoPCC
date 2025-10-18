@@ -57,45 +57,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include __DIR__ . '/partials/header.php';
 ?>
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <h2 class="h4 mb-0">Editar Usuário #<?php echo (int)$user['id']; ?></h2>
-  <a class="btn btn-outline-secondary btn-sm" href="admin.php">Voltar</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+    font-family: roboto;
 
-<?php if ($errors): ?>
-  <div class="alert alert-danger">
-    <ul class="mb-0">
-      <?php foreach ($errors as $e) echo '<li>'.htmlspecialchars($e).'</li>'; ?>
-    </ul>
-  </div>
-<?php endif; ?>
+    background: linear-gradient(135deg, 
+    #ffffff 0%,    
+    #9df7c2 50%,    
+    #acb7f7 100%   
+  );
+  min-height: 100vh;
+  margin: 0;
 
-<form method="post" class="card shadow-sm p-3">
-  <div class="row g-3">
-    <div class="col-md-6">
-      <label class="form-label">Nome</label>
-      <input type="text" name="first_name" class="form-control" value="<?php echo htmlspecialchars($nome); ?>" required>
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">E-mail</label>
-      <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required>
-    </div>
-    <div class="col-md-3">
-      <label class="form-label">Perfil</label>
-      <select name="role" class="form-select">
-        <option value="paciente" <?php echo $tipo_usuario==='paciente'?'selected':''; ?>>Paciente</option>
-        <option value="fisioterapeuta" <?php echo $tipo_usuario==='fisioterapeuta'?'selected':''; ?>>Fisioterapeuta</option>
-        <option value="admin" <?php echo $tipo_usuario==='admin'?'selected':''; ?>>Admin</option>
-      </select>
-    </div>
-    <div class="col-md-3">
-      <label class="form-label">Nova Senha (opcional)</label>
-      <input type="password" name="password" class="form-control" placeholder="Deixe em branco para manter">
-    </div>
+  background-attachment: fixed;
+  background-size: cover;
+}
+  </style>
+</head>
+<body>
+  
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0">Editar Usuário #<?php echo (int)$user['id']; ?></h2>
+    <a class="btn btn-outline-primary btn-sm fs-6" href="admin.php">Voltar</a>
   </div>
-  <div class="mt-3 text-end">
-    <button class="btn btn-primary">Salvar</button>
-  </div>
-</form>
-
-<?php include __DIR__ . '/partials/footer.php'; ?>
+  
+  <?php if ($errors): ?>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <?php foreach ($errors as $e) echo '<li>'.htmlspecialchars($e).'</li>'; ?>
+      </ul>
+    </div>
+    <?php endif; ?>
+    
+    <form method="post" class="card shadow-sm p-3">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nome</label>
+          <input type="text" name="first_name" class="form-control" value="<?php echo htmlspecialchars($nome); ?>" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">E-mail</label>
+          <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Perfil</label>
+          <select name="role" class="form-select">
+            <option value="paciente" <?php echo $tipo_usuario==='paciente'?'selected':''; ?>>Paciente</option>
+            <option value="fisioterapeuta" <?php echo $tipo_usuario==='fisioterapeuta'?'selected':''; ?>>Fisioterapeuta</option>
+            <option value="admin" <?php echo $tipo_usuario==='admin'?'selected':''; ?>>Admin</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Nova Senha (opcional)</label>
+          <input type="password" name="password" class="form-control" placeholder="Deixe em branco para manter">
+        </div>
+      </div>
+      <div class="mt-3 text-end">
+        <button class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+    
+    <?php include __DIR__ . '/partials/footer.php'; ?>
+  </body>
+  </html>
+    
