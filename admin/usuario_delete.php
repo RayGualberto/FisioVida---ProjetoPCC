@@ -21,8 +21,8 @@ if ($id === (int)($_SESSION['user_id'] ?? 0)) {
 }
 
 // Exclui o usuário da tabela 'usuario'
-$stmt = $pdo->prepare('DELETE FROM usuario WHERE id=?');
-$stmt->execute([$id]);
+$stmt1 = $pdo->prepare('DELETE FROM usuario WHERE id=?');
+$stmt1->execute([$id]);
 
 header('Location: admin.php');
 exit;
