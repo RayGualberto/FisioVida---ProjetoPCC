@@ -5,14 +5,14 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_tipo'] !== 'paciente')
     exit();
 }
 
-require_once '../php/db.php'; // Certifique-se que $conn é PDO
+require_once '../php/db.php'; // Certifique-se que $pdo é PDO
 
 $usuarioId = $_SESSION['usuario_id'];
 $nomePaciente = $_SESSION['usuario_nome'];
 
 try {
     // Buscar id_paciente via CPF do usuário
-    $stmt = $conn->prepare("
+    $stmt = $pdo->prepare("
         SELECT p.id_paciente
         FROM paciente p
         INNER JOIN usuario u ON p.cpf = u.cpf
@@ -105,7 +105,7 @@ try {
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <?php
       // Consulta usando PDO
-      $stmt = $conn->query("SELECT nome_servico, descricao_servico FROM servico WHERE status = 'Ativo'");
+      $stmt = $pdo->query("SELECT nome_servico, descricao_servico FROM servico WHERE status = 'Ativo'");
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
       ?>
       <div class="col">
@@ -138,7 +138,7 @@ try {
 
           <?php
           // Consulta usando PDO
-          $stmt = $conn->query("SELECT id_servico, nome_servico FROM servico WHERE status = 'Ativo'");
+          $stmt = $pdo->query("SELECT id_servico, nome_servico FROM servico WHERE status = 'Ativo'");
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
               echo '<option value="' . $row['id_servico'] . '">' . htmlspecialchars($row['nome_servico']) . '</option>';
           }
@@ -178,7 +178,7 @@ try {
         <tbody>
           <?php
           // Consulta usando PDO corrigida
-          $stmt = $conn->prepare("
+          $stmt = $pdo->prepare("
             SELECT a.data, a.hora, s.descricao_servico
             FROM agenda a
             INNER JOIN servico s ON a.servico_id_servico = s.id_servico

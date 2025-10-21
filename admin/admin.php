@@ -34,7 +34,7 @@ if (in_array($tipoFiltro, ['paciente', 'fisioterapeuta', 'admin'])) {
 $whereSql = $clauses ? ('WHERE ' . implode(' AND ', $clauses)) : '';
 
 // Total para paginação
-$stmt = $conn->prepare("SELECT COUNT(*) FROM usuario $whereSql");
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM usuario $whereSql");
 $stmt->execute($params);
 $total  = (int)$stmt->fetchColumn();
 $pages  = max(1, (int)ceil($total / $perPage));
@@ -46,7 +46,7 @@ $sql = "SELECT id, nome, email, tipo_usuario, data_nasc
         $whereSql
         ORDER BY id DESC
         LIMIT $perPage OFFSET $offset";
-$stmt = $conn->prepare($sql);
+$stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $usuarios = $stmt->fetchAll();
 

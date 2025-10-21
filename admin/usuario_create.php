@@ -1,5 +1,5 @@
 <?php
-require_once '../php/db.php'; // conexão $conn
+require_once '../php/db.php'; // conexão $pdo
 
 $errors = [];
 $nome = $email = $tipo_usuario = $cpf = $telefone = $cep = $sexo = $data_nasc = '';
@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$errors) {
         try {
-            $conn->beginTransaction();
+            $pdo->beginTransaction();
 
             // 1️⃣ Inserção na tabela USUARIO (agora incluindo o campo data_nasc)
-            $stmt = $conn->prepare('
+            $stmt = $pdo->prepare('
                 INSERT INTO usuario (nome, email, senha, cpf, telefone, cep, sexo, data_nasc, tipo_usuario)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ');
@@ -49,19 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // 2️⃣ Se for paciente, insere na tabela PACIENTE (sem data_nasc)
             if ($tipo_usuario === 'paciente') {
-                $stmt2 = $conn->prepare('
+                $stmt2 = $pdo->prepare('
                     INSERT INTO paciente (nome, telefone, cep, sexo, cpf)
                     VALUES (?, ?, ?, ?, ?)
                 ');
                 $stmt2->execute([$nome, $telefone, $cep, $sexo, $cpf]);
             }
 
-            $conn->commit();
+            $pdo->commit();
 
             header('Location: admin.php');
             exit;
         } catch (PDOException $e) {
-            $conn->rollBack();
+            $pdo->rollBack();
             if ($e->getCode() === '23000') {
                 $errors[] = 'Já existe um usuário com este e-mail ou CPF.';
             } else {

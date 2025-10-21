@@ -26,7 +26,7 @@ if (strlen($senha) < 6) {
 
 try {
     // Verificar se o e-mail já está cadastrado
-    $stmt_check = $conn->prepare("SELECT id FROM usuario WHERE email = ?");
+    $stmt_check = $pdo->prepare("SELECT id FROM usuario WHERE email = ?");
     $stmt_check->execute([$email]);
 
     if ($stmt_check->rowCount() > 0) {
@@ -38,21 +38,21 @@ try {
     $tipo_usuario = 'paciente';
 
     // Iniciar transação
-    $conn->beginTransaction();
+    $pdo->beginTransaction();
 
     // Inserir usuário
-    $stmt1 = $conn->prepare("INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt1->execute([$nome, $email, $senhaHash, $cpf, $data_nasc, $telefone, $cep, $tipo_usuario]);
+    $stmt1 = $pdo->prepare("INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, sexo, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1->execute([$nome, $email, $senhaHash, $cpf, $data_nasc, $telefone, $cep, $sexo, $tipo_usuario]);
 
     // Pega o ID do usuário recém-criado (caso precise)
-    $id = $conn->lastInsertId();
+    $id = $pdo->lastInsertId();
 
     // Inserir paciente
-    $stmt2 = $conn->prepare("INSERT INTO paciente (nome, telefone, cep, sexo, cpf) VALUES (?, ?, ?, ?, ?)");
+    $stmt2 = $pdo->prepare("INSERT INTO paciente (nome, telefone, cep, sexo, cpf) VALUES (?, ?, ?, ?, ?)");
     $stmt2->execute([$nome, $telefone, $cep, $sexo, $cpf]);
 
     // Commit na transação
-    $conn->commit();
+    $pdo->commit();
 
     // Redirecionar para login
     header("Location: ../site/login.php");
@@ -60,7 +60,7 @@ try {
 
 } catch (PDOException $e) {
     // Rollback se algo falhar
-    $conn->rollBack();
+    $pdo->rollBack();
     die("Erro no cadastro: " . $e->getMessage());
 }
 ?>

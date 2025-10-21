@@ -16,7 +16,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 try {
     // Consulta com PDO
-    $stmt = $conn->prepare("SELECT id, nome, senha, tipo_usuario FROM usuario WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, nome, senha, tipo_usuario FROM usuario WHERE email = ?");
     $stmt->execute([$email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 

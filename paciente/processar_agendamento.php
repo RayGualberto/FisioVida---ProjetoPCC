@@ -15,7 +15,7 @@ $data_agendamento = date('Y-m-d');
 
 try {
     // Buscar id_paciente correspondente ao usuário
-    $stmt = $conn->prepare("
+    $stmt = $pdo->prepare("
         SELECT p.id_paciente
         FROM paciente p
         INNER JOIN usuario u ON p.cpf = u.cpf
@@ -30,7 +30,7 @@ try {
     }
 
     // Buscar descrição do serviço
-    $stmt = $conn->prepare("SELECT descricao_servico FROM servico WHERE id_servico = ?");
+    $stmt = $pdo->prepare("SELECT descricao_servico FROM servico WHERE id_servico = ?");
     $stmt->execute([$servico_id]);
     $descricao_servico = $stmt->fetchColumn();
 
@@ -39,7 +39,7 @@ try {
     }
 
     // Inserir agendamento
-    $stmt = $conn->prepare("
+    $stmt = $pdo->prepare("
         INSERT INTO agenda (nome_paciente, data, data_agendamento, hora, descricao_servico, paciente_id_paciente, servico_id_servico)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     ");
