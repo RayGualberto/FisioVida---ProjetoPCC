@@ -78,6 +78,8 @@ include __DIR__ . '/partials/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -90,6 +92,29 @@ include __DIR__ . '/partials/header.php';
             background-size: cover;
         }
     </style>
+
+      <!-- Máscara CPF -->
+    <script>
+    $(document).ready(function(){
+    $('#cpf').mask('000.000.000-00');
+    });
+    </script>
+
+      <!-- Máscara para telefone -->
+
+    <script>
+    $(document).ready(function(){
+    $('#telefone').mask('(00) 00000-0000');
+    });
+    </script>
+
+    <!-- Máscara para CEP -->
+    <script>
+    $(document).ready(function(){
+    $('#cep').mask('00000-000');
+    });
+    </script>
+
 </head>
 <body>
 
@@ -120,17 +145,17 @@ include __DIR__ . '/partials/header.php';
 
         <div class="col-md-3">
             <label class="form-label">CPF</label>
-            <input type="text" name="cpf" class="form-control" value="<?php echo htmlspecialchars($cpf); ?>" required maxlength="14" placeholder="000.000.000-00">
+            <input type="text" name="cpf" id="cpf" class="form-control" value="<?php echo htmlspecialchars($cpf); ?>" required maxlength="14" placeholder="000.000.000-00">
         </div>
 
         <div class="col-md-3">
             <label class="form-label">Telefone</label>
-            <input type="text" name="telefone" class="form-control" value="<?php echo htmlspecialchars($telefone); ?>" required placeholder="(00) 00000-0000">
+            <input type="text" name="telefone" id="telefone" class="form-control" value="<?php echo htmlspecialchars($telefone); ?>" required placeholder="(00) 00000-0000">
         </div>
 
         <div class="col-md-3">
             <label class="form-label">CEP</label>
-            <input type="text" name="cep" class="form-control" value="<?php echo htmlspecialchars($cep); ?>" required placeholder="00000-000">
+            <input type="text" name="cep" id="cep" class="form-control" value="<?php echo htmlspecialchars($cep); ?>" required placeholder="00000-000">
         </div>
 
         <div class="col-md-3">

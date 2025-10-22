@@ -16,9 +16,9 @@
   <link rel="stylesheet" href="../css/style.css"/>
 
   <!-- Adicionando JQuery -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-          crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
 
   <!-- Adicionando Javascript -->
   <script>
@@ -66,15 +66,27 @@
     });
   </script>
 
-  <!-- jQuery Mask -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
   <!-- Máscara CPF -->
   <script>
     $(document).ready(function(){
       $('#cpf').mask('000.000.000-00');
     });
   </script>
+
+  <!-- Máscara para telefone -->
+
+  <script>
+$(document).ready(function(){
+  $('#telefone').mask('(00) 00000-0000');
+});
+</script>
+
+<!-- Máscara para CEP -->
+<script>
+$(document).ready(function(){
+  $('#cep').mask('00000-000');
+});
+</script>
 
 </head>
 <body> 
@@ -102,7 +114,7 @@
 
       <div class="col-md-6">
         <label for="telefone" class="form-label">Telefone:</label>
-        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(99) 99999-9999" required />
+        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(xx) xxxxx-xxxx" required />
       </div>
 
       <div class="col-md-6"><label for="data de nascimento" class="form-label">Data de Nascimento</label>
