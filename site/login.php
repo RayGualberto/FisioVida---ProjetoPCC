@@ -68,12 +68,14 @@
 
       <!-- Coluna da imagem -->
       <div class="col-lg-6 d-flex justify-content-center">
-        <img
+      <a href="index.html">  
+      <img
           src="../img/Fisiovida logo.png"
           alt="Imagem Fisioterapia"
           class="img-fluid"
           style="max-height: 450px; object-fit: contain; border: none; box-shadow: none;"
         />
+      </a>
       </div>
     </div>
   </div>
