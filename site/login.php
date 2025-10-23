@@ -59,6 +59,9 @@
             <p class="mt-3">
               Não tem uma conta? <a href="../site/cadastro.php">Cadastre-se</a>
             </p>
+            <p>
+              <a href="index.html">Voltar para a pagina inicial</a>
+            </p>
           </div>
         </form>
       </div>
