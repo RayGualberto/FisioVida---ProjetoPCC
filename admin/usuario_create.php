@@ -115,6 +115,62 @@ include __DIR__ . '/partials/header.php';
     });
     </script>
 
+    <!-- Validar CPF -->
+
+    <script>
+    $(document).ready(function() {
+
+    $("form").on("submit", function(e) {
+    if ($("#cpf").hasClass("is-invalid")) {
+        e.preventDefault();
+        alert("Corrija o CPF antes de enviar o formulário!");
+    }
+    });
+
+
+    $("#cpf").on("blur", function() {
+        const cpf = $(this).val();
+
+        if (cpf.trim() === "") return;
+
+        $.ajax({
+        url: "../admin/validar_cpf.php",
+        method: "POST",
+        dataType: "json",
+        data: { cpf: cpf },
+        success: function(response) {
+            if (response.valido) {
+            $("#cpf").removeClass("is-invalid").addClass("is-valid");
+            if ($("#cpf-feedback").length === 0) {
+                $("<div id='cpf-feedback' class='valid-feedback'>CPF válido ✅</div>")
+                .insertAfter("#cpf");
+            } else {
+                $("#cpf-feedback")
+                .removeClass("invalid-feedback")
+                .addClass("valid-feedback")
+                .text("CPF válido ✅");
+            }
+            } else {
+            $("#cpf").removeClass("is-valid").addClass("is-invalid");
+            if ($("#cpf-feedback").length === 0) {
+                $("<div id='cpf-feedback' class='invalid-feedback'>CPF inválido ❌</div>")
+                .insertAfter("#cpf");
+            } else {
+                $("#cpf-feedback")
+                .removeClass("valid-feedback")
+                .addClass("invalid-feedback")
+                .text("CPF inválido ❌");
+            }
+            }
+        },
+        error: function() {
+            console.error("Erro ao validar CPF.");
+        },
+        });
+    });
+    });
+    </script>
+
 </head>
 <body>
 

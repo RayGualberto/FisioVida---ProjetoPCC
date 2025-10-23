@@ -223,7 +223,7 @@ include __DIR__ . '/partials/header.php';
     <form method="get" class="card card-body shadow-sm mb-3">
     <div class="row g-2 align-items-end">
       <div class="col-md-6">
-        <label class="form-label">Buscar Serviço</label>
+        <label class="form-label">Buscar Agendamento</label>
         <input type="text" name="q_agenda" class="form-control" value="<?= htmlspecialchars($qAgenda) ?>" placeholder="Nome do paciente, data ou tipo de serviço">
       </div>
         <div class="col-md-6 text-end">
