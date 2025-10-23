@@ -18,7 +18,7 @@
   <!-- Adicionando JQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
+  <script src="server.js"></script>
 
   <!-- Adicionando Javascript -->
   <script>
@@ -85,6 +85,62 @@ $(document).ready(function(){
 <script>
 $(document).ready(function(){
   $('#cep').mask('00000-000');
+});
+</script>
+
+<!-- Validar CPF -->
+
+<script>
+$(document).ready(function() {
+
+  $("form").on("submit", function(e) {
+  if ($("#cpf").hasClass("is-invalid")) {
+    e.preventDefault();
+    alert("Corrija o CPF antes de enviar o formulário!");
+  }
+});
+
+
+  $("#cpf").on("blur", function() {
+    const cpf = $(this).val();
+
+    if (cpf.trim() === "") return;
+
+    $.ajax({
+      url: "../site/validar_cpf.php", // ajuste o caminho conforme a estrutura
+      method: "POST",
+      dataType: "json",
+      data: { cpf: cpf },
+      success: function(response) {
+        if (response.valido) {
+          $("#cpf").removeClass("is-invalid").addClass("is-valid");
+          if ($("#cpf-feedback").length === 0) {
+            $("<div id='cpf-feedback' class='valid-feedback'>CPF válido ✅</div>")
+              .insertAfter("#cpf");
+          } else {
+            $("#cpf-feedback")
+              .removeClass("invalid-feedback")
+              .addClass("valid-feedback")
+              .text("CPF válido ✅");
+          }
+        } else {
+          $("#cpf").removeClass("is-valid").addClass("is-invalid");
+          if ($("#cpf-feedback").length === 0) {
+            $("<div id='cpf-feedback' class='invalid-feedback'>CPF inválido ❌</div>")
+              .insertAfter("#cpf");
+          } else {
+            $("#cpf-feedback")
+              .removeClass("valid-feedback")
+              .addClass("invalid-feedback")
+              .text("CPF inválido ❌");
+          }
+        }
+      },
+      error: function() {
+        console.error("Erro ao validar CPF.");
+      },
+    });
+  });
 });
 </script>
 
