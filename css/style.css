@@ -326,6 +326,10 @@ form button.btn-primary:hover {
   -webkit-text-fill-color: transparent;
   animation: animacaoCor 6s ease infinite;
   font-weight: bold;
+  background-clip: text; /* Padrão */
+-webkit-background-clip: text; /* Chrome, Safari */
+color: transparent;
+-webkit-text-fill-color: transparent; /* Chrome, Safari*/
 }
 
 @keyframes animacaoCor {
