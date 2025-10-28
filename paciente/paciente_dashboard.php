@@ -84,7 +84,7 @@ try {
         <li class="nav-item"><a href="#serviços" class="nav-link">SERVIÇOS</a></li>
         <li class="nav-item"><a href="#agendar" class="nav-link">AGENDAR</a></li>
         <li class="nav-item"><a href="#meusagendamentos" class="nav-link">MEUS AGENDAMENTOS</a></li>
-        <li class="nav-item"><a href="../php/logout.php" class="nav-link"><button type="button" class="btn btn-outline-danger">Logout</button></a></li>
+        <li class="nav-item"><a href="../php/logout.php" class="nav-link"><button type="button" class="btn btn-outline-danger">Sair</button></a></li>
       </ul>
     </div>
   </div>
