@@ -7,11 +7,19 @@ $email = htmlspecialchars(trim($_POST['email']));
 $senha = $_POST['senha'];
 
 if (empty($email) || empty($senha)) {
-    die("Por favor, preencha email e senha.");
+    echo "<script>
+            alert('Por favor preencha o campo Email ou senha.');
+            window.history.back();
+          </script>";
+    exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die("Email inválido.");
+    echo "<script>
+            alert('Email inválido.');
+            window.history.back();
+          </script>";
+    exit;
 }
 
 try {
@@ -21,13 +29,21 @@ try {
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$usuario) {
-        die("Email ou senha inválidos.");
-    }
+    echo "<script>
+            alert('Email ou senha inválido.');
+            window.history.back();
+          </script>";
+    exit;
+}
 
     // Verifica senha
     if (!password_verify($senha, $usuario['senha'])) {
-        die("Email ou senha inválidos.");
-    }
+    echo "<script>
+            alert('Email ou senha inválido.');
+            window.history.back();
+          </script>";
+    exit;
+}
 
     // Login OK - grava dados na sessão
     $_SESSION['usuario_id'] = $usuario['id'];

@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nova_senha = $_POST['nova_senha'];
     $confirmar_senha = $_POST['confirmar_senha'];
 
-    if (strlen($nova_senha) < 8) {
-        $erro = "A senha deve ter pelo menos 8 caracteres.";
+    if (strlen($nova_senha) < 6) {
+        $erro = "A senha deve ter pelo menos 6 caracteres.";
     } elseif ($nova_senha !== $confirmar_senha) {
         $erro = "As senhas não coincidem.";
     } else {

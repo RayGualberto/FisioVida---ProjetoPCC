@@ -13,25 +13,39 @@ $data_nasc = htmlspecialchars(trim($_POST['data_nasc']));
 
 // Validações básicas
 if (empty($nome) || empty($email) || empty($senha) || empty($cpf) || empty($sexo) || empty($data_nasc)) {
-    die("Por favor, preencha todos os campos obrigatórios.");
+    echo "<script>
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            window.history.back();
+          </script>";
+    exit;
 }
-
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die("Email inválido.");
+    echo "<script>
+            alert('Email inválido.');
+            window.history.back();
+          </script>";
+    exit;
 }
-
 if (strlen($senha) < 6) {
-    die("A senha deve ter no mínimo 6 caracteres.");
+    echo "<script>
+            alert('A senha deve ter pelo menos 6 caracteres.');
+            window.history.back();
+          </script>";
+    exit;
 }
 
 try {
     // Verificar se o e-mail já está cadastrado
-    $stmt_check = $pdo->prepare("SELECT id FROM usuario WHERE email = ?");
-    $stmt_check->execute([$email]);
+    $stmt_check = $pdo->prepare("SELECT id FROM usuario WHERE email = ? OR cpf = ?");
+    $stmt_check->execute([$email, $cpf]);
 
     if ($stmt_check->rowCount() > 0) {
-        die("Este e-mail já está cadastrado. Tente fazer login.");
-    }
+        echo "<script>
+            alert('Este e-mail ou CPF já está cadastrado.');
+            window.history.back();
+          </script>";
+        exit;
+        }
 
     // Criptografar senha
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
