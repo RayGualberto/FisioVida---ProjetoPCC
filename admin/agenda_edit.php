@@ -178,7 +178,7 @@ include __DIR__ . '/partials/header.php';
       <label class="form-label">Hora do Agendamento</label>
       <input type="time" name="hora" class="form-control" 
             value="<?= htmlspecialchars($hora) ?>" 
-            required min="08:00" max="18:00" step="900"> <!-- step="900" = 15 minutos -->
+            required min="08:00" max="18:00" step="60"> <!-- step="900" = 15 minutos -->
     </div>
 
 

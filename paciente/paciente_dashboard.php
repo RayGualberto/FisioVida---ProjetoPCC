@@ -151,8 +151,9 @@ try {
       </div>
       <div class="col-md-6">
         <label class="form-label">Horário</label>
-        <input type="time" class="form-control" name="hora" required>
-      </div>
+      <input type="time" name="hora" class="form-control" 
+            required min="08:00" max="18:00" step="60"> <!-- step="900" = 15 minutos -->
+    </div>
       <div class="col-12 text-center mt-4">
         <button class="btn btn-success" type="submit">Agendar</button>
       </div>

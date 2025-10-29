@@ -131,9 +131,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
 
       <div class="mb-3">
         <label class="form-label">Novo Horário</label>
-        <input type="time" name="nova_hora" class="form-control" required>
-      </div>
-
+      <input type="time" name="nova_hora" class="form-control" required min="08:00" max="18:00" step="60"> <!-- step="900" = 15 minutos -->
+    </div>
       <div class="text-center">
         <button type="submit" class="btn btn-warning px-4">Confirmar Remarcação</button>
         <a href="fisio_dashboard.php" class="btn btn-secondary px-4">Cancelar</a>
