@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_tipo'] !== 'paciente') {
-    header("Location: ../site/login.html");
+    header("Location: ../site/login.php");
     exit();
 }
 
@@ -179,7 +179,7 @@ try {
           <?php
           // Consulta usando PDO corrigida
           $stmt = $pdo->prepare("
-            SELECT a.data, a.hora, s.descricao_servico
+            SELECT a.data, a.hora, s.descricao_servico, a.status
             FROM agenda a
             INNER JOIN servico s ON a.servico_id_servico = s.id_servico
             WHERE a.paciente_id_paciente = ?
@@ -195,7 +195,25 @@ try {
             <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>
             <td><?= substr($row['hora'], 0, 5) ?></td>
             <td><?= htmlspecialchars($row['descricao_servico']) ?></td>
-            <td><span class="badge bg-success">Confirmado</span></td>
+            <td>
+          <?php
+            $status = htmlspecialchars($row['status']);
+            switch ($status) {
+              case 'confirmado':
+                echo '<span class="badge bg-success">Confirmado</span>';
+                break;
+              case 'remarcado':
+                echo '<span class="badge bg-info text-dark">Remarcado</span>';
+                break;
+              case 'recusado':
+                echo '<span class="badge bg-danger">Recusado</span>';
+                break;
+              default:
+                echo '<span class="badge bg-warning text-dark">Pendente</span>';
+                break;
+            }
+          ?>
+        </td>
           </tr>
           <?php 
               endforeach; 
@@ -222,16 +240,6 @@ try {
           Email: contato@fisiovida.com.br
         </p>
       </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <h5 class="text-uppercase">Links úteis</h5>
-        <ul class="list-unstyled mb-0">
-          <li><a href="#!" class="text-dark">Política de Privacidade</a></li>
-          <li><a href="#!" class="text-dark">Termos de Uso</a></li>
-          <li><a href="#!" class="text-dark">Contato</a></li>
-        </ul>
-      </div>
-
       <div class="col-lg-3 col-md-6 mb-4">
         <h5 class="text-uppercase">Redes sociais</h5>
         <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">

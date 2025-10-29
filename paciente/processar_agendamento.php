@@ -40,10 +40,11 @@ try {
 
     // Inserir agendamento
     $stmt = $pdo->prepare("
-        INSERT INTO agenda (nome_paciente, data, data_agendamento, hora, descricao_servico, paciente_id_paciente, servico_id_servico)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO agenda (nome_paciente, data, data_agendamento, hora, descricao_servico, status, paciente_id_paciente, servico_id_servico)
+        VALUES (?, ?, ?, ?, ?, 'pendente', ?, ?)
     ");
     $stmt->execute([$nome_paciente, $data, $data_agendamento, $hora, $descricao_servico, $id_paciente, $servico_id]);
+
 
     header("Location: paciente_dashboard.php?agendado=sucesso");
     exit();

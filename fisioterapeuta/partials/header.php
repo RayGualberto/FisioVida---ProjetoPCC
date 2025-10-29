@@ -18,7 +18,6 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
 <style>
   /* Fundo geral da página com degradê suave (azul claro → verde claro) */
   body {
-    background: linear-gradient(135deg, #557dffff 0%, #77ff6aff 100%);
     min-height: 100vh;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -29,7 +28,7 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
   /* Sidebar lateral moderna */
   #sidebar {
     width: 230px;
-    background: linear-gradient(180deg, #00b368ff 0%, #003c82 100%); /* azul escuro elegante */
+    background: linear-gradient(180deg, #4e1d4aff 0%, #003c82 100%); /* azul escuro elegante */
     height: 100vh;
     position: fixed;
     top: 0;
@@ -60,17 +59,11 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
   }
 
   #sidebar .nav-link:hover {
-    background-color: #0078ff;
+    background-color: #8a31ffff;
     color: #fff;
     transform: translateX(4px);
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
     text-decoration: none;
-  }
-
-  #sidebar .nav-link.active {
-    background-color: #0078ff;
-    color: #fff;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   }
 
   /* Conteúdo principal */
@@ -123,7 +116,7 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
 <!-- Navbar superior -->
 <nav class="navbar navbar-expand-md bg-light sticky-top">
   <div class="container-fluid d-flex justify-content-between align-items-center">
-    <a href="admin.php" class="navbar-brand">
+    <a href="fisio_dashboard.php" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">
     </a>
 
@@ -146,10 +139,7 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
 
 <!-- Sidebar lateral -->
 <div id="sidebar">
-  <a href="admin.php" class="nav-link"><i class="bi bi-house-door"></i> Início</a>
-  <a href="servicos.php" class="nav-link"><i class="bi bi-briefcase"></i> Serviços</a>
-  <a href="agendamentos.php" class="nav-link"><i class="bi bi-calendar-check"></i> Agendamentos</a>
-  <a href="usuarios.php" class="nav-link"><i class="bi bi-people"></i> Usuários</a>
+  <a href="fisio_dashboard.php" class="nav-link"><i class="bi bi-house-door"></i> Início</a>
   <a href="prontuario.php" class="nav-link"><i class="bi bi-clipboard"></i>Prontuários</a>
 </div>
 

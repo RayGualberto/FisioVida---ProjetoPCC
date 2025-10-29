@@ -3,7 +3,7 @@ require_once '../php/db.php';
 
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) {
-    header('Location: admin.php');
+    header('Location: usuarios.php');
     exit;
 }
 
@@ -13,7 +13,7 @@ $stmt->execute([$id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
-    header('Location: admin.php');
+    header('Location: usuarios.php');
     exit;
 }
 
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $pdo->commit();
 
-                header('Location: admin.php');
+                header('Location: usuarios.php');
                 exit;
             }
         } catch (PDOException $e) {
@@ -125,16 +125,55 @@ include __DIR__ . '/partials/header.php';
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>  
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100vh;
-      font-family: roboto;
-      background: linear-gradient(135deg, #ffffff 0%, #9df7c2 50%, #acb7f7 100%);
-      background-attachment: fixed;
-      background-size: cover;
+       body {
+        background: linear-gradient(135deg, #ffffff 0%, #9df7c2 50%, #acb7f7 100%);
+        background-attachment: fixed;
+        background-size: cover;
+        font-family: 'Roboto';
     }
+
+    .form-label {
+        color: #004b87;
+    }
+
+    .form-control, .form-select {
+        border-radius: 10px;
+        border: 1px solid #a9d3ff;
+        transition: 0.3s;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #6ddccf;
+        box-shadow: 0 0 5px #6ddccf;
+    }
+
+    .card {
+        background: #ffffffdd;
+        border: none;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn-primary {
+        background: #0078ff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+    .btn-outline-primary {
+    border-radius: 12px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #6ddccf;
+    border-color: #6ddccf;
+    color: #fff;
+    transform: translateY(-2px);
+}
   </style>
 
     <!-- Máscara CPF -->
@@ -162,78 +201,78 @@ include __DIR__ . '/partials/header.php';
 </head>
 <body>
 
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <h2 class="h4 mb-0">Editar Usuário #<?php echo (int)$user['id']; ?></h2>
-  <a class="btn btn-outline-primary btn-sm fs-6" href="admin.php">Voltar</a>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h2 class="h4 mb-0">Editar Usuário #<?= (int)$user['id']; ?></h2>
+    <a class="btn btn-outline-primary btn-sm" href="usuarios.php">Voltar</a>
 </div>
 
 <?php if ($errors): ?>
-  <div class="alert alert-danger">
-    <ul class="mb-0">
-      <?php foreach ($errors as $e) echo '<li>'.htmlspecialchars($e).'</li>'; ?>
-    </ul>
-  </div>
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            <?php foreach ($errors as $e) echo '<li>' . htmlspecialchars($e) . '</li>'; ?>
+        </ul>
+    </div>
 <?php endif; ?>
 
-<form method="post" class="card shadow-sm p-3">
-  <div class="row g-3">
-    <div class="col-md-6">
-      <label class="form-label">Nome</label>
-      <input type="text" name="first_name" class="form-control" value="<?php echo htmlspecialchars($nome); ?>" required>
+<form method="post" class="card shadow-sm p-4" style="border-radius: 15px;">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">Nome</label>
+            <input type="text" name="first_name" class="form-control form-control-lg" value="<?= htmlspecialchars($nome) ?>" required>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">E-mail</label>
+            <input type="email" name="email" class="form-control form-control-lg" value="<?= htmlspecialchars($email) ?>" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">CPF</label>
+            <input type="text" name="cpf" id="cpf" class="form-control form-control-lg" value="<?= htmlspecialchars($cpf) ?>" required maxlength="14" placeholder="000.000.000-00">
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Telefone</label>
+            <input type="text" name="telefone" id="telefone" class="form-control form-control-lg" value="<?= htmlspecialchars($telefone) ?>" required placeholder="(00) 00000-0000">
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">CEP</label>
+            <input type="text" name="cep" id="cep" class="form-control form-control-lg" value="<?= htmlspecialchars($cep) ?>" required placeholder="00000-000">
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Sexo</label>
+            <select name="sexo" class="form-select form-select-lg" required>
+                <option value="M" <?= $sexo==='M'?'selected':'' ?>>Masculino</option>
+                <option value="F" <?= $sexo==='F'?'selected':'' ?>>Feminino</option>
+                <option value="Outro" <?= $sexo==='Outro'?'selected':'' ?>>Outro</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Data de Nascimento</label>
+            <input type="date" name="data_nasc" class="form-control form-control-lg" value="<?= htmlspecialchars($data_nasc) ?>" required>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Perfil</label>
+            <select name="role" class="form-select form-select-lg">
+                <option value="paciente" <?= $tipo_usuario==='paciente'?'selected':'' ?>>Paciente</option>
+                <option value="fisioterapeuta" <?= $tipo_usuario==='fisioterapeuta'?'selected':'' ?>>Fisioterapeuta</option>
+                <option value="admin" <?= $tipo_usuario==='admin'?'selected':'' ?>>Admin</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Nova Senha (opcional)</label>
+            <input type="password" name="password" class="form-control form-control-lg" placeholder="Deixe em branco para manter">
+        </div>
     </div>
 
-    <div class="col-md-6">
-      <label class="form-label">E-mail</label>
-      <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required>
+    <div class="mt-4 text-end">
+        <button type="submit" class="btn btn-primary btn-lg px-4">Salvar Alterações</button>
     </div>
-
-    <div class="col-md-3">
-      <label class="form-label">CPF</label>
-      <input type="text" name="cpf" id="cpf" class="form-control" value="<?php echo htmlspecialchars($cpf); ?>" required maxlength="14">
-    </div>
-
-    <div class="col-md-3">
-      <label class="form-label">Telefone</label>
-      <input type="text" name="telefone" id="telefone" class="form-control" value="<?php echo htmlspecialchars($telefone); ?>" required>
-    </div>
-
-    <div class="col-md-3">
-      <label class="form-label">CEP</label>
-      <input type="text" name="cep" id="cep" class="form-control" value="<?php echo htmlspecialchars($cep); ?>" required>
-    </div>
-
-    <div class="col-md-3">
-      <label class="form-label">Sexo</label>
-      <select name="sexo" class="form-select" required>
-        <option value="M" <?php echo $sexo === 'M' ? 'selected' : ''; ?>>Masculino</option>
-        <option value="F" <?php echo $sexo === 'F' ? 'selected' : ''; ?>>Feminino</option>
-        <option value="Outro" <?php echo $sexo === 'Outro' ? 'selected' : ''; ?>>Outros...</option>
-      </select>
-    </div>
-
-    <div class="col-md-3">
-      <label class="form-label">Data de Nascimento</label>
-      <input type="date" name="data_nasc" class="form-control" value="<?php echo htmlspecialchars($data_nasc); ?>" required>
-    </div>
-
-    <div class="col-md-3">
-      <label class="form-label">Perfil</label>
-      <select name="role" class="form-select">
-        <option value="paciente" <?php echo $tipo_usuario==='paciente'?'selected':''; ?>>Paciente</option>
-        <option value="fisioterapeuta" <?php echo $tipo_usuario==='fisioterapeuta'?'selected':''; ?>>Fisioterapeuta</option>
-        <option value="admin" <?php echo $tipo_usuario==='admin'?'selected':''; ?>>Admin</option>
-      </select>
-    </div>
-
-    <div class="col-md-3">
-      <label class="form-label">Nova Senha (opcional)</label>
-      <input type="password" name="password" class="form-control" placeholder="Deixe em branco para manter">
-    </div>
-  </div>
-
-  <div class="mt-3 text-end">
-    <button class="btn btn-primary">Salvar</button>
-  </div>
 </form>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>

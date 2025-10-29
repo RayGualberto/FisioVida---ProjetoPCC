@@ -2,14 +2,14 @@
 require_once '../php/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: admin.php');
+    header('Location: usuarios.php');
     exit;
 }
 
 $id = (int)($_POST['id'] ?? 0);
 
 if ($id <= 0) {
-    header('Location: admin.php');
+    header('Location: usuarios.php');
     exit;
 }
 
@@ -17,7 +17,7 @@ session_start();
 
 // Evita deletar a si mesmo
 if ($id === (int)($_SESSION['user_id'] ?? 0)) {
-    header('Location: admin.php');
+    header('Location: usuarios.php');
     exit;
 }
 
@@ -57,5 +57,5 @@ try {
     die('Erro ao excluir: ' . $e->getMessage());
 }
 
-header('Location: admin.php');
+header('Location: usuarios.php');
 exit;

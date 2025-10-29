@@ -2,14 +2,14 @@
 require_once '../php/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: admin.php');
+    header('Location: agendamentos.php');
     exit;
 }
 
 $id = (int)($_POST['id'] ?? 0);
 
 if ($id <= 0) {
-    header('Location: admin.php');
+    header('Location: agendamentos.php');
     exit;
 }
 
@@ -23,7 +23,7 @@ try {
 
     if (!$existe) {
         $pdo->rollBack();
-        header('Location: admin.php');
+        header('Location: agendamentos.php');
         exit;
     }
 
@@ -38,5 +38,5 @@ try {
     die('Erro ao excluir agendamento: ' . $e->getMessage());
 }
 
-header('Location: admin.php');
+header('Location: agendamentos.php');
 exit;

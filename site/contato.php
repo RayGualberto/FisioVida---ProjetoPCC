@@ -1,21 +1,104 @@
+<?php
+require_once '../php/db.php'; // mantém o caminho original conforme sua preferência
+
+// Inserção no banco de dados
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome      = trim($_POST['nome'] ?? '');
+    $telefone  = trim($_POST['telefone'] ?? '');
+    $email     = trim($_POST['email'] ?? '');
+    $mensagem  = trim($_POST['mensagem'] ?? '');
+    $rating    = trim($_POST['rating'] ?? '');
+
+    if ($nome && $email && $rating) {
+        $stmt = $pdo->prepare("INSERT INTO avaliacao (nome_paciente, telefone, email, avaliacao) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$nome, $telefone, $email, "Nota: $rating ⭐ - $mensagem"]);
+    }
+}
+
+// Buscar avaliações existentes
+$stmt = $pdo->query("SELECT nome_paciente, avaliacao FROM avaliacao ORDER BY id_avaliacao DESC");
+$avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <title> Fisiovida</title>
-    <link rel="icon" href="../img/Icone fisiovida.jfif">
-    <style>
-        
-    </style>
+  <meta charset="UTF-8">
+  <title>Fisiovida - Contato</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="icon" href="../img/Icone fisiovida.jfif">
+  <link rel="stylesheet" href="../css/style.css">
+  
+  <!-- Adicionando JQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <script src="server.js"></script>
+  <style>
+    .star-rating {
+      display: inline-flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+    }
+    .star-rating input {
+      display: none;
+    }
+    .star-rating label {
+      font-size: 2rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .star-rating input:checked ~ label {
+      color: #ffc107;
+    }
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #ffc107;
+    }
+
+    /* Avaliações com rolagem lateral */
+    .avaliacoes-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 1rem;
+      scroll-behavior: smooth;
+    }
+    .avaliacoes-container::-webkit-scrollbar {
+      height: 10px;
+    }
+    .avaliacoes-container::-webkit-scrollbar-thumb {
+      background-color: #198754;
+      border-radius: 5px;
+    }
+    .avaliacao-card {
+      min-width: 250px;
+      max-width: 300px;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      flex-shrink: 0;
+    }
+    .avaliacao-card h6 {
+      font-weight: 600;
+    }
+  </style>
+
+    <!-- Máscara para telefone -->
+
+      <script>
+    $(document).ready(function(){
+      $('#telefone').mask('(00) 00000-0000');
+    });
+</script>
 </head>
 <body>
-     <!-- Barra superior do site. -->
+
+ <!-- Barra superior do site. -->
      <div class="container-fluid bg-light ps-1 pe-0 d-none d-lg-block">
         <div class="row gx-0">
             <div class="col-md-6 text-center text-lg-start mb-0">
@@ -37,12 +120,12 @@
     </div>
   <!--fim da barra superior do site. -->
 
-<!-- Barra de navegação do site. -->
+  <!-- Barra de navegação do site. -->
 
 <nav class="navbar navbar-expand-lg bg-light sticky-xxl-top">
   <div class="container-fluid d-flex justify-content-between align-items-center">
     <!-- Logo colado à esquerda -->
-    <a href="index.html" class="navbar-brand">
+    <a href="#" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="90">
     </a>
 
@@ -55,9 +138,9 @@
     <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
       <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center">
         <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
-        <li class="nav-item"><a href="servico.html" class="nav-link">SERVIÇOS</a></li>
+        <li class="nav-item"><a href="servico.html" class="nav-link ">SERVIÇOS</a></li>
         <li class="nav-item"><a href="sobre.html" class="nav-link">SOBRE</a></li>
-        <li class="nav-item"><a href="contato.html" class="nav-link active">CONTATO</a></li>
+        <li class="nav-item"><a href="contato.php" class="nav-link active">CONTATO</a></li>
       </ul>
 
       <div class="d-flex gap-2 ms-3">
@@ -67,96 +150,40 @@
   </div>
 </nav>
 
-    
-<!-- Pagina do site. -->
+  
 
-<!-- Seção de Contato -->
-<div class="container my-5">
-  <h2 class="text-center mb-4">Contato</h2>
-  <p class="text-center mb-5">
-    Cuidar da sua saúde é a nossa prioridade, e estamos prontos para ajudar você a dar o próximo passo na sua recuperação. 
-    Entre em contato conosco para agendar sua sessão, tirar dúvidas ou receber orientações personalizadas.
-  </p>
+  <!-- Fim da barra de navegação do site. -->
 
-  <div class="row g-4">
+<!-- (Seu conteúdo anterior todo aqui, sem mudanças até o formulário) -->
 
-    <div class="col-md-6 col-lg-3">
-      <div class="card h-100 text-center shadow-sm border-0">
-        <div class="card-body">
-          <h5 class="card-title">Endereço</h5>
-          <p class="card-text">
-            Rua da Saúde, 123 – Centro<br>
-            Sua Cidade – SP
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="card h-100 text-center shadow-sm border-0">
-        <div class="card-body">
-          <h5 class="card-title">Telefone / WhatsApp</h5>
-          <p class="card-text">
-            (11) 99999-9999
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="card h-100 text-center shadow-sm border-0">
-        <div class="card-body">
-          <h5 class="card-title">E-mail</h5>
-          <p class="card-text">
-            fisiovidarmnf@gmail.com
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6 col-lg-3">
-      <div class="card h-100 text-center shadow-sm border-0">
-        <div class="card-body">
-          <h5 class="card-title">Horário</h5>
-          <p class="card-text">
-            Seg. a Sex.: 08h às 20h<br>
-            Sábado: 08h às 14h
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Formulário de Contato -->
 <div class="container my-5">
   <h2 class="text-center mb-4">Avalie sua experiência</h2>
   <p class="text-center mb-5">
-    Preencha o formulário abaixo para estar avaliando o serviço e caso você possua alguma duvida ou reclamação para estarmos entrando em contato.  
-    Estamos prontos para ajudar você no seu processo de recuperação!
+    Preencha o formulário abaixo para avaliar nosso serviço ou enviar dúvidas e sugestões.
   </p>
   
-  <form class="row g-3">
+  <form class="row g-3" method="POST">
 
     <div class="col-md-6">
       <label for="nome" class="form-label">Nome Completo</label>
-      <input type="text" class="form-control" id="nome" placeholder="Digite seu nome">
+      <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
     </div>
 
     <div class="col-md-6">
       <label for="telefone" class="form-label">Telefone / WhatsApp</label>
-      <input type="tel" class="form-control" id="telefone" placeholder="(11) 99999-9999">
+      <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(11) 99999-9999">
     </div>
 
     <div class="col-12">
       <label for="email" class="form-label">E-mail</label>
-      <input type="email" class="form-control" id="email" placeholder="seuemail@exemplo.com">
+      <input type="email" class="form-control" id="email" name="email" placeholder="seuemail@exemplo.com" required>
     </div>
 
-    <div class="col-12"> <label for="mensagem" class="form-label">Mensagem</label> <textarea class="form-control" id="mensagem" rows="5" placeholder="Escreva sua mensagem..."></textarea> </div>
+    <div class="col-12">
+      <label for="mensagem" class="form-label">Mensagem</label>
+      <textarea class="form-control" id="mensagem" name="mensagem" rows="5" placeholder="Escreva sua mensagem..."></textarea>
+    </div>
 
-
-    <!-- Avaliação -->
     <div class="col-12 text-center">
       <label class="form-label d-block mb-2">Avaliação</label>
       <div class="star-rating">
@@ -168,18 +195,34 @@
       </div>
     </div>
 
-    <!-- Botão -->
     <div class="col-12 text-center">
       <button type="submit" class="btn btn-primary px-5 py-2">
-        Enviar Mensagem
+        Enviar Avaliação
       </button>
     </div>
   </form>
 </div>
 
+<!-- Avaliações dos pacientes -->
+<div class="container my-5">
+  <h3 class="text-center mb-4">O que nossos pacientes dizem</h3>
+  <div class="avaliacoes-container">
+    <?php if ($avaliacoes): ?>
+      <?php foreach ($avaliacoes as $a): ?>
+        <div class="avaliacao-card">
+          <h6><?= htmlspecialchars($a['nome_paciente']) ?></h6>
+          <p class="text-muted mb-0"><?= htmlspecialchars($a['avaliacao']) ?></p>
+        </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p class="text-center text-muted">Ainda não há avaliações registradas.</p>
+    <?php endif; ?>
+  </div>
+</div>
+
 <!-- Apartir daqui começa o Rodapé da pagina. -->
 
-    <footer class="bg-light text-center text-lg-start mt-auto">
+<footer class="bg-light text-center text-lg-start mt-auto">
         <div class="container p-4">
           <div class="row">
             
@@ -188,17 +231,8 @@
               <p>
                 Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
                 Telefone: +55 12 3456-7890<br>
-                Email: fisiovidarmnf@gmail.com
+                Email: contato@fisiovida.com.br
               </p>
-            </div>
-            
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <h5 class="text-uppercase">Links úteis</h5>
-              <ul class="list-unstyled mb-0">
-                <li><a href="#!" class="text-dark">Política de Privacidade</a></li>
-                <li><a href="#!" class="text-dark">Termos de Uso</a></li>
-                <li><a href="#!" class="text-dark">Contato</a></li>
-              </ul>
             </div>
             
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
@@ -223,6 +257,6 @@
           © 2025 Fisiovida. Todos os direitos reservados.
         </div>
       </footer>
-      
+<!-- Fim do Rodapé da pagina. -->
 </body>
 </html>

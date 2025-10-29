@@ -56,7 +56,6 @@ CREATE TABLE servico (
     status ENUM('Ativo', 'Inativo')
 );
 
--- Tabela AGENDA
 CREATE TABLE agenda (
     id_Agenda INT PRIMARY KEY AUTO_INCREMENT,
     nome_paciente VARCHAR(100),
@@ -64,10 +63,28 @@ CREATE TABLE agenda (
     data_agendamento DATE DEFAULT (CURRENT_DATE),
     hora TIME,
     descricao_servico VARCHAR(255),
+    status ENUM('pendente', 'confirmado', 'remarcado', 'recusado') DEFAULT 'pendente',
     paciente_id_paciente INT,
     servico_id_servico INT,
     FOREIGN KEY (paciente_id_paciente) REFERENCES paciente(id_paciente),
     FOREIGN KEY (servico_id_servico) REFERENCES servico(id_servico)
+);
+
+-- Tabela AVALIACAO
+CREATE TABLE avaliacao (
+    id_avaliacao INT PRIMARY KEY AUTO_INCREMENT,
+    nome_paciente VARCHAR(100),
+    telefone VARCHAR(20),
+    email VARCHAR(50),
+    avaliacao VARCHAR(255)
+);
+
+-- Tabela PRONTUARIO
+CREATE TABLE prontuario (
+    id_prontuario INT PRIMARY KEY AUTO_INCREMENT,
+    evolucao VARCHAR(255),
+    data DATE,
+    assinatura VARCHAR(255),
 );
 
 -- -- Tabela ATENDIMENTO
@@ -80,26 +97,6 @@ CREATE TABLE agenda (
 --     FOREIGN KEY (Fisioterapeuta_id_Fisioterapeuta) REFERENCES fisioterapeuta(id_Fisioterapeuta)
 -- );
 
--- -- Tabela AVALIACAO
--- CREATE TABLE avaliacao (
---     id_avaliacao INT PRIMARY KEY AUTO_INCREMENT,
---     nome_paciente VARCHAR(100),
---     avaliacao VARCHAR(255),
---     paciente_id_paciente INT,
---     atendimento_id_atendimento INT,
---     FOREIGN KEY (paciente_id_paciente) REFERENCES paciente(id_paciente),
---     FOREIGN KEY (atendimento_id_atendimento) REFERENCES atendimento(id_atendimento)
--- );
-
--- -- Tabela PRONTUARIO
--- CREATE TABLE prontuario (
---     id_prontuario INT PRIMARY KEY AUTO_INCREMENT,
---     evolucao VARCHAR(255),
---     data DATE,
---     assinatura VARCHAR(255),
---     paciente_id_paciente INT,
---     FOREIGN KEY (paciente_id_paciente) REFERENCES paciente(id_paciente)
--- );
 
 -- -- Tabela PERFIL
 -- CREATE TABLE perfil (

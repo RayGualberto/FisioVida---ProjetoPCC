@@ -13,7 +13,7 @@ $stmt->execute([$id]);
 $servico = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$servico) {
-    header('Location: admin.php');
+    header('Location: servicos.php');
     exit;
 }
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $pdo->commit();
 
-            header('Location: admin.php');
+            header('Location: servicos.php');
             exit;
         } catch (PDOException $e) {
             $pdo->rollBack();
@@ -56,30 +56,116 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include __DIR__ . '/partials/header.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editar Serviço</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100vh;
-      font-family: roboto;
-      background: linear-gradient(135deg, #ffffff 0%, #9df7c2 50%, #acb7f7 100%);
-      background-attachment: fixed;
-      background-size: cover;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Serviço</title>
+<style>
+body {
+    margin: 0;
+
+    font-family: 'Roboto';
+    background: linear-gradient(135deg, #ffffff 0%, #9df7c2 50%, #acb7f7 100%);
+    min-height: 100vh;
+}
+
+/* Títulos */
+h2 {
+    color: #003c82;
+    font-weight: 600;
+}
+
+/* Card do formulário */
+.card {
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+/* Labels */
+label.form-label {
+    font-weight: 500;
+    color: #004b87;
+}
+
+/* Inputs e selects */
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 1px solid #a9d3ff;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #6ddccf;
+    box-shadow: 0 0 8px rgba(109,220,207,0.5);
+}
+
+/* Botões */
+.btn-primary {
+    border-radius: 12px;
+    padding: 8px 25px;
+    background: linear-gradient(90deg, #6ddccf 0%, #7cc6fe 100%);
+    border: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    border-radius: 12px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #6ddccf;
+    border-color: #6ddccf;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Alertas */
+.alert-danger {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Campos em linha e responsivos */
+.row.g-4 > [class*='col-'] {
+    margin-bottom: 15px;
+}
+
+/* Botão alinhado à direita */
+.text-end {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .card {
+      padding: 20px 15px;
     }
-  </style>
+}
+</style>
 </head>
 <body>
 
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <h2 class="h4 mb-0">Editar Serviço #<?php echo (int)$servico['id_servico']; ?></h2>
-  <a class="btn btn-outline-primary btn-sm fs-6" href="admin.php">Voltar</a>
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <h2 class="h4 mb-0">Editar Serviço #<?= (int)$servico['id_servico'] ?></h2>
+  <a class="btn btn-outline-primary btn-sm" href="servicos.php">Voltar</a>
 </div>
 
 <?php if ($errors): ?>
@@ -90,28 +176,28 @@ include __DIR__ . '/partials/header.php';
   </div>
 <?php endif; ?>
 
-<form method="post" class="card shadow-sm p-3">
-  <div class="row g-3">
+<form method="post" class="card mb-5">
+  <div class="row g-4">
     <div class="col-md-6">
       <label class="form-label">Nome do Serviço</label>
-      <input type="text" name="nome_servico" class="form-control" value="<?php echo htmlspecialchars($nome_servico); ?>" required>
+      <input type="text" name="nome_servico" class="form-control" value="<?= htmlspecialchars($nome_servico) ?>" required>
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Descrição</label>
-      <input type="text" name="descricao_servico" class="form-control" value="<?php echo htmlspecialchars($descricao_servico); ?>" required>
+      <input type="text" name="descricao_servico" class="form-control" value="<?= htmlspecialchars($descricao_servico) ?>" required>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <label class="form-label">Status</label>
       <select name="status" class="form-select" required>
-        <option value="Ativo" <?php echo $status==='Ativo'?'selected':''; ?>>Ativo</option>
-        <option value="Inativo" <?php echo $status==='Inativo'?'selected':''; ?>>Inativo</option>
+        <option value="Ativo" <?= $status==='Ativo'?'selected':''; ?>>Ativo</option>
+        <option value="Inativo" <?= $status==='Inativo'?'selected':''; ?>>Inativo</option>
       </select>
     </div>
   </div>
 
-  <div class="mt-3 text-end">
+  <div class="mt-4 text-end">
     <button class="btn btn-primary">Salvar</button>
   </div>
 </form>

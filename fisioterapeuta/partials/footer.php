@@ -4,31 +4,24 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Função para aplicar o tema
-function applyTheme(theme) {
-    document.documentElement.setAttribute('data-bs-theme', theme); // Compatível com Bootstrap
-}
-
-// Carregar tema salvo no localStorage
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark' || savedTheme === 'light') {
-    applyTheme(savedTheme);
-}
-
-// Esperar o DOM carregar
-document.addEventListener('DOMContentLoaded', function() {
+// O tema é armazenado em localStorage
+(function() {
+  const applyTheme = (t) => document.documentElement.setAttribute('data-bs-theme', t);
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark' || saved === 'light') { applyTheme(saved); }
+  document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('themeToggle');
     if (btn) {
-        btn.addEventListener('click', () => {
-            // Verifica o tema atual
-            const currentTheme = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'dark' : 'light';
-            // Alterna para o outro tema
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
-            localStorage.setItem('theme', newTheme); // Salva preferência
-        });
+      btn.addEventListener('click', function() {
+        const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+        const next = current === 'light' ? 'dark' : 'light';
+        applyTheme(next);
+        localStorage.setItem('theme', next);
+        showToast('Tema: ' + (next === 'dark' ? 'escuro' : 'claro'), 'success');
+      });
     }
-});
+  });
+})();
 
 // Essa função esta relacionada no helpers.php
 function showToast(message, type) {
