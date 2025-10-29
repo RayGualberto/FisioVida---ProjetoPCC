@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_tipo'] !== 'paciente') {
-    header("Location: ../site/paciente_dashboard.php");
+    header("Location: ../paciente/paciente_dashboard.php");
     exit();
 }
 
