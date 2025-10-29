@@ -51,7 +51,8 @@ include __DIR__ . '/partials/header.php';
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Painel Administrativo - FisioVida</title>
+  <title>Painel Fisioterapeuta - FisioVida</title>
+  <link rel="icon" href="../img/Icone fisiovida.jfif">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   /* Corpo e fundo */

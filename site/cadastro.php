@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FisioVida - Cadastro</title>
+  <link rel="icon" href="../img/Icone fisiovida.jfif">
   <link rel="icon" href="img/Fisiovida logo.png" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
