@@ -55,147 +55,119 @@ include __DIR__ . '/partials/header.php';
   <link rel="icon" href="../img/Icone fisiovida.jfif">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  /* Corpo e fundo */
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #5b4fc7 0%, #7a5df0 50%, #a69afc 100%);
-    color: #000; /* TEXTO PRETO */
-    min-height: 100vh;
-  }
-
   /* Cabeçalho */
   h2.h4 {
     color: #000; /* TEXTO PRETO */
     font-weight: 500;
   }
 
-  .badge.text-bg-primary {
-    background-color: #3c2f91;
-    color: #fff; /* Mantemos contraste no badge */
-    font-weight: 500;
-  }
+    .card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
 
-  /* Formulário de filtro */
-  form.card {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    border: none;
-  }
+    .card-header {
+      background: linear-gradient(90deg, #0099ff, #4cd3a5);
+      color: white;
+      font-weight: 500;
+      font-size: 1rem;
+      border-bottom: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-  form.card .form-control,
-  form.card .form-select {
-    border-radius: 8px;
-    background-color: #fff;
-    color: #000; /* TEXTO PRETO */
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
+    table {
+      border-collapse: separate;
+      border-spacing: 0 6px;
+    }
 
-  form.card .form-control::placeholder {
-    color: rgba(0, 0, 0, 0.5);
-  }
+    thead tr {
+      background: #cfe9ff;
+      color: #003c82;
+      text-align: center;
+    }
 
-  /* Botões do filtro */
-  form.card .btn-primary {
-    background-color: #6b4ffc;
-    border-color: #6b4ffc;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    color: #fff;
-  }
+    th {
+      font-weight: 600;
+      padding: 12px;
+      border: none;
+    }
 
-  form.card .btn-primary:hover {
-    background-color: #5841d3;
-    border-color: #5841d3;
-  }
+    tbody tr {
+      background: #ffffff;
+      transition: all 0.25s ease-in-out;
+      border-radius: 12px;
+    }
 
-  form.card .btn-outline-secondary {
-    color: #000;
-    border-color: #000;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
+    tbody tr:hover {
+      background-color: #e3f7f1;
+      transform: scale(1.01);
+    }
 
-  form.card .btn-outline-secondary:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+    td {
+      vertical-align: middle;
+      text-align: center;
+      padding: 10px;
+      color: #333;
+    }
 
-  /* Tabela */
-  .card.shadow-sm {
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.85);
-    border: none;
-    color: #000; /* TEXTO PRETO */
-  }
+    .btn {
+      transition: all 0.3s ease;
+    }
 
-  .card-header {
-    background-color: rgba(60, 47, 145, 0.8);
-    border-bottom: none;
-    font-weight: 500;
-    font-size: 1rem;
-    color: #fff;
-  }
+    .btn-outline-secondary:hover {
+      background-color: #6ddccf;
+      color: #fff;
+      border-color: #6ddccf;
+    }
 
-  table.table {
-    color: #000; /* TEXTO PRETO */
-  }
+    .btn-outline-danger:hover {
+      background-color: #ff6b6b;
+      color: #fff;
+      border-color: #ff6b6b;
+    }
 
-  table.table th {
-    color: #000; /* TEXTO PRETO */
-    font-weight: 500;
-  }
+    /* Filtro */
+    form.card {
+      background-color: #ffffffd9;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
 
-  table.table td {
-    color: #000; /* TEXTO PRETO */
-  }
+    form label {
+      font-weight: 500;
+      color: #004b87;
+    }
 
-  table.table tr:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
+    form input {
+      border-radius: 8px;
+      border: 1px solid #a9d3ff;
+      transition: 0.3s;
+    }
 
-  /* Badges de status */
-  .badge.text-bg-success { background-color: #4cd964; color: #000; }
-  .badge.text-bg-danger  { background-color: #ff5c5c; color: #000; }
-  .badge.text-bg-warning { background-color: #ffcc00; color: #000; }
-  .badge.text-bg-info    { background-color: #5ac8fa; color: #000; }
-  .badge.text-bg-secondary { background-color: #b0b0c0; color: #000; }
+    form input:focus {
+      border-color: #6ddccf;
+      box-shadow: 0 0 4px #6ddccf;
+    }
 
-  /* Botões de ações na tabela */
-  .table .btn-sm {
-    border-radius: 6px;
-    font-weight: 500;
-    padding: 0.25rem 0.6rem;
-    transition: all 0.3s ease;
-    color: #fff;
-  }
-
-  .table .btn-success { background-color: #4cd964; border-color: #4cd964; }
-  .table .btn-success:hover { background-color: #3ac13a; }
-
-  .table .btn-danger  { background-color: #ff5c5c; border-color: #ff5c5c; }
-  .table .btn-danger:hover  { background-color: #e64c4c; }
-
-  .table .btn-warning { background-color: #ffcc00; border-color: #ffcc00; color: #000; }
-  .table .btn-warning:hover { background-color: #e6b800; color: #000; }
-
-  /* Responsividade e cards */
-  .table-responsive {
-    border-radius: 12px;
-    overflow: hidden;
-  }
+    /* Mensagem de vazio */
+    .no-results {
+      color: #999;
+      padding: 20px;
+      font-style: italic;
+    }
 </style>
 
 </head>
-<body>
-  
+
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0 text-white">Painel de Fisioterapeuta - FisioVida</h2>
+    <h2 class="h4 mb-0">Painel de Fisioterapeuta - FisioVida</h2>
 
     <span class="badge text-bg-primary">Perfil: Fisioterapeuta</span>
   </div>
-
+<div class=" mt-4">
   <!-- Filtro de Agenda -->
   <form method="get" class="card card-body shadow-sm mb-3">
     <div class="row g-2 align-items-end">
@@ -226,7 +198,7 @@ include __DIR__ . '/partials/header.php';
   <div class="card shadow-sm mb-4">
     <div class="card-header">Agendamentos encontrados (<?= $totalAgendamentos ?>)</div>
     <div class="card-body p-0">
-      <div class="table-responsive">
+      <div class="table-responsive ">
         <table class="table table-striped table-hover mb-0 align-middle">
           <thead>
             <tr>
@@ -264,15 +236,15 @@ include __DIR__ . '/partials/header.php';
                 <td class="text-end">
                   <form action="confirmar_agenda.php" method="post" class="d-inline">
                     <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                    <button type="submit" class="btn btn-sm btn-success">Confirmar</button>
+                    <button type="submit" class="btn btn-sm btn-outline-success">Confirmar</button>
                   </form>
                   <form action="recusar_agenda.php" method="post" class="d-inline">
                     <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                    <button type="submit" class="btn btn-sm btn-danger">Recusar</button>
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Recusar</button>
                   </form>
                   <form action="remarcar_agenda.php" method="post" class="d-inline">
                     <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                    <button type="submit" class="btn btn-sm btn-warning">Remarcar</button>
+                    <button type="submit" class="btn btn-sm btn-outline-warning text-dark">Remarcar</button>
                   </form>
                 </td>
               </tr>
@@ -290,7 +262,6 @@ include __DIR__ . '/partials/header.php';
       </div>
     </div>
   </div>
-
+</div>
   <?php include __DIR__ . '/partials/footer.php'; ?>
-</body>
 </html>

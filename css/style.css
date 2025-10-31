@@ -11,15 +11,9 @@ body {
     padding: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgb(255, 255, 255);
+    background-color: whitesmoke;
     height: 100vh;
-    font-family: roboto;
 
-    background: linear-gradient(135deg, 
-    #ffffff 0%,    
-    #9df7c2 50%,    
-    #acb7f7 100%   
-  );
   min-height: 100vh;
   margin: 0;
 

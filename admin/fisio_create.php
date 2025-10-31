@@ -196,8 +196,6 @@ $(document).ready(function(){
     });
 </script>
 </head>
-<body>
-
 <div class="d-flex align-items-center justify-content-between mb-4">
     <h2 class="h4 mb-0">Novo Fisioterapeuta</h2>
     <a class="btn btn-outline-primary btn-sm" href="usuarios.php">Voltar</a>

@@ -23,32 +23,33 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 try {
-    // Consulta com PDO
-    $stmt = $pdo->prepare("SELECT id, nome, senha, tipo_usuario FROM usuario WHERE email = ?");
+    // Consulta com PDO, agora incluindo a coluna 'foto'
+    $stmt = $pdo->prepare("SELECT id, nome, senha, tipo_usuario, foto FROM usuario WHERE email = ?");
     $stmt->execute([$email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$usuario) {
-    echo "<script>
-            alert('Email ou senha inválido.');
-            window.history.back();
-          </script>";
-    exit;
-}
+        echo "<script>
+                alert('Email ou senha inválido.');
+                window.history.back();
+              </script>";
+        exit;
+    }
 
     // Verifica senha
     if (!password_verify($senha, $usuario['senha'])) {
-    echo "<script>
-            alert('Email ou senha inválido.');
-            window.history.back();
-          </script>";
-    exit;
-}
+        echo "<script>
+                alert('Email ou senha inválido.');
+                window.history.back();
+              </script>";
+        exit;
+    }
 
     // Login OK - grava dados na sessão
-    $_SESSION['usuario_id'] = $usuario['id'];
-    $_SESSION['usuario_nome'] = $usuario['nome'];
-    $_SESSION['usuario_tipo'] = $usuario['tipo_usuario'];
+    $_SESSION['usuario_id']      = $usuario['id'];
+    $_SESSION['usuario_nome']    = $usuario['nome'];
+    $_SESSION['usuario_tipo']    = $usuario['tipo_usuario'];
+    $_SESSION['foto_perfil']     = $usuario['foto'] ?? '../img/imagem_perfil.JPEG';
 
     // Redireciona conforme tipo de usuário
     switch ($usuario['tipo_usuario']) {

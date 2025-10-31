@@ -134,8 +134,6 @@ include __DIR__ . '/partials/header.php';
   }
 </style>
 </head>
-<body>
-
 <div class="d-flex align-items-center justify-content-between mb-4">
   <h2 class="h4 mb-0">Editar Agendamento #<?= (int)$agenda['id_Agenda'] ?></h2>
   <a class="btn btn-outline-primary btn-sm" href="agendamentos.php">Voltar</a>
@@ -178,8 +176,5 @@ include __DIR__ . '/partials/header.php';
     <button class="btn btn-primary">Salvar</button>
   </div>
 </form>
-
-
 <?php include __DIR__ . '/partials/footer.php'; ?>
-</body>
 </html>

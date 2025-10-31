@@ -132,8 +132,6 @@ label.form-label {
 }
 </style>
 </head>
-<body>
-
 <div class="d-flex align-items-center justify-content-between mb-4">
     <h2 class="h4 mb-0">Novo Serviço</h2>
     <a class="btn btn-outline-primary btn-sm" href="servicos.php">Voltar</a>

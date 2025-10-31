@@ -30,10 +30,6 @@ include __DIR__ . '/partials/header.php';
   <meta charset="UTF-8">
   <title>Painel Administrativo - FisioVida</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <style>
     .container {
       max-width: 1200px;
@@ -69,8 +65,11 @@ include __DIR__ . '/partials/header.php';
     }
   </style>
 </head>
-<body>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0">Painel de Prontuários - FisioVida</h2>
 
+    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+  </div>
 <div class="container mt-5 mb-5">
     <div class="form-card mb-5">
         <h2 class="mb-4 text-center">Evolução dos Pacientes</h2>

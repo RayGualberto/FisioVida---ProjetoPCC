@@ -2,10 +2,10 @@
 require_once '../php/db.php';
 
 // Parâmetros de filtro e paginação
-$tipoFiltro   = $_GET['tipo'] ?? '';
 $page         = max(1, (int)($_GET['page'] ?? 1));
 $perPage      = 8;
 $qAgenda      = trim($_GET['q_agenda'] ?? '');
+$statusFiltro = $_GET['status'] ?? ''; // Novo filtro de status
 
 // ===== Paginação de agenda =====
 $agendaClauses = [];
@@ -14,10 +14,18 @@ $agendaParams  = [];
 if ($qAgenda !== '') {
     $agendaClauses[] = "(nome_paciente LIKE ? OR data LIKE ? OR descricao_servico LIKE ?)";
     $like = "%$qAgenda%";
-    $agendaParams = [$like, $like, $like];
+    $agendaParams[] = $like;
+    $agendaParams[] = $like;
+    $agendaParams[] = $like;
+}
+
+if ($statusFiltro !== '' && in_array($statusFiltro, ['pendente', 'confirmado', 'remarcado', 'recusado'])) {
+    $agendaClauses[] = "status = ?";
+    $agendaParams[] = $statusFiltro;
 }
 
 $agendaWhereSql = $agendaClauses ? ('WHERE ' . implode(' AND ', $agendaClauses)) : '';
+
 
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM agenda $agendaWhereSql");
 $stmt->execute($agendaParams);
@@ -35,7 +43,7 @@ $stmt = $pdo->prepare($sqlagendamentos);
 $stmt->execute($agendaParams);
 $agenda = $stmt->fetchAll();
 
-include __DIR__ . '/partials/header.php';
+include __DIR__ . '../partials/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +52,13 @@ include __DIR__ . '/partials/header.php';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agendamentos FisioVida</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <style>
+  /* Cabeçalho */
+  h2.h4 {
+    color: #000; /* TEXTO PRETO */
+    font-weight: 500;
+  }
+
     .card {
       border: none;
       border-radius: 15px;
@@ -55,13 +67,13 @@ include __DIR__ . '/partials/header.php';
     }
 
     .card-header {
-      background: linear-gradient(90deg, #6ddccf 0%, #7cc6fe 100%);
-      color: #fff;
+      background: linear-gradient(90deg, #0099ff, #4cd3a5);
+      color: white;
       font-weight: 500;
-      font-size: 1.1rem;
-      text-align: center;
+      font-size: 1rem;
       border-bottom: none;
-      padding: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     table {
@@ -100,7 +112,7 @@ include __DIR__ . '/partials/header.php';
     }
 
     .btn {
-      border-radius: 8px;
+
       transition: all 0.3s ease;
     }
 
@@ -145,22 +157,37 @@ include __DIR__ . '/partials/header.php';
       padding: 20px;
       font-style: italic;
     }
-
-  </style>
+</style>
 </head>
 
-<body>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0">Painel de Agendamentos - FisioVida</h2>
 
-<div class="container mt-4">
+    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+  </div>
+
+<div class=" mt-4">
   <!-- Filtro de Agenda -->
-  <form method="get" class="card card-body shadow-sm mb-4">
+  <form method="get" class="card card-body shadow-sm mb-3">
     <div class="row g-2 align-items-end">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <label class="form-label">🔎 Buscar Agendamento</label>
-        <input type="text" name="q_agenda" class="form-control" value="<?= htmlspecialchars($qAgenda) ?>" placeholder="Nome do paciente, data ou tipo de serviço">
+        <input type="text" name="q_agenda" class="form-control" 
+               value="<?= htmlspecialchars($qAgenda) ?>" 
+               placeholder="Nome do paciente, data ou tipo de serviço">
       </div>
-      <div class="col-md-6 text-end">
-        <a class="btn btn-outline-secondary mt-3" href="agendamentos.php">Limpar</a>
+      <div class="col-md-3">
+        <label class="form-label">Filtrar por Status</label>
+        <select name="status" class="form-select">
+          <option value="">Todos</option>
+          <option value="pendente"   <?= $statusFiltro === 'pendente'   ? 'selected' : '' ?>>Pendente</option>
+          <option value="confirmado" <?= $statusFiltro === 'confirmado' ? 'selected' : '' ?>>Confirmado</option>
+          <option value="remarcado"  <?= $statusFiltro === 'remarcado'  ? 'selected' : '' ?>>Remarcado</option>
+          <option value="recusado"   <?= $statusFiltro === 'recusado'   ? 'selected' : '' ?>>Recusado</option>
+        </select>
+      </div>
+      <div class="col-md-4 text-end">
+        <a class="btn btn-outline-secondary mt-3" href="fisio_dashboard.php">Limpar</a>
         <button class="btn btn-primary mt-3">Filtrar</button>
       </div>
     </div>
@@ -173,56 +200,55 @@ include __DIR__ . '/partials/header.php';
     </div>
 
     <div class="card-body p-0">
-      <div class="table-responsive p-3">
-        <table class="table align-middle mb-0">
-<thead>
-  <tr>
-    <th>#</th>
-    <th>Nome do Paciente</th>
-    <th>Data da Consulta</th>
-    <th>Data do Agendamento</th>
-    <th>Hora</th>
-    <th>Serviço</th>
-    <th>Status</th> <!-- nova coluna -->
-    <th class="text-end">Ações</th>
-  </tr>
-</thead>
-<tbody>
-  <?php if ($agenda): ?>
-    <?php foreach ($agenda as $a): ?>
-        <?php
-                // Define cor do status
-                $status = htmlspecialchars($a['status']);
-                $badgeClass = match ($status) {
-                    'confirmado' => 'success',
-                    'recusado' => 'danger',
-                    'remarcado' => 'info',
-                    'pendente' => 'warning',
-                    default => 'secondary'
-                };
-              ?>
-      <tr>
-        <td><?= (int)$a['id_Agenda'] ?></td>
-        <td><?= htmlspecialchars($a['nome_paciente']) ?></td>
-        <td><?= htmlspecialchars($a['data']) ?></td>
-        <td><?= htmlspecialchars($a['data_agendamento']) ?></td>
-        <td><?= htmlspecialchars($a['hora']) ?></td>
-        <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
-        <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
-        <td class="text-end">
-          <a class="btn btn-sm btn-outline-secondary" href="agenda_edit.php?id=<?= (int)$a['id_Agenda'] ?>">Remarcar</a>
-          <form action="agenda_delete.php" method="post" class="d-inline" onsubmit="return confirm('Deseja excluir este agendamento?');">
-            <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-            <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
-          </form>
-        </td>
-      </tr>
-    <?php endforeach; ?>
-  <?php else: ?>
-    <tr><td colspan="8" class="text-center no-results">Nenhum agendamento encontrado.</td></tr>
-  <?php endif; ?>
-</tbody>
-
+      <div class="table-responsive">
+        <table class="table table-striped table-hover mb-0 align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome do Paciente</th>
+              <th>Data da Consulta</th>
+              <th>Data do Agendamento</th>
+              <th>Hora</th>
+              <th>Serviço</th>
+              <th>Status</th> <!-- nova coluna -->
+              <th class="text-end">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($agenda): ?>
+              <?php foreach ($agenda as $a): ?>
+                  <?php
+                          // Define cor do status
+                          $status = htmlspecialchars($a['status']);
+                          $badgeClass = match ($status) {
+                              'confirmado' => 'success',
+                              'recusado' => 'danger',
+                              'remarcado' => 'info',
+                              'pendente' => 'warning',
+                              default => 'secondary'
+                          };
+                        ?>
+                <tr>
+                  <td><?= (int)$a['id_Agenda'] ?></td>
+                  <td><?= htmlspecialchars($a['nome_paciente']) ?></td>
+                  <td><?= htmlspecialchars($a['data']) ?></td>
+                  <td><?= htmlspecialchars($a['data_agendamento']) ?></td>
+                  <td><?= htmlspecialchars($a['hora']) ?></td>
+                  <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
+                  <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
+                  <td class="text-end">
+                    <a class="btn btn-sm btn-outline-warning text-dark" href="agenda_edit.php?id=<?= (int)$a['id_Agenda'] ?>">Remarcar</a>
+                    <form action="agenda_delete.php" method="post" class="d-inline" onsubmit="return confirm('Deseja excluir este agendamento?');">
+                      <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+                      <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                    </form>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr><td colspan="8" class="text-center no-results">Nenhum agendamento encontrado.</td></tr>
+            <?php endif; ?>
+          </tbody>
         </table>
       </div>
     </div>

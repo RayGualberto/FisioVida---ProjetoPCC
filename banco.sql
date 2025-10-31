@@ -12,6 +12,7 @@ CREATE TABLE usuario (
     telefone VARCHAR(20),
     cep VARCHAR(200),
     sexo ENUM('M','F','Outro'),
+    foto VARCHAR(255) DEFAULT '../img/imagem_perfil.JPEG',
     tipo_usuario ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
 );
 

@@ -94,9 +94,13 @@ include __DIR__ . '/partials/header.php';
     }
 
     .card-header {
-      background: linear-gradient(90deg, #6fcf97, #56ccf2);
+      background: linear-gradient(90deg, #0099ff, #4cd3a5);
       color: white;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 1rem;
+      border-bottom: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .btn-filtro,
 .btn-filtro:hover,
@@ -110,9 +114,12 @@ a {
 
   </style>
 </head>
-<body>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0">Painel de Úsuarios - FisioVida</h2>
 
-<div class="container mt-4">
+    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+  </div>
+<div class="mt-5">
 
   <!-- Filtro com botões -->
   <div class="container-filtro text-center">

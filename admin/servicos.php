@@ -44,7 +44,7 @@ $stmt = $pdo->prepare($sqlServicos);
 $stmt->execute($servParams);
 $servicos = $stmt->fetchAll();
 
-include __DIR__ . '/partials/header.php';
+include __DIR__ . '../partials/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -96,13 +96,6 @@ include __DIR__ . '/partials/header.php';
       background-color: #e9f7f5;
       transform: scale(1.01);
     }
-
-    .badge {
-      padding: 0.5em 0.8em;
-      border-radius: 10px;
-      font-size: 0.85rem;
-    }
-
     .text-bg-info {
       background-color: #4cd3a5 !important;
       color: #fff !important;
@@ -114,14 +107,13 @@ include __DIR__ . '/partials/header.php';
     }
 
     .btn {
-      border-radius: 8px;
       transition: all 0.3s ease;
     }
 
     .btn-outline-secondary:hover {
-      background-color: #0099ff;
-      color: white;
-      border-color: #0099ff;
+      background-color: #6ddccf;
+      color: #fff;
+      border-color: #6ddccf;
     }
 
     .btn-outline-danger:hover {
@@ -134,9 +126,9 @@ include __DIR__ . '/partials/header.php';
       background: rgba(255, 255, 255, 0.9);
     }
 
-    .form-label {
+    form label {
       font-weight: 500;
-      color: #333;
+      color: #004b87;
     }
 
     input.form-control, select.form-select {
@@ -153,17 +145,17 @@ include __DIR__ . '/partials/header.php';
   </style>
 </head>
 
-<body>
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0 text-white">Painel de Serviços - FisioVida</h2>
-    <span class="badge text-bg-primary">Perfil: Admin</span>
-  </div>
+    <h2 class="h4 mb-0">Painel de Serviços - FisioVida</h2>
 
+    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+  </div>
+<div class=" mt-4">
   <!-- Filtro de serviços -->
 <form method="get" class="card card-body shadow-sm mb-3">
   <div class="row g-2 align-items-end">
     <div class="col-md-5">
-      <label class="form-label">Buscar Serviço</label>
+      <label class="form-label">🔎 Buscar Serviço</label>
       <input type="text" name="q_servico" class="form-control" value="<?= htmlspecialchars($qServico) ?>" placeholder="Nome ou descrição do serviço">
     </div>
     <div class="col-md-2">
@@ -227,7 +219,7 @@ include __DIR__ . '/partials/header.php';
       </div>
     </div>
   </div>
-
+</div>
   <?php include __DIR__ . '/partials/footer.php'; ?>
 </body>
 </html>

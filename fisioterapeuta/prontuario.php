@@ -30,21 +30,7 @@ include __DIR__ . '/partials/header.php';
   <meta charset="UTF-8">
   <title>Painel Administrativo - FisioVida</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <style>
-    /* Corpo e fundo */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #6C63FF 0%, #A29BFE 100%);
-      color: #333;
-      min-height: 100vh;
-    }
-
     .container {
       max-width: 1200px;
     }
@@ -75,15 +61,7 @@ include __DIR__ . '/partials/header.php';
     }
 
     h2, h5 {
-      color: #4e4cff;
-    }
-
-    .btn-primary {
-      background: #4e4cff;
-      border: none;
-    }
-    .btn-primary:hover {
-      background: #3b3ad6;
+      color: #000000ff;
     }
 
     textarea.form-control {
@@ -101,8 +79,6 @@ include __DIR__ . '/partials/header.php';
     }
   </style>
 </head>
-<body>
-
 <div class="container mt-5 mb-5">
     <div class="form-card mb-5">
         <h2 class="mb-4">Adicionar Evolução do Paciente</h2>
@@ -149,5 +125,4 @@ include __DIR__ . '/partials/header.php';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
-</body>
 </html>
