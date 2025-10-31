@@ -187,9 +187,10 @@ include __DIR__ . '/partials/header.php';
   <div class="card shadow-sm mb-4">
     <div class="card-header">Serviços encontrados (<?= $totalServicos ?>)</div>
     <div class="card-body p-0">
-      <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle">
-          <thead>
+      <!-- Div com rolagem vertical -->
+      <div class="table-responsive" style="max-height: 500px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+        <table class="table table-striped table-hover align-middle mb-0">
+          <thead class="sticky-top" style="background: #cde9ff; z-index: 10;">
             <tr>
               <th>#</th>
               <th>Nome</th>
