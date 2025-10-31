@@ -81,13 +81,6 @@ include __DIR__ . '/partials/header.php';
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <style>
-    body {
-        background: linear-gradient(135deg, #ffffff 0%, #9df7c2 50%, #acb7f7 100%);
-        background-attachment: fixed;
-        background-size: cover;
-        font-family: 'Roboto';
-    }
-
     .form-label {
         color: #004b87;
     }

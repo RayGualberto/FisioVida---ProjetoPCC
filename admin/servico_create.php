@@ -42,14 +42,6 @@ include __DIR__ . '/partials/header.php';
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-    margin: 0;
-
-    font-family: 'Roboto';
-    background: linear-gradient(135deg, #ffffff 0%, #9df7c2 50%, #acb7f7 100%);
-    min-height: 100vh;
-}
-
 /* Título */
 h2 {
     color: #003c82;

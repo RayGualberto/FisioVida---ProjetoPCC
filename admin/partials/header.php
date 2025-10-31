@@ -16,21 +16,18 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
-  /* Fundo geral da página com degradê suave (azul claro → verde claro) */
+<style> 
   body {
-    background: linear-gradient(135deg, #557dffff 0%, #77ff6aff 100%);
     min-height: 100vh;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: roboto;
   }
 
   /* Sidebar lateral moderna */
   #sidebar {
     width: 230px;
-    background: linear-gradient(180deg, #00b368ff 0%, #003c82 100%); /* azul escuro elegante */
+    background: #0b8ecb; /* azul escuro elegante */
     height: 100vh;
     position: fixed;
     top: 0;
@@ -123,7 +120,7 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
 
 <!-- Navbar superior -->
 <nav class="navbar navbar-expand-md bg-light sticky-top">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
+  <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 33px;">
     <a href="admin.php" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">
     </a>
@@ -147,12 +144,13 @@ $userRole = $_SESSION['tipo_usuario'] ?? null;
 
 <!-- Sidebar lateral -->
 <div id="sidebar">
-  <a href="admin.php" class="nav-link"><i class="bi bi-house-door"></i> Início</a>
-  <a href="servicos.php" class="nav-link"><i class="bi bi-briefcase"></i> Serviços</a>
-  <a href="agendamentos.php" class="nav-link"><i class="bi bi-calendar-check"></i> Agendamentos</a>
-  <a href="usuarios.php" class="nav-link"><i class="bi bi-people"></i> Usuários</a>
-  <a href="prontuario.php" class="nav-link"><i class="bi bi-clipboard"></i>Prontuários</a>
+  <a href="admin.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'admin.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
+  <a href="servicos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'servicos.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Serviços</a>
+  <a href="agendamentos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>"><i class="bi bi-calendar-check"></i> Agendamentos</a>
+  <a href="usuarios.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'usuarios.php') ? 'active' : ''; ?>"><i class="bi bi-people"></i> Usuários</a>
+  <a href="prontuario.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>"><i class="bi bi-clipboard"></i> Prontuários</a>
 </div>
+  
 
 <!-- Conteúdo principal -->
 <div id="main-content">
