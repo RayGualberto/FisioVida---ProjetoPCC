@@ -57,6 +57,8 @@ CREATE TABLE servico (
     status ENUM('Ativo', 'Inativo')
 );
 
+-- Tabela AGENDA
+
 CREATE TABLE agenda (
     id_Agenda INT PRIMARY KEY AUTO_INCREMENT,
     nome_paciente VARCHAR(100),

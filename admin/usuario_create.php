@@ -30,10 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $pdo->beginTransaction();
 
-            // 1️⃣ Inserção na tabela USUARIO (agora incluindo o campo data_nasc)
+            // 1️⃣ Inserção na tabela USUARIO (agora incluindo o campo foto com valor padrão)
             $stmt = $pdo->prepare('
-                INSERT INTO usuario (nome, email, senha, cpf, telefone, cep, sexo, data_nasc, tipo_usuario)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO usuario (nome, email, senha, cpf, telefone, cep, sexo, data_nasc, tipo_usuario, foto)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ');
             $stmt->execute([
                 $nome,
@@ -44,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $cep,
                 $sexo,
                 $data_nasc,
-                $tipo_usuario
+                $tipo_usuario,
+                "../img/imagem_perfil.JPEG" // Foto padrão
             ]);
 
             // 2️⃣ Se for paciente, insere na tabela PACIENTE (sem data_nasc)
@@ -70,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 
 include __DIR__ . '/partials/header.php';
 ?>

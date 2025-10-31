@@ -35,8 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Inserção na tabela USUARIO com tipo_usuario fixo 'fisioterapeuta'
             $stmt = $pdo->prepare('
-                INSERT INTO usuario (nome, email, senha, cpf, telefone, cep, sexo, data_nasc, tipo_usuario)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO usuario (nome, email, senha, cpf, telefone, cep, sexo, data_nasc, tipo_usuario, foto)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ');
             $stmt->execute([
                 $nome,
@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $cep,
                 $sexo,
                 $data_nasc,
-                'fisioterapeuta'
+                'fisioterapeuta',
+                "../img/imagem_perfil.JPEG" // Foto padrão
             ]);
 
             // Inserção na tabela FISIOTERAPEUTA

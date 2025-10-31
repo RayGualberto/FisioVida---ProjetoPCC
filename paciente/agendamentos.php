@@ -161,9 +161,9 @@ include __DIR__ . '../partials/header.php';
 </head>
 
     <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Agendamentos - FisioVida</h2>
+    <h2 class="h4 mb-0">Meus Agendamentos - FisioVida</h2>
 
-    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+    <span class="badge text-bg-primary">Perfil: paciente</span>
   </div>
 
 <div class=" mt-4">
@@ -210,8 +210,7 @@ include __DIR__ . '../partials/header.php';
               <th>Data do Agendamento</th>
               <th>Hora</th>
               <th>Serviço</th>
-              <th>Status</th> <!-- nova coluna -->
-              <th class="text-end">Ações</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -236,13 +235,6 @@ include __DIR__ . '../partials/header.php';
                   <td><?= htmlspecialchars($a['hora']) ?></td>
                   <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
                   <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
-                  <td class="text-end">
-                    <a class="btn btn-sm btn-outline-warning text-dark" href="agenda_edit.php?id=<?= (int)$a['id_Agenda'] ?>">Remarcar</a>
-                    <form action="agenda_delete.php" method="post" class="d-inline" onsubmit="return confirm('Deseja excluir este agendamento?');">
-                      <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                      <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
-                    </form>
-                  </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>

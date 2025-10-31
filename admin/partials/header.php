@@ -235,16 +235,25 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     <span class="close-btn">&times;</span>
     <h5 class="mb-3 text-center">Perfil do Usuário</h5>
 
-    <!-- Foto de perfil -->
-    <div class="text-center mb-3">
-      <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Foto de perfil" class="rounded-circle shadow-sm" width="300" height="300" id="userPhoto">
-      <form id="formFoto" action="upload_foto.php" method="post" enctype="multipart/form-data" class="mt-2">
-        <label for="novaFoto" class="btn btn-sm btn-outline-primary">
-          <i class="bi bi-camera"></i> Alterar foto
-        </label>
-        <input type="file" name="novaFoto" id="novaFoto" accept="image/*" style="display:none">
-      </form>
-    </div>
+<!-- Foto de perfil -->
+<div class="text-center mb-3">
+  <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Foto de perfil" class="rounded-circle shadow-sm" width="300" height="300" id="userPhoto">
+
+  <div class="mt-2 d-flex justify-content-center gap-2">
+    <!-- Botão Alterar Foto -->
+    <form id="formFoto" action="upload_foto.php" method="post" enctype="multipart/form-data">
+      <label for="novaFoto" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-camera"></i> Alterar foto
+      </label>
+      <input type="file" name="novaFoto" id="novaFoto" accept="image/*" style="display:none">
+    </form>
+
+    <!-- Botão Remover Foto -->
+    <button type="button" id="removerFotoBtn" class="btn btn-sm btn-outline-danger">
+      <i class="bi bi-x-circle"></i> Remover foto
+    </button>
+  </div>
+</div>
 
     <hr>
 
@@ -275,9 +284,11 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <!-- Modal de Pefil -->
 
 <script>
+const removerFotoBtn = document.getElementById('removerFotoBtn');
 const novaFoto = document.getElementById('novaFoto');
 const userPhoto = document.getElementById('userPhoto');
 const profileBtnPhoto = document.querySelector('#profileBtn img');
+const FOTO_PADRAO = '../img/imagem_perfil.JPEG';
 
 novaFoto.addEventListener('change', (event) => {
   const file = event.target.files[0];
@@ -307,6 +318,27 @@ novaFoto.addEventListener('change', (event) => {
     console.error('Erro no upload:', err);
     alert('Erro ao enviar a foto.');
   });
+});
+
+// Botão Remover Foto
+removerFotoBtn.addEventListener('click', () => {
+    // Atualiza a imagem no modal e no ícone
+    userPhoto.src = FOTO_PADRAO;
+    profileBtnPhoto.src = FOTO_PADRAO;
+
+    // Envia requisição para o PHP remover a foto no banco
+    fetch('remover_foto.php', {
+        method: 'POST'
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Foto removida:', data);
+        alert('Foto removida com sucesso!');
+    })
+    .catch(err => {
+        console.error('Erro ao remover foto:', err);
+        alert('Erro ao remover a foto.');
+    });
 });
 
 // Abrir e fechar modal

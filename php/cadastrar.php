@@ -35,7 +35,7 @@ if (strlen($senha) < 6) {
 }
 
 try {
-    // Verificar se o e-mail já está cadastrado
+    // Verificar se o e-mail ou CPF já está cadastrado
     $stmt_check = $pdo->prepare("SELECT id FROM usuario WHERE email = ? OR cpf = ?");
     $stmt_check->execute([$email, $cpf]);
 
@@ -45,27 +45,28 @@ try {
             window.history.back();
           </script>";
         exit;
-        }
+    }
 
     // Criptografar senha
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
     $tipo_usuario = 'paciente';
+    $fotoPadrao = "../img/imagem_perfil.JPEG"; // FOTO PADRÃO
 
     // Iniciar transação
     $pdo->beginTransaction();
 
-    // Inserir usuário
-    $stmt1 = $pdo->prepare("INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, sexo, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt1->execute([$nome, $email, $senhaHash, $cpf, $data_nasc, $telefone, $cep, $sexo, $tipo_usuario]);
+    // Inserir usuário com foto padrão
+    $stmt1 = $pdo->prepare("INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, sexo, foto, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1->execute([$nome, $email, $senhaHash, $cpf, $data_nasc, $telefone, $cep, $sexo, $fotoPadrao, $tipo_usuario]);
 
-    // Pega o ID do usuário recém-criado (caso precise)
+    // Pega o ID do usuário recém-criado
     $id = $pdo->lastInsertId();
 
     // Inserir paciente
     $stmt2 = $pdo->prepare("INSERT INTO paciente (nome, telefone, cep, sexo, cpf) VALUES (?, ?, ?, ?, ?)");
     $stmt2->execute([$nome, $telefone, $cep, $sexo, $cpf]);
 
-    // Commit na transação
+    // Commit
     $pdo->commit();
 
     // Redirecionar para login

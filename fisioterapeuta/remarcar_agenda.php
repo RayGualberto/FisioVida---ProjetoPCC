@@ -39,8 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #5b4fc7 0%, #7a5df0 50%, #a69afc 100%);
+      background-color: whitesmoke;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -77,16 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     }
 
     .btn-warning {
-      background-color: #6b4ffc;
-      border-color: #6b4ffc;
-      color: #fff;
       border-radius: 8px;
       transition: all 0.3s ease;
     }
 
     .btn-warning:hover {
-      background-color: #5841d3;
-      border-color: #5841d3;
+      background-color: #ffae00ff;
+      border-color: #ffae00ff;
     }
 
     .btn-secondary {

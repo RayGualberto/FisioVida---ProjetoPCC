@@ -2,11 +2,32 @@
 // partials/header.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-// Adaptação para o banco "fisiovida"
-$userName = $_SESSION['nome'] ?? null;           
-$userRole = $_SESSION['tipo_usuario'] ?? null;
+$usuarioId = $_SESSION['usuario_id'];
+$nomePaciente = $_SESSION['usuario_nome'];
 $idUsuario = $_SESSION['usuario_id'];
 $fotoPerfil = $_SESSION['foto_perfil'] ?? ($usuario['foto'] ?? '../img/imagem_perfil.JPEG');
+
+try {
+    // Buscar id_paciente via CPF do usuário
+    $stmt = $pdo->prepare("
+        SELECT p.id_paciente
+        FROM paciente p
+        INNER JOIN usuario u ON p.cpf = u.cpf
+        WHERE u.id = ?
+        LIMIT 1
+    ");
+    $stmt->execute([$usuarioId]);
+    $id_paciente = $stmt->fetchColumn(); // Retorna apenas a primeira coluna (id_paciente)
+
+    if (!$id_paciente) {
+        throw new Exception("Paciente não encontrado para o usuário informado.");
+    }
+
+} catch (PDOException $e) {
+    die("Erro ao buscar ID do paciente: " . $e->getMessage());
+} catch (Exception $e) {
+    die("Erro: " . $e->getMessage());
+}
 
 // Consulta os dados do usuário
 $stmt = $pdo->prepare("SELECT nome, email, cpf, data_nasc, telefone, cep, sexo, tipo_usuario
@@ -19,7 +40,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FisioVida - Fisioterapeuta</title>
+  <title>FisioVida - Paciente</title>
   <link rel="icon" href="../img/Icone fisiovida.jfif">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -47,6 +68,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     align-items: center;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    padding-top: 140px;
   }
 
   #sidebar .nav-link {
@@ -133,6 +155,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.45);
+    padding-top: 41px;
   }
 
   .profile-content {
@@ -194,10 +217,31 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <body>
 
+<!-- Barra superior -->
+<div class="container-fluid bg-light ps-1 pe-0 d-none d-lg-block sticky-top">
+  <div class="row gx-0">
+    <div class="col-md-6 text-center text-lg-start mb-0">
+      <div class="d-inline-flex align-items-center">
+        <small class="py-2"><i class="bi bi-clock container"></i> Aberto de Segunda a Sexta, das 08:00 às 18:00.</small>
+      </div>
+    </div>
+    <div class="col-md-6 text-center text-lg-end">
+      <div class="position-relative d-inline-flex align-items-center bg-success text-white top-shape px-4">
+        <div class="me-3 pe-3 border-end py-2">
+          <p class="m-0"><i class="bi bi-envelope-at me-2"></i>fisiovidarmnf@gmail.com</p>
+        </div>
+        <div class="py-2">
+          <p class="m-0"><i class="bi bi-telephone me-2"></i>+012 345 6789</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Navbar superior -->
 <nav class="navbar navbar-expand-md bg-light sticky-top">
   <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 55px;">
-    <a href="admin.php" class="navbar-brand">
+    <a href="paciente_dashboard.php" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">
     </a>
 
@@ -208,7 +252,10 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
       <ul class="navbar-nav ms-auto d-flex align-items-center">
         <li class="nav-item me-2">
-          <a class="btn btn-outline-danger btn-sm" href="../php/logout.php">Sair</a>
+            <a class="btn btn-outline-primary btn-sm" href="Agendar.php"><i class="bi bi-calendar-check"></i> Agendar</a>
+        </li>
+        <li class="nav-item me-2">
+            <a class="btn btn-outline-danger btn-sm" href="../php/logout.php">Sair</a>
         </li>
 
         <!-- Ícone de perfil com a foto do usuário -->
@@ -274,8 +321,9 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <!-- Sidebar lateral -->
 <div id="sidebar">
-  <a href="fisio_dashboard.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'fisio_dashboard.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
-  <a href="prontuario.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Prontuários</a>
+  <a href="paciente_dashboard.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'paciente_dashboard.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
+  <a href="servicos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'servicos.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Serviços</a>
+  <a href="agendamentos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>"><i class="bi bi-calendar-check"></i> Meus agendamentos</a>
 </div>
 
 <!-- Modal de Pefil -->
