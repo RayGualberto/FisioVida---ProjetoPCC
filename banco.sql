@@ -84,7 +84,7 @@ CREATE TABLE prontuario (
     id_prontuario INT PRIMARY KEY AUTO_INCREMENT,
     evolucao VARCHAR(255),
     data DATE,
-    assinatura VARCHAR(255),
+    assinatura VARCHAR(255)
 );
 
 -- -- Tabela ATENDIMENTO
