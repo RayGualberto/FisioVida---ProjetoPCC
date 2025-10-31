@@ -197,7 +197,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <!-- Navbar superior -->
 <nav class="navbar navbar-expand-md bg-light sticky-top">
   <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 55px;">
-    <a href="admin.php" class="navbar-brand">
+    <a href="fisio_dashboard.php" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">
     </a>
 
