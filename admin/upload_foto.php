@@ -10,40 +10,47 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $idUsuario = $_SESSION['usuario_id'];
 
+// Verifica se um arquivo foi enviado corretamente
 if (isset($_FILES['novaFoto']) && $_FILES['novaFoto']['error'] === UPLOAD_ERR_OK) {
     $fotoTmp = $_FILES['novaFoto']['tmp_name'];
-    $fotoConteudo = file_get_contents($fotoTmp);
-    $hashFoto = md5($fotoConteudo); // ou sha1($fotoConteudo)
+    $fotoNome = basename($_FILES['novaFoto']['name']);
+    $extensao = strtolower(pathinfo($fotoNome, PATHINFO_EXTENSION));
 
-    // Verifica se já existe essa foto para o usuário
-    $stmt = $pdo->prepare("SELECT foto FROM usuario WHERE id = ? AND foto_hash = ?");
-    $stmt->execute([$idUsuario, $hashFoto]);
-    $fotoExistente = $stmt->fetchColumn();
-
-    if ($fotoExistente) {
-        // Foto já existe, não salva novamente
-        $_SESSION['foto_perfil'] = $fotoExistente;
-        echo "Foto já existe";
+    // Extensões permitidas
+    $extPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    if (!in_array($extensao, $extPermitidas)) {
+        echo "<script>alert('Formato de imagem inválido!'); window.history.back();</script>";
         exit;
     }
 
     // Gera novo nome único
-    $extensao = strtolower(pathinfo($_FILES['novaFoto']['name'], PATHINFO_EXTENSION));
     $novoNome = 'foto_' . $idUsuario . '_' . time() . '.' . $extensao;
+
+    // Caminho destino
     $pastaDestino = '../uploads/';
-    if (!is_dir($pastaDestino)) mkdir($pastaDestino, 0777, true);
+    if (!is_dir($pastaDestino)) {
+        mkdir($pastaDestino, 0777, true);
+    }
+
     $caminhoFinal = $pastaDestino . $novoNome;
 
+    // Move a imagem para a pasta uploads
     if (move_uploaded_file($fotoTmp, $caminhoFinal)) {
-        // Atualiza banco com caminho e hash
-        $stmt = $pdo->prepare("UPDATE usuario SET foto = ?, foto_hash = ? WHERE id = ?");
-        $stmt->execute([$caminhoFinal, $hashFoto, $idUsuario]);
+        // Atualiza no banco
+        $stmt = $pdo->prepare("UPDATE usuario SET foto = ? WHERE id = ?");
+        $stmt->execute([$caminhoFinal, $idUsuario]);
 
+        // Atualiza a sessão com a nova foto
         $_SESSION['foto_perfil'] = $caminhoFinal;
-        echo "Foto enviada com sucesso";
     } else {
-        echo "Erro ao enviar a foto.";
+        echo "<script>alert('Erro ao enviar a foto.'); window.history.back();</script>";
+        exit;
     }
 }
+
+// Redireciona para a página anterior
+// NÃO use header("Location: ...") mais, só retorna OK
+echo "Foto enviada com sucesso";
+exit;
 
 ?>
