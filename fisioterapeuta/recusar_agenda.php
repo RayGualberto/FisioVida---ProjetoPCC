@@ -1,15 +1,18 @@
 <?php
-require_once '../php/db.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../php/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = (int)($_POST['id'] ?? 0);
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
 
-    if ($id > 0) {
+    try {
         $stmt = $pdo->prepare("UPDATE agenda SET status = 'recusado' WHERE id_Agenda = ?");
         $stmt->execute([$id]);
+        $_SESSION['msg'] = "❌ Agendamento recusado com sucesso.";
+    } catch (PDOException $e) {
+        $_SESSION['msg'] = "⚠️ Erro ao recusar: " . $e->getMessage();
     }
 }
 
-header('Location: fisio_dashboard.php');
+header("Location: agenda.php");
 exit;
-?>
