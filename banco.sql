@@ -66,7 +66,7 @@ CREATE TABLE servico (
 );
 
 -- ==============================
--- TABELA AGENDA (AJUSTADA)
+-- TABELA AGENDA
 -- ==============================
 CREATE TABLE agenda (
     id_Agenda INT PRIMARY KEY AUTO_INCREMENT,
@@ -106,7 +106,7 @@ CREATE TABLE prontuario (
 );
 
 -- ==============================
--- TABELA ATENDIMENTO (opcional, usada em relatórios)
+-- TABELA ATENDIMENTO
 -- ==============================
 CREATE TABLE atendimento (
     id_atendimento INT PRIMARY KEY AUTO_INCREMENT,
