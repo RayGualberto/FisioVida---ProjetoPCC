@@ -106,7 +106,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endfor; ?>
         </select>
 
-        <button class="btn btn-success w-100" onclick="salvarAgendamento()" onclick="fecharFormulario()">Salvar</button>
+        <button class="btn btn-success w-100" onclick="salvarAgendamento()" onclick="fecharFormulario()">Agendar</button>
     </div>
 </div>
 

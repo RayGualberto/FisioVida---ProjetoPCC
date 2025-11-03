@@ -211,6 +211,7 @@ include __DIR__ . '../partials/header.php';
               <th>Hora</th>
               <th>Serviço</th>
               <th>Status</th>
+              <th class="text-end">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -235,6 +236,16 @@ include __DIR__ . '../partials/header.php';
                   <td><?= htmlspecialchars($a['hora']) ?></td>
                   <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
                   <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
+                  <td class="text-end">
+                  <form action="cancelar_agenda.php" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>
+                  </form>
+                  <form action="remarcar_agenda.php" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-warning text-dark">Remarcar</button>
+                  </form>
+                </td>
                 </tr>
               <?php endforeach; ?>
             <?php else: ?>

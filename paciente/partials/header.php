@@ -329,7 +329,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <div id="sidebar">
   <a href="paciente_dashboard.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'paciente_dashboard.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
   <a href="servicos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'servicos.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Serviços</a>
-  <a href="agendamentos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>"><i class="bi bi-calendar-check"></i> Meus agendamentos</a>
+  <a href="agendamentos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>"><i class="bi bi-calendar-check"></i> Agendamentos</a>
 </div>
 
 <!-- Modal de Pefil -->
