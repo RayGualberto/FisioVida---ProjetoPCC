@@ -79,6 +79,11 @@ include __DIR__ . '/partials/header.php';
     }
   </style>
 </head>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0">Painel de Fisioterapeuta - FisioVida</h2>
+
+    <span class="badge text-bg-primary">Perfil: Fisioterapeuta</span>
+  </div>
 <div class="container mt-5 mb-5">
     <div class="form-card mb-5">
         <h2 class="mb-4">Adicionar Evolução do Paciente</h2>

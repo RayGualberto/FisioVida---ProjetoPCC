@@ -2,8 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/../php/db.php';
 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_POST['id'])) {
+    $id = intval($_POST['id']);
 
     try {
         $stmt = $pdo->prepare("UPDATE agenda SET status = 'confirmado' WHERE id_Agenda = ?");
@@ -14,5 +14,5 @@ if (isset($_GET['id'])) {
     }
 }
 
-header("Location: agenda.php");
+header("Location: fisio_dashboard.php");
 exit;

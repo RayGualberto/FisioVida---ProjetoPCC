@@ -2,6 +2,12 @@
 // partials/header.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../site/login.php');
+    exit;
+}
+
 // Adaptação para o banco "fisiovida"
 $userName = $_SESSION['nome'] ?? null;           
 $userRole = $_SESSION['tipo_usuario'] ?? null;
@@ -23,8 +29,6 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   <link rel="icon" href="../img/Icone fisiovida.jfif">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-  <link rel="stylesheet" href="../css/fisioterapeuta.css">
 
 <style> 
   body {

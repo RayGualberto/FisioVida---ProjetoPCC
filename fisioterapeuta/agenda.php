@@ -16,12 +16,31 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php include 'partials/header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Fisioterapeuta - FisioVida</title>
+    <style>
+        /* Conteúdo principal */
+        .main-content {
+        padding: 2rem;
+        transition: margin 0.3s ease;
+        }
+    </style>
+</head>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0">Painel de Fisioterapeuta - FisioVida</h2>
 
+    <span class="badge text-bg-primary">Perfil: Fisioterapeuta</span>
+  </div>
 <div class="main-content">
     <h2><i class="fas fa-calendar-alt"></i> Agenda de Atendimentos</h2>
 
     <div id='calendar'></div>
 </div>
+</html>
 
 <?php include 'partials/footer.php'; ?>
 
@@ -37,8 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: ''
         },
+        buttonText: {
+            today:    'Hoje',
+            month:    'Mês',
+            week:     'Semana',
+            day:      'Dia',
+            list:     'Lista'
+        },
+
         events: <?php echo json_encode($agendamentos); ?>,
         eventColor: '#007bff',
         eventDisplay: 'block',
@@ -73,4 +100,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calendar.render();
 });
+
 </script>

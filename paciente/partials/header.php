@@ -2,6 +2,12 @@
 // partials/header.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../site/login.php');
+    exit;
+}
+
 $usuarioId = $_SESSION['usuario_id'];
 $nomePaciente = $_SESSION['usuario_nome'];
 $idUsuario = $_SESSION['usuario_id'];

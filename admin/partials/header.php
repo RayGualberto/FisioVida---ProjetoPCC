@@ -2,6 +2,12 @@
 // partials/header.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../site/login.php');
+    exit;
+}
+
 // Adaptação para o banco "fisiovida"
 $userName = $_SESSION['nome'] ?? null;           
 $userRole = $_SESSION['tipo_usuario'] ?? null;

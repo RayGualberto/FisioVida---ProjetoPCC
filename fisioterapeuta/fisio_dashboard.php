@@ -55,7 +55,7 @@ include __DIR__ . '/partials/header.php';
   <link rel="icon" href="../img/Icone fisiovida.jfif">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  /* Cabeçalho */
+ /* Cabeçalho */
   h2.h4 {
     color: #000; /* TEXTO PRETO */
     font-weight: 500;
@@ -114,6 +114,7 @@ include __DIR__ . '/partials/header.php';
     }
 
     .btn {
+
       transition: all 0.3s ease;
     }
 
