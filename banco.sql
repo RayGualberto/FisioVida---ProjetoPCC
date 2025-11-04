@@ -75,7 +75,7 @@ CREATE TABLE agenda (
     data_agendamento DATE DEFAULT (CURRENT_DATE),
     hora TIME,
     descricao_servico VARCHAR(255),
-    status ENUM('pendente', 'confirmado', 'remarcado', 'recusado') DEFAULT 'pendente',
+    status ENUM('pendente', 'confirmado', 'remarcado', 'recusado','cancelado','concluido') DEFAULT 'pendente',
     paciente_id_paciente INT,
     servico_id_servico INT,
     fisioterapeuta_id INT,

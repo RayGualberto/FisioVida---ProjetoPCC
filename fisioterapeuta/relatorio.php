@@ -49,7 +49,6 @@ $concluidos = $stmtConcluidos->fetch()['total'];
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../css/fisioterapeuta.css">
 </head>
-<body>
 <div class="main-content">
     <h2>📊 Relatórios de Agendamentos</h2>
 
@@ -117,7 +116,4 @@ new Chart(ctx, {
 </script>
 
 <?php include('partials/footer.php'); ?>
-
-
-</body>
 </html>
