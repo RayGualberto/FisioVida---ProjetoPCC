@@ -106,7 +106,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endfor; ?>
         </select>
 
-        <button class="btn btn-success w-100" onclick="salvarAgendamento()" onclick="fecharFormulario()">Agendar</button>
+        <button class="btn btn-success w-100" onclick="salvarAgendamento(); fecharFormulario();">Agendar</button>
     </div>
 </div>
 
@@ -131,11 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
             right: ''
         },
         buttonText: {
-            today: 'Hoje',
-            month: 'Mês',
-            week: 'Semana',
-            day: 'Dia',
-            list: 'Lista'
+            today: 'Hoje'
         },
         
         events: <?php echo json_encode($agendamentos); ?>,
@@ -196,6 +192,7 @@ function salvarAgendamento() {
     const data = document.getElementById('dataSelecionada').value;
     const servico = document.getElementById('servico').value;
     const horario = document.getElementById('horario').value;
+    
 
     if (!data || !servico || !horario) {
         alert('Por favor, preencha todos os campos.');
