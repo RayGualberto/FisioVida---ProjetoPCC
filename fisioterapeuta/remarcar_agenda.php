@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     header('Location: fisio_dashboard.php');
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>

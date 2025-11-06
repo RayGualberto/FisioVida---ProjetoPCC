@@ -11,7 +11,7 @@ INSERT INTO servico (nome_servico, descricao_servico, status) VALUES
 ('Geriátrica', 'Geriátrica', 'Ativo'),
 ('Uroginecológica e Obstétrica', 'Uroginecológica e Obstétrica', 'Ativo'),
 ('Cardiorrespiratória', 'Cardiorrespiratória', 'Ativo'),
-('Aquática (Hidroterapia)', 'Aquática (Hidroterapia)', 'Ativo')
+('Aquática (Hidroterapia)', 'Aquática (Hidroterapia)', 'Ativo'),
 ('Quiropraxia', 'Quiropraxia', 'Ativo');
 
 -- USUÁRIOS ADMIN

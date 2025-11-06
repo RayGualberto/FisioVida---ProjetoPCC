@@ -116,3 +116,18 @@ CREATE TABLE atendimento (
     FOREIGN KEY (agenda_id) REFERENCES agenda(id_Agenda),
     FOREIGN KEY (fisioterapeuta_id) REFERENCES fisioterapeuta(id_Fisioterapeuta)
 );
+
+-- ==============================
+-- TABELA NOTIFICACAO
+-- ==============================
+
+CREATE TABLE notificacoes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  destinatario_id INT NOT NULL,
+  mensagem VARCHAR(255) NOT NULL,
+  tipo VARCHAR(50),
+  data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+  lida TINYINT(1) DEFAULT 0
+);
+
+

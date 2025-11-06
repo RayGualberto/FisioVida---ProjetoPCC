@@ -31,6 +31,26 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
 <style> 
+#contadorNotificacoes {
+  font-size: 0.7rem;
+  padding: 3px 6px;
+}
+
+#listaNotificacoes li {
+  list-style: none;
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
+}
+
+#listaNotificacoes li:last-child {
+  border-bottom: none;
+}
+
+#listaNotificacoes .nao-lida {
+  background-color: #e9f5ff;
+  font-weight: 600;
+}
+
   body {
     background-color: whitesmoke;
     min-height: 100vh;
@@ -230,6 +250,24 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             >
           </button>
         </li>
+        <!-- Ícone de notificações -->
+<li class="nav-item dropdown me-3">
+  <a class="btn position-relative" href="#" id="notificacoesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="bi bi-bell fs-5"></i>
+    <span id="contadorNotificacoes" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+      0
+    </span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificacoesDropdown" style="width: 320px; max-height: 400px; overflow-y: auto;">
+    <li class="dropdown-header text-center fw-bold">Notificações</li>
+    <div id="listaNotificacoes">
+      <li class="text-center text-muted small py-2">Carregando...</li>
+    </div>
+    <li><hr class="dropdown-divider"></li>
+    <li><button id="marcarLidas" class="dropdown-item text-center text-primary">Marcar todas como lidas</button></li>
+  </ul>
+</li>
+
       </ul>
     </div>
   </div>
@@ -288,6 +326,55 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 </div>
 
 <!-- Modal de Pefil -->
+
+<script>
+// Função para buscar notificações
+function carregarNotificacoes() {
+  fetch('../php/buscar_notificacao.php')
+    .then(res => res.json())
+    .then(data => {
+      const lista = document.getElementById('listaNotificacoes');
+      const contador = document.getElementById('contadorNotificacoes');
+      lista.innerHTML = '';
+
+      if (!data.notificacoes || data.notificacoes.length === 0) {
+        lista.innerHTML = '<li class="text-center text-muted small py-2">Nenhuma notificação</li>';
+        contador.classList.add('d-none');
+        return;
+      }
+
+      data.notificacoes.forEach(n => {
+        const li = document.createElement('li');
+        li.classList.add('dropdown-item', 'small', n.lida == 0 ? 'nao-lida' : '');
+        li.innerHTML = `
+          <div>${n.mensagem}</div>
+          <small class="text-muted">${new Date(n.data_envio).toLocaleString('pt-BR')}</small>
+        `;
+        lista.appendChild(li);
+      });
+
+      if (data.total_nao_lidas > 0) {
+        contador.textContent = data.total_nao_lidas;
+        contador.classList.remove('d-none');
+      } else {
+        contador.classList.add('d-none');
+      }
+    })
+    .catch(err => console.error('Erro ao buscar notificações:', err));
+}
+
+// Marcar todas como lidas
+document.getElementById('marcarLidas').addEventListener('click', () => {
+  fetch('../php/marcar_lida.php')
+    .then(res => res.json())
+    .then(() => carregarNotificacoes());
+});
+
+// Atualiza notificações a cada 30 segundos
+setInterval(carregarNotificacoes, 30000);
+carregarNotificacoes();
+</script>
+
 
 <script>
 const removerFotoBtn = document.getElementById('removerFotoBtn');
