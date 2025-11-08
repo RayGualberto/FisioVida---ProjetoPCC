@@ -23,7 +23,7 @@ CREATE TABLE usuario (
 -- ==============================
 CREATE TABLE paciente (
     id_paciente INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100),
+    nome VARCHAR(100),  
     telefone VARCHAR(20),
     cep VARCHAR(255),
     sexo ENUM('M','F','Outro'),
@@ -130,4 +130,16 @@ CREATE TABLE notificacoes (
   lida TINYINT(1) DEFAULT 0
 );
 
-
+CREATE TABLE perfil (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    email VARCHAR(50) UNIQUE,
+    senha VARCHAR(100),
+    cpf VARCHAR(14) UNIQUE,
+    data_nasc DATE,
+    telefone VARCHAR(20),
+    cep VARCHAR(200),
+    sexo ENUM('M','F','Outro'),
+    foto VARCHAR(255) DEFAULT '../img/imagem_perfil.JPEG',
+    tipo_usuario ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
+)
