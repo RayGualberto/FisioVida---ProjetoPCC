@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once '../php/db.php'; // Conexão com o banco
 
 // Inclusão correta do header
-include __DIR__ . '/partials/header.php'; // ajuste o caminho conforme a localização da pasta 'partials'
+include __DIR__ . '../partials/header.php'; // ajuste o caminho conforme a localização da pasta 'partials'
 
 // Garantir que a variável $nomePaciente exista
 $nomePaciente = $_SESSION['usuario_nome'] ?? 'Paciente';
@@ -27,3 +27,5 @@ $nomePaciente = $_SESSION['usuario_nome'] ?? 'Paciente';
 
     <!-- Aqui você pode adicionar cards ou outras seções do dashboard -->
 </div>
+
+<?php include __DIR__ . '/partials/footer.php'; ?>

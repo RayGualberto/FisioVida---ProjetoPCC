@@ -17,13 +17,13 @@ if (isset($_POST['id'])) {
 
         if ($agenda) {
             // Envia notificação ao paciente
-            $msg = "❌ Seu agendamento foi recusado.";
+            $msg = "❌ Sua sessão foi recusada.";
             $stmtNotif = $pdo->prepare("
                 INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo, lida)
                 VALUES (?, ?, ?, ?, 0)
             ");
             $stmtNotif->execute([
-                $_SESSION['user_id'],             // remetente
+                $_SESSION['usuario_id'],             // remetente
                 $agenda['paciente_id_paciente'],  // destinatário
                 $msg,
                 'recusado'

@@ -6,6 +6,12 @@ if (isset($_POST['id'])) {
     $id = intval($_POST['id']);
 
     try {
+        // Verifica se o usuário está logado
+        $remetente_id = $_SESSION['usuario_id'] ?? $_SESSION['id'] ?? null;
+        if (empty($remetente_id)) {
+            throw new Exception("Usuário não autenticado. ID ausente na sessão.");
+        }
+
         // Atualiza status do agendamento para confirmado
         $stmt = $pdo->prepare("UPDATE agenda SET status = 'confirmado' WHERE id_Agenda = ?");
         $stmt->execute([$id]);
@@ -17,13 +23,13 @@ if (isset($_POST['id'])) {
 
         if ($agenda) {
             // Envia notificação ao paciente
-            $msg = "✅ Seu agendamento foi confirmado.";
+            $msg = "✅ Sua sessão foi confirmada com sucesso.";
             $stmtNotif = $pdo->prepare("
                 INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo, lida)
                 VALUES (?, ?, ?, ?, 0)
             ");
             $stmtNotif->execute([
-                $_SESSION['user_id'],             // remetente
+                $remetente_id,                    // remetente
                 $agenda['paciente_id_paciente'],  // destinatário
                 $msg,
                 'aceito'
@@ -31,7 +37,7 @@ if (isset($_POST['id'])) {
         }
 
         $_SESSION['msg'] = "✅ Agendamento confirmado e notificação enviada!";
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         $_SESSION['msg'] = "⚠️ Erro ao confirmar: " . $e->getMessage();
     }
 }

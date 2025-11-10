@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     $stmtUpdate->execute([$novaData, $novaHora, $id]);
 
     $pacienteId = $agendamento['paciente_id_paciente'];
-    $msg = "📅 Seu agendamento foi remarcado para " . date('d/m/Y', strtotime($novaData)) . " às " . $novaHora . ".";
+    $msg = "📅 Sua sessão foi remarcado para " . date('d/m/Y', strtotime($novaData)) . " às " . $novaHora . ".";
     
     // Envia notificação
     $stmtNotif = $pdo->prepare("
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
         VALUES (?, ?, ?, ?, 0)
     ");
     $stmtNotif->execute([
-        $_SESSION['user_id'], // remetente
+        $_SESSION['usuario_id'], // remetente
         $pacienteId,          // destinatário
         $msg,
         'remarcado'

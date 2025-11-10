@@ -66,4 +66,7 @@ include __DIR__ . '/partials/header.php';
     </div>
 </div>
 
+<?php include __DIR__ . '/partials/footer.php'; ?>
+
 </html>
+
