@@ -6,20 +6,28 @@ if (isset($_POST['id'])) {
     $id = intval($_POST['id']);
 
     try {
-        // Atualiza status do agendamento
+        // Atualiza status do agendamento para recusado
         $stmt = $pdo->prepare("UPDATE agenda SET status = 'recusado' WHERE id_Agenda = ?");
         $stmt->execute([$id]);
 
-        // Buscar dados
+        // Buscar dados do paciente
         $stmtInfo = $pdo->prepare("SELECT paciente_id_paciente, nome_paciente FROM agenda WHERE id_Agenda = ?");
         $stmtInfo->execute([$id]);
         $agenda = $stmtInfo->fetch(PDO::FETCH_ASSOC);
 
         if ($agenda) {
             // Envia notificação ao paciente
-            $msg = "❌ Seu agendamento foi recusado pelo fisioterapeuta.";
-            $stmtNotif = $pdo->prepare("INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo, lida) VALUES (?, ?, ?, ?, 0)");
-            $stmtNotif->execute([$_SESSION['user_id'], $agenda['paciente_id_paciente'], $msg, 'recusado']);
+            $msg = "❌ Seu agendamento foi recusado.";
+            $stmtNotif = $pdo->prepare("
+                INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo, lida)
+                VALUES (?, ?, ?, ?, 0)
+            ");
+            $stmtNotif->execute([
+                $_SESSION['user_id'],             // remetente
+                $agenda['paciente_id_paciente'],  // destinatário
+                $msg,
+                'recusado'
+            ]);
         }
 
         $_SESSION['msg'] = "❌ Agendamento recusado e notificação enviada.";

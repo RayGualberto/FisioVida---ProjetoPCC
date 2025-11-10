@@ -30,7 +30,7 @@ $stmt->execute();
 $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<?php include 'partials/header.php'; ?>
+<?php include __DIR__ . '../partials/header.php' ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

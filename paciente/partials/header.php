@@ -297,13 +297,12 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             >
           </button>
         </li>
-        <!-- Ícone de notificações -->
+
+<!-- Ícone de notificações -->
 <li class="nav-item dropdown me-3">
   <a class="btn position-relative" href="#" id="notificacoesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="bi bi-bell fs-5"></i>
-    <span id="contadorNotificacoes" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
-      0
-    </span>
+    <span id="contadorNotificacoes" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
   </a>
   <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificacoesDropdown" style="width: 320px; max-height: 400px; overflow-y: auto;">
     <li class="dropdown-header text-center fw-bold">Notificações</li>
@@ -314,10 +313,6 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     <li><button id="marcarLidas" class="dropdown-item text-center text-primary">Marcar todas como lidas</button></li>
   </ul>
 </li>
-
-      </ul>
-    </div>
-  </div>
 </nav>
 
 <!-- Modal de Perfil -->
@@ -374,44 +369,44 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <!-- Modal de Pefil -->
 
 <script>
-// Função para buscar notificações
+// Função para buscar notificações do paciente
 function carregarNotificacoes() {
-  fetch('../php/buscar_notificacao.php')
+    fetch('../php/buscar_notificacao.php')
     .then(res => res.json())
     .then(data => {
-      const lista = document.getElementById('listaNotificacoes');
-      const contador = document.getElementById('contadorNotificacoes');
-      lista.innerHTML = '';
+        const lista = document.getElementById('listaNotificacoes');
+        const contador = document.getElementById('contadorNotificacoes');
+        lista.innerHTML = '';
 
-      if (!data.notificacoes || data.notificacoes.length === 0) {
-        lista.innerHTML = '<li class="text-center text-muted small py-2">Nenhuma notificação</li>';
-        contador.classList.add('d-none');
-        return;
-      }
+        if (!data.notificacoes || data.notificacoes.length === 0) {
+            lista.innerHTML = '<li class="text-center text-muted small py-2">Nenhuma notificação</li>';
+            contador.classList.add('d-none');
+            return;
+        }
 
-      data.notificacoes.forEach(n => {
-        const li = document.createElement('li');
-        li.classList.add('dropdown-item', 'small', n.lida == 0 ? 'nao-lida' : '');
-        li.innerHTML = `
-          <div>${n.mensagem}</div>
-          <small class="text-muted">${new Date(n.data_envio).toLocaleString('pt-BR')}</small>
-        `;
-        lista.appendChild(li);
-      });
+        data.notificacoes.forEach(n => {
+            const li = document.createElement('li');
+            li.classList.add('dropdown-item', 'small', n.lida == 0 ? 'nao-lida' : '');
+            li.innerHTML = `
+                <div>${n.mensagem}</div>
+                <small class="text-muted">Enviado por: ${n.remetente_nome} | ${new Date(n.data_envio).toLocaleString('pt-BR')}</small>
+            `;
+            lista.appendChild(li);
+        });
 
-      if (data.total_nao_lidas > 0) {
-        contador.textContent = data.total_nao_lidas;
-        contador.classList.remove('d-none');
-      } else {
-        contador.classList.add('d-none');
-      }
+        if (data.total_nao_lidas > 0) {
+            contador.textContent = data.total_nao_lidas;
+            contador.classList.remove('d-none');
+        } else {
+            contador.classList.add('d-none');
+        }
     })
     .catch(err => console.error('Erro ao buscar notificações:', err));
 }
 
 // Marcar todas como lidas
 document.getElementById('marcarLidas').addEventListener('click', () => {
-  fetch('../php/marcar_lida.php')
+    fetch('../php/marcar_lida.php')
     .then(res => res.json())
     .then(() => carregarNotificacoes());
 });

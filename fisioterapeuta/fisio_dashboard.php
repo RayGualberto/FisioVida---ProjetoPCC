@@ -36,6 +36,12 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <span class="badge text-bg-primary">Perfil: Fisioterapeuta</span>
   </div>
 <div class="main-content">
+    <?php if (isset($_SESSION['msg'])): ?>
+  <div class="alert alert-info">
+    <?= $_SESSION['msg']; unset($_SESSION['msg']); ?>
+  </div>
+<?php endif; ?>
+
     <h2><i class="fas fa-calendar-alt"></i> Agenda de Atendimentos</h2>
 
     <div id='calendar'></div>

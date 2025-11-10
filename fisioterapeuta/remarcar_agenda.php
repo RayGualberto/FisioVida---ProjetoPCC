@@ -1,15 +1,17 @@
 <?php
 require_once '../php/db.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
-$id = (int)($_POST['id'] ?? 0);
+$id = (int)($_POST['id'] ?? $_GET['id'] ?? 0);
 if ($id <= 0) {
     header('Location: fisio_dashboard.php');
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT nome_paciente, descricao_servico, data, hora FROM agenda WHERE id_Agenda = ?");
+// Buscar dados do agendamento
+$stmt = $pdo->prepare("SELECT nome_paciente, descricao_servico, data, hora, paciente_id_paciente FROM agenda WHERE id_Agenda = ?");
 $stmt->execute([$id]);
-$agendamento = $stmt->fetch();
+$agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$agendamento) {
     header('Location: fisio_dashboard.php');
@@ -21,13 +23,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     $novaData = $_POST['nova_data'];
     $novaHora = $_POST['nova_hora'];
 
+    // Atualiza agendamento
     $stmtUpdate = $pdo->prepare("UPDATE agenda SET data = ?, hora = ?, status = 'remarcado' WHERE id_Agenda = ?");
     $stmtUpdate->execute([$novaData, $novaHora, $id]);
 
+    $pacienteId = $agendamento['paciente_id_paciente'];
+    $msg = "📅 Seu agendamento foi remarcado para " . date('d/m/Y', strtotime($novaData)) . " às " . $novaHora . ".";
+    
+    // Envia notificação
+    $stmtNotif = $pdo->prepare("
+        INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo, lida)
+        VALUES (?, ?, ?, ?, 0)
+    ");
+    $stmtNotif->execute([
+        $_SESSION['user_id'], // remetente
+        $pacienteId,          // destinatário
+        $msg,
+        'remarcado'
+    ]);
+
+    $_SESSION['msg'] = "📅 Agendamento remarcado e notificação enviada!";
     header('Location: fisio_dashboard.php');
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -46,68 +64,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
       justify-content: center;
       align-items: center;
     }
-
     .card {
       border-radius: 12px;
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: rgba(255, 255, 255, 0.9);
       border: none;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      color: #000;
       width: 100%;
       max-width: 500px;
       padding: 2rem;
-    }
-
-    h3 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-    }
-
-    .form-control {
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.2);
-      background-color: #fff;
-      color: #000;
-    }
-
-    .form-control:focus {
-      border-color: #6b4ffc;
-      box-shadow: 0 0 5px rgba(107, 79, 252, 0.5);
-    }
-
-    .btn-warning {
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .btn-warning:hover {
-      background-color: #ffae00ff;
-      border-color: #ffae00ff;
-    }
-
-    .btn-secondary {
-      background-color: #b0b0c0;
-      border-color: #b0b0c0;
-      color: #000;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .btn-secondary:hover {
-      background-color: #9898a8;
-      border-color: #9898a8;
-      color: #000;
-    }
-
-    .text-center > .btn {
-      margin: 0 0.5rem;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h3>Remarcar Agendamento</h3>
+    <h3 class="text-center mb-4">Remarcar Agendamento</h3>
     <form method="post">
       <input type="hidden" name="id" value="<?= (int)$id ?>">
 
@@ -117,8 +87,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Tipo de Serviço</label>
+        <label class="form-label">Serviço</label>
         <input type="text" class="form-control" value="<?= htmlspecialchars($agendamento['descricao_servico']) ?>" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Data Atual</label>
+        <input type="text" class="form-control" value="<?= date('d/m/Y', strtotime($agendamento['data'])) ?>" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Hora Atual</label>
+        <input type="text" class="form-control" value="<?= htmlspecialchars($agendamento['hora']) ?>" readonly>
       </div>
 
       <div class="mb-3">
@@ -128,14 +108,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
 
       <div class="mb-3">
         <label class="form-label">Novo Horário</label>
-      <input type="time" name="nova_hora" class="form-control" required min="08:00" max="18:00" step="60"> <!-- step="900" = 15 minutos -->
-    </div>
+        <input type="time" name="nova_hora" class="form-control" required min="08:00" max="18:00" step="900">
+      </div>
+
       <div class="text-center">
-        <button type="submit" class="btn btn-warning px-4">Confirmar Remarcação</button>
+        <button type="submit" class="btn btn-warning px-4">Confirmar</button>
         <a href="fisio_dashboard.php" class="btn btn-secondary px-4">Cancelar</a>
       </div>
     </form>
   </div>
 </body>
 </html>
-

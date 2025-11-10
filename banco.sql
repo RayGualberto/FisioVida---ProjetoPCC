@@ -118,16 +118,16 @@ CREATE TABLE atendimento (
 );
 
 -- ==============================
--- TABELA NOTIFICACAO
+-- TABELA NOTIFICACAO 
 -- ==============================
-
-CREATE TABLE notificacoes (
+CREATE TABLE IF NOT EXISTS notificacoes (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  destinatario_id INT NOT NULL,
-  mensagem VARCHAR(255) NOT NULL,
-  tipo VARCHAR(50),
-  data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
-  lida TINYINT(1) DEFAULT 0
+  destinatario_id INT NOT NULL,      -- id do paciente ou usuário que receberá a notificação
+  remetente_id INT NOT NULL,         -- id do usuário que enviou a notificação (ex: fisioterapeuta)
+  mensagem VARCHAR(255) NOT NULL,    -- texto da notificação
+  tipo VARCHAR(50),                  -- tipo de notificação (ex: aceito, recusado, remarcado)
+  data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,  -- data e hora do envio
+  lida TINYINT(1) DEFAULT 0          -- 0 = não lida, 1 = lida
 );
 
 CREATE TABLE perfil (
