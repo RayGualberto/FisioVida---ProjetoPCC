@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include 'db.php';
+require_once __DIR__ . '/../php/db.php';
 
 $email = htmlspecialchars(trim($_POST['email']));
 $senha = $_POST['senha'];

@@ -16,7 +16,7 @@
     <div class="row align-items-center">
       <!-- Coluna do Formulário e textos -->
       <div class="col-lg-6 mb-4 mb-lg-0">
-        <h2 class="mb-3 text-center" style="color:#198754; font-weight: 700;">
+        <h2 class="mb-3 text-center" style="color:#0b8ecb; font-weight: 700;">
           Login de Usuário
         </h2>
         <p class="text-center">
