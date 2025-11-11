@@ -24,7 +24,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 try {
     // Consulta com PDO, agora incluindo a coluna 'foto'
-    $stmt = $pdo->prepare("SELECT id, nome, senha, tipo_usuario, foto FROM usuario WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, nome, senha, cpf, tipo_usuario, foto FROM usuario WHERE email = ?");
     $stmt->execute([$email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -50,7 +50,7 @@ try {
     $_SESSION['usuario_nome']    = $usuario['nome'];
     $_SESSION['usuario_tipo']    = $usuario['tipo_usuario'];
     $_SESSION['foto_perfil']     = $usuario['foto'] ?? '../img/imagem_perfil.JPEG';
-
+    $_SESSION['cpf']             = $usuario['cpf'];
     // Redireciona conforme tipo de usuário
     switch ($usuario['tipo_usuario']) {
         case 'paciente':

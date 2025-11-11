@@ -11,8 +11,32 @@ if (!isset($_SESSION['usuario_id'])) {
 // Adaptação para o banco "fisiovida"
 $userName = $_SESSION['nome'] ?? null;           
 $userRole = $_SESSION['tipo_usuario'] ?? null;
+$usuarioId = $_SESSION['usuario_id'];
 $idUsuario = $_SESSION['usuario_id'];
+$nomePaciente = $_SESSION['usuario_nome'];
 $fotoPerfil = $_SESSION['foto_perfil'] ?? ($usuario['foto'] ?? '../img/imagem_perfil.JPEG');
+
+try {
+  // Buscar id_paciente via CPF do usuário
+  $stmt = $pdo->prepare("
+      SELECT p.id_fisioterapeuta
+      FROM fisioterapeuta p
+      INNER JOIN usuario u ON p.cpf = u.cpf
+      WHERE u.id = ?
+      LIMIT 1
+  ");
+  $stmt->execute([$usuarioId]);
+  $id_paciente = $stmt->fetchColumn(); // Retorna apenas a primeira coluna (id_paciente)
+
+  if (!$id_paciente) {
+      throw new Exception("Paciente não encontrado para o usuário informado.");
+  }
+
+} catch (PDOException $e) {
+  die("Erro ao buscar ID do fisioterapeuta: " . $e->getMessage());
+} catch (Exception $e) {
+  die("Erro: " . $e->getMessage());
+}
 
 // Consulta os dados do usuário
 $stmt = $pdo->prepare("SELECT nome, email, cpf, data_nasc, telefone, cep, sexo, tipo_usuario

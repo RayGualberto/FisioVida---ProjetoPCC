@@ -1,5 +1,6 @@
 <?php
 require_once '../php/db.php';
+include __DIR__ . '../partials/header.php';
 
 // Parâmetros de filtro e paginação
 $page         = max(1, (int)($_GET['page'] ?? 1));
@@ -26,7 +27,6 @@ if ($statusFiltro !== '' && in_array($statusFiltro, ['pendente', 'confirmado', '
 
 $agendaWhereSql = $agendaClauses ? ('WHERE ' . implode(' AND ', $agendaClauses)) : '';
 
-
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM agenda $agendaWhereSql");
 $stmt->execute($agendaParams);
 $totalagendamentos = (int)$stmt->fetchColumn();
@@ -37,13 +37,12 @@ $offsetagendamentos = ($page - 1) * $perPage;
 $sqlagendamentos = "SELECT id_Agenda, nome_paciente, data, data_agendamento, hora, descricao_servico, status
                     FROM agenda
                     $agendaWhereSql
+                    WHERE paciente_id_paciente = '$IdUsuarioPaciente'
                     ORDER BY id_Agenda DESC
                     LIMIT $perPage OFFSET $offsetagendamentos";
 $stmt = $pdo->prepare($sqlagendamentos);
 $stmt->execute($agendaParams);
 $agenda = $stmt->fetchAll();
-
-include __DIR__ . '../partials/header.php';
 ?>
 
 <!DOCTYPE html>

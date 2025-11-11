@@ -1,27 +1,31 @@
 <?php
-
 require_once '../php/db.php';
-
+include __DIR__ . '/partials/header.php';
 // Processar envio do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $evolucao = trim($_POST['evolucao'] ?? '');
-    $assinatura = trim($_POST['assinatura'] ?? '');
+    $nomePaciente = $_SESSION['usuario_nome'];
     $data = date('Y-m-d'); // Data atual
 
-    if ($evolucao && $assinatura) {
+    if ($evolucao && $nomePaciente) {
         $stmt = $pdo->prepare("INSERT INTO prontuario (evolucao, data, assinatura) VALUES (?, ?, ?)");
-        $stmt->execute([$evolucao, $data, $assinatura]);
+        $stmt->execute([$evolucao, $data, $nomePaciente]);
         $mensagem = "Prontuário salvo com sucesso!";
     } else {
         $mensagem = "Por favor, preencha todos os campos.";
     }
 }
 
+// Seleciona o nome do fisioterapeuta Logado
+$stmtPaciente = $pdo->prepare("SELECT nome FROM fisioterapeuta WHERE id_fisioterapeuta = ?");
+$stmtPaciente->execute([$idUsuario]);
+$paciente = $stmtPaciente->fetch(PDO::FETCH_ASSOC);
+
 // Buscar registros já salvos
 $stmt = $pdo->query("SELECT * FROM prontuario ORDER BY data DESC, id_prontuario DESC");
 $prontuarios = $stmt->fetchAll();
 
-include __DIR__ . '/partials/header.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +104,7 @@ include __DIR__ . '/partials/header.php';
 
             <div class="mb-3">
                 <label for="assinatura" class="form-label">Assinatura</label>
-                <input type="text" id="assinatura" name="assinatura" class="form-control" placeholder="Assinatura do fisioterapeuta" value="<?= htmlspecialchars($_POST['assinatura'] ?? '') ?>">
+                <input type="text" id="assinatura" name="assinatura" class="form-control" placeholder="Assinatura do fisioterapeuta" value="<?= htmlspecialchars($nomePaciente)?>" disabled>
             </div>
 
             <button type="submit" class="btn btn-primary">Salvar Evolução</button>

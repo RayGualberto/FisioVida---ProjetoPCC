@@ -8,6 +8,26 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
+// obtendo o cpf do usuario logado
+$sqlCpfUsuario = "SELECT cpf FROM usuario WHERE id = :usuario_id";
+$stmt = $pdo->prepare($sqlCpfUsuario);
+// Bind do parâmetro
+$stmt->bindParam(':usuario_id', $_SESSION['usuario_id'], PDO::PARAM_INT);
+// Executa a consulta
+$stmt->execute();
+// Obtém o valor do 'cpf' diretamente
+$cpfUsuario = $stmt->fetchColumn();
+
+// obtendo o cpf do usuario logado
+$sqlIdUsuarioPaciente = "SELECT id_paciente FROM paciente WHERE cpf = :cpfUsuario";
+$stmt = $pdo->prepare($sqlIdUsuarioPaciente);
+// Bind do parâmetro
+$stmt->bindParam(':cpfUsuario', $cpfUsuario, PDO::PARAM_STR);
+// Executa a consulta
+$stmt->execute();
+// Obtém o valor do 'cpf' diretamente
+$IdUsuarioPaciente = $stmt->fetchColumn();
+
 $usuarioId = $_SESSION['usuario_id'];
 $nomePaciente = $_SESSION['usuario_nome'];
 $idUsuario = $_SESSION['usuario_id'];
