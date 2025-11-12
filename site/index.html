@@ -1,284 +1,509 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="/FisioVida/js/main.js">
+<html lang="pt-BR">
 
-</head>
-    <link rel="stylesheet" href="../css/style.css">
-    <title> Fisiovida</title>
-    <link rel="icon" href="../img/Icone fisiovida.jfif">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FisioVida</title>
+    <link rel="icon" href="../img/Fisiovida logo.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <!-- Optional: Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
+         :root {
+            --azul-base: #b3e5fc;
+            /* pedido */
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
         
+        html,
+        body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Top info bar */
+        
+        .top-info {
+            background: transparent;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+        
+        .top-info .contact-pill {
+            background: var(--azul-base);
+            color: #0b3b56;
+            border-radius: 8px;
+            padding: .35rem .9rem;
+            font-weight: 600;
+        }
+        /* Navbar */
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+        }
+        
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+        
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+        
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
+        /* Hero / Carousel */
+        
+        .hero-carousel .carousel-item {
+            min-height: 420px;
+            position: relative;
+        }
+        
+        .hero-carousel .carousel-item img.bg-img {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            filter: brightness(0.46) saturate(0.95);
+            border-radius: 16px;
+        }
+        
+        .hero-caption {
+            position: absolute;
+            left: 5%;
+            top: 12%;
+            max-width: 60%;
+            color: #fff;
+            text-shadow: 0 8px 20px rgba(2, 24, 36, 0.45);
+            border-radius: 12px;
+            padding: 18px 22px;
+            background: linear-gradient(180deg, rgba(3, 24, 56, 0.18), rgba(3, 24, 56, 0.08));
+            backdrop-filter: blur(4px);
+            transition: transform .45s ease;
+        }
+        
+        .hero-caption h1 {
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            line-height: 1.05;
+        }
+        
+        .hero-caption p {
+            color: #e9f6ff;
+        }
+        
+        .hero-buttons .btn {
+            border-radius: 999px;
+            padding: .9rem 1.6rem;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(3, 24, 56, 0.12);
+        }
+        
+        .hero-buttons .btn-primary {
+            background: linear-gradient(90deg, var(--azul-escuro), #016699);
+            border: none;
+        }
+        
+        .hero-buttons .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.16);
+            color: #fff;
+        }
+        /* Cards section */
+        
+        .banner .card {
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(2, 24, 56, 0.06);
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        
+        .banner .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(2, 24, 56, 0.09);
+        }
+        
+        .card .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--azul-escuro);
+            box-shadow: 0 8px 20px rgba(2, 24, 56, 0.06);
+        }
+        /* Promotional / text section */
+        
+        .promo h1 {
+            color: var(--azul-escuro);
+            font-weight: 800;
+        }
+        
+        .promo p {
+            color: #374151;
+        }
+        /* Testimonials / second carousel (reworked) */
+        
+        .testimonials {
+            background: linear-gradient(180deg, rgba(179, 229, 252, 0.14), rgba(255, 255, 255, 0.0));
+            padding: 48px 0;
+        }
+        
+        .testimonials .carousel-item img {
+            border-radius: 12px;
+            object-fit: cover;
+            height: 340px;
+            width: 100%;
+            box-shadow: 0 12px 30px rgba(2, 24, 56, 0.08);
+            border: 1px solid rgba(3, 24, 56, 0.03);
+        }
+        /* Remove solid bg on carousel, center captions */
+        
+        .testimonials .carousel-inner {
+            background: transparent;
+        }
+        
+        .testimonials .testimonial-caption {
+            margin-top: -80px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(2, 24, 56, 0.06);
+        }
+        /* Footer */
+        
+    /* Footer */
+    footer {
+            background: #ffffff;
+            color: #243b4a;
+        }
+
+        footer .bg-secondary {
+            background: var(--azul-escuro) !important;
+        }
+
+    footer a:hover {
+      color: var(--azul-escuro);
+    }
+
+    /* Responsividade */
+    @media (max-width: 991px) {
+      .navbar .nav-link {
+        text-align: center;
+        padding: 0.8rem 0;
+      }
+    }
+        /* Small responsive tweaks */
+        
+        @media (max-width: 991px) {
+            .hero-caption {
+                max-width: 86%;
+                top: 8%;
+                left: 6%;
+            }
+            .hero-carousel .carousel-item img.bg-img {
+                height: 420px;
+            }
+        }
+        /* Minor animations for interactive elements */
+        
+        .fade-zoom-up {
+            transform-origin: 50% 100%;
+            transition: transform .5s cubic-bezier(.2, .9, .3, 1), opacity .5s;
+        }
+        
+        .fade-zoom-up:hover {
+            transform: translateY(-6px) scale(1.01);
+        }
     </style>
 </head>
+
 <body>
-  <!-- Barra superior do site. -->
-     <div class="container-fluid bg-light ps-1 pe-0 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-md-6 text-center text-lg-start mb-0">
-                <div class="d-inline-flex align-items-center">
-                    <small class="py-2"><i class="bi bi-clock container"></i>Aberto de Segunda-feira a Sexta-feira das 8 : 00 AM até 18 : 00 PM.</small>
+
+    <!-- Top info bar -->
+    <div class="container-fluid top-info py-2 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <small><i class="bi bi-clock me-2"></i>Aberto de Segunda a Sexta das 8:00 às 18:00</small>
                 </div>
-            </div>
-            <div class="col-md-6 text-center text-lg-end">
-                <div class="position-relative d-inline-flex align-items-center bg-success text-white top-shape px-4">
-                    <div class="me-3 pe-3 border-end py-2">
-                        <p class="m-0"><i class="bi bi-envelope-at me-2"></i>fisiovidarmnf@gmail.com</p>
-                    </div>
-                    <div class="py-2">
-                        <p class="m-0"><i class="bi bi-telephone me-2"></i>+012 345 6789</p>
-                    </div>
+                <div class="col-lg-6 text-lg-end">
+                    <span class="contact-pill me-2"><i class="bi bi-envelope-at me-1"></i> fisiovidarmnf@gmail.com</span>
+                    <span class="contact-pill"><i class="bi bi-telephone me-1"></i> +012 345 6789</span>
                 </div>
             </div>
         </div>
     </div>
-  <!--fim da barra superior do site. -->
 
-  <!-- Barra de navegação do site. -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
+            </a>
 
-<nav class="navbar navbar-expand-lg bg-light sticky-xxl-top">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <!-- Logo colado à esquerda -->
-    <a href="#" class="navbar-brand">
-      <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="90">
-    </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <!-- Botão toggle para mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Menu e botões alinhados à direita -->
-    <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
-      <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center">
-        <li class="nav-item"><a href="index.html" class="nav-link active">HOME</a></li>
-        <li class="nav-item"><a href="servico.html" class="nav-link ">SERVIÇOS</a></li>
-        <li class="nav-item"><a href="sobre.html" class="nav-link">SOBRE</a></li>
-        <li class="nav-item"><a href="contato.php" class="nav-link">CONTATO</a></li>
-      </ul>
-
-      <div class="d-flex gap-2 ms-3">
-        <a href="./login.php"><button type="button" class="btn btn-outline-primary"><i class="bi bi-person-fill"></i> Login</button></a>
-      </div>
-    </div>
-  </div>
-</nav>
-
-  
-
-  <!-- Fim da barra de navegação do site. -->
-
-  <!-- Começo do carrossel. -->
-
-<div id="carouselExampleIndicators" class="carousel slide">
-  <div class="carousel-inner">
-    <div class="carousel-item active" style="background-color: rgb(26, 33, 44);">
-      <img src="../img/Imagem de fisioterapia.png" class="d-block w-100 opacity-25" alt="image">
-      <div class="carousel-caption d-flex flex-column align-items-center justify-content-center" style="position: absolute; top: 10%;">
-        <div class="p-3" style="max-width: 900px;">
-          <h5 class="text-white text-uppercase mb-3 p-1 rounded fs-2 texto-animado">FisioVida</h5>
-            <h1 class="display-5 text-white mb-md-2">Cuide da sua saúde hoje mesmo, agende sua sessão de fisioterapia online com rapidez e segurança!</h1>
-            <div class="position-relative" style="position: absolute; right: 2%;">
-            <a href="./login.php"><button type="button" class="btn btn-primary btn-lg p-3 py-md-3 px-md-5 me-3">Agendar agora</button></a>
-            <a href="./sobre.html"><button type="button" class="btn btn-secondary btn-lg p-3 py-md-3 px-md-5 me-3">Saiba mais</button></a>
+            <div class="collapse navbar-collapse" id="menunavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="servico.html">SERVIÇOS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">SOBRE</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">CONTATO</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="./login.php"><button class="btn btn-outline-primary"><i class="bi bi-person-fill me-2"></i>Login</button></a>
+                    </li>
+                </ul>
             </div>
         </div>
-      </div>
-    </div>
-    <div class="carousel-item" style="background-color: rgb(26, 33, 44);">
-      <img src="../img/Imagem de fisioterapia 2.png" class="d-block w-100 opacity-25" alt="image">
-        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center" style="position: absolute; top: 10%;">
-        <div class="p-3" style="max-width: 900px;">
-          <h5 class="text-white text-uppercase mb-3 p-1 rounded fs-2 texto-animado">FisioVida</h5>
-            <h1 class="display-5 text-white mb-md-2">Saúde e recuperação em primeiro lugar, fisioterapia profissional que você pode confiar.</h1>
-             <div class="position-relative" style="position: absolute; right: 2%;">
-            <a href="./login.php"><button type="button" class="btn btn-primary btn-lg p-3 py-md-3 px-md-5 me-3">Agendar agora</button></a>
-            <a href="./sobre.html"><button type="button" class="btn btn-secondary btn-lg p-3 py-md-3 px-md-5 me-3">Saiba mais</button></a>
+    </nav>
+
+    <!-- HERO: Carousel principal -->
+    <section class="container my-5 hero-carousel" data-aos="fade-up">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../img/Imagem de fisioterapia.png" class="bg-img d-block w-100 rounded" alt="FisioVida">
+                    <div class="hero-caption" data-aos="fade-right" data-aos-delay="200">
+                        <h5 class="text-uppercase mb-2" style="color: #eaf8ff; font-weight:700;">FisioVida</h5>
+                        <h1 class="display-6 mb-3">Cuide da sua saúde hoje mesmo — agende sua sessão com rapidez e segurança</h1>
+                        <p class="mb-3">Acompanhamento profissional, programas personalizados e atendimento humanizado.</p>
+                        <div class="hero-buttons d-flex gap-2">
+                            <a href="./login.php" class="btn btn-primary">Agendar agora</a>
+                            <a href="./sobre.html" class="btn btn-outline">Saiba mais</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img src="../img/Imagem de fisioterapia 2.png" class="bg-img d-block w-100 rounded" alt="Tratamento">
+                    <div class="hero-caption" data-aos="fade-right" data-aos-delay="200">
+                        <h5 class="text-uppercase mb-2" style="color: #eaf8ff; font-weight:700;">FisioVida</h5>
+                        <h1 class="display-6 mb-3">Saúde e recuperação em primeiro lugar — tratamentos que funcionam</h1>
+                        <p class="mb-3">Equipe experiente e tecnologia para acelerar sua reabilitação.</p>
+                        <div class="hero-buttons d-flex gap-2">
+                            <a href="./login.php" class="btn btn-primary">Agendar agora</a>
+                            <a href="./sobre.html" class="btn btn-outline">Saiba mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon rounded-circle p-3" aria-hidden="true" style="background: linear-gradient(90deg,#0a6ebd,#016699);"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon rounded-circle p-3" aria-hidden="true" style="background: linear-gradient(90deg,#0a6ebd,#016699);"></span>
+        <span class="visually-hidden">Próximo</span>
+      </button>
+        </div>
+    </section>
+
+    <!-- BANNERS / CARDS -->
+    <section class="container banner my-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gx-4 gy-4">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card p-4 h-100">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="icon"><i class="bi bi-clock fs-4"></i></div>
+                        <div>
+                            <h5>Horários de Funcionamento</h5>
+                            <p class="mb-2"><strong>Seg - Sex:</strong> 8:00 - 18:00<br><strong>Sábado:</strong> 8:00 - 17:00</p>
+                            <a class="btn btn-sm btn-outline-primary" href="./login.php">Realizar Agendamento</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card p-4 h-100">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="icon"><i class="bi bi-card-checklist fs-4"></i></div>
+                        <div>
+                            <h5>Serviços Disponíveis</h5>
+                            <p class="mb-2">Escolha o tipo de sessão que você precisa — ortopédica, neurológica, pediátrica e mais.</p>
+                            <select class="form-select mb-3" aria-label="Serviços">
+                <option selected>Selecionar tipo de serviço</option>
+                <option value="1">Ortopédica</option>
+                <option value="2">Neurológica</option>
+                <option value="3">Pediátrica</option>
+                <option value="4">Respiratória</option>
+                <option value="5">Esportiva</option>
+              </select>
+                            <a class="btn btn-sm btn-outline-primary" href="#">Conferir horários</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card p-4 h-100">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="icon"><i class="bi bi-telephone-inbound fs-4"></i></div>
+                        <div>
+                            <h5>Agende pelo Telefone</h5>
+                            <p class="mb-2">Também atendemos por ligação para agendamentos rápidos.</p>
+                            <h4 class="mt-3">+012 345 6789</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+    </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-  <!-- Fim do carrossel. -->
-
-  <!-- Começo dos banners -->
-<div class="container-fluid banner my-5">
-  <div class="container">
-    <div class="row gx-4 gy-4">
-      
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="bg-primary d-flex flex-column p-4 h-100 rounded shadow-sm">
-          <h3 class="text-white mb-3">Horários de Funcionamento</h3>
-          <div class="d-flex justify-content-between text-white mb-2">
-            <h6 class="mb-0">Seg - Sex</h6>
-            <p class="mb-0">8:00 - 18:00</p>
-          </div>
-          <div class="d-flex justify-content-between text-white mb-2">
-            <h6 class="mb-0">Sábado</h6>
-            <p class="mb-0">8:00 - 17:00</p>
-          </div>
-          <div class="d-flex justify-content-between text-white mb-4">
-            <h6 class="mb-0">Domingo</h6>
-            <p class="mb-0">8:00 - 16:00</p>
-          </div>
-          <a class="btn btn-light mt-auto" href="./login.php">Realizar Agendamento</a>
+    <!-- PROMO / SOBRE -->
+    <section class="container my-5 promo" data-aos="fade-up" data-aos-delay="150">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                <h1>FisioVida</h1>
+                <p class="fs-5">Na <strong>FisioVida</strong>, oferecemos atendimento de excelência em fisioterapia com profissionais qualificados e programas personalizados para sua recuperação.</p>
+            </div>
+            <div class="col-12 col-lg-6 text-center">
+                <img src="../img/ChatGPT Image 23 de set. de 2025, 15_28_44.png" alt="imagem" class="img-fluid rounded shadow" style="object-fit: cover; max-height:400px;">
+            </div>
         </div>
-      </div>
+    </section>
 
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="bg-dark d-flex flex-column p-4 h-100 rounded shadow-sm">
-          <h3 class="text-white mb-3">Serviços Disponíveis</h3>
-          <div class="date mb-3" id="date" data-target-input="nearest">
-            <input type="date" class="form-control bg-light border-0 datetimepicker-input"
-             placeholder="Data da Consulta" data-target="#date" data-toggle="datetimepicker" style="height: 40px;">
-          </div>
-          <select class="form-select bg-light border-0 mb-4" style="height: 40px;">
-            <option selected>Selecionar tipo de serviço</option>
-            <option value="1">Ortopédica</option>
-            <option value="2">Neurológica</option>
-            <option value="3">Pediátrica</option>
-            <option value="4">Respiratória</option>
-            <option value="5">Esportiva</option>
-            <option value="6">Geriátrica</option>
-            <option value="7">Uroginecológica e Obstétrica</option>
-            <option value="8">Cardiorrespiratória</option>
-            <option value="9">Aquática (Hidroterapia)</option>
-          </select>
-          <a class="btn btn-light mt-auto" href="">Conferir horários</a>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="bg-success d-flex flex-column p-4 h-100 rounded shadow-sm">
-          <h3 class="text-white mb-3">Agende pelo Telefone</h3>
-          <p class="text-white">Você também pode realizar o agendamento diretamente pelo nosso número de telefone.</p>
-          <h2 class="text-white mt-auto">+012 345 6789</h2>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- Fim dos banners -->
-
-  <!-- Propaganda -->
-<div class="container my-5">
-  <div class="row align-items-center">
-    
-    <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-      <h1 class="text-success mb-3">Fisiovida</h1>
-      <p class="fs-5">
-        Na <b>FisioVida</b>, oferecemos um atendimento de excelência em fisioterapia, 
-        com profissionais qualificados e dedicados à sua recuperação e bem-estar. 
-        Confiança, acolhimento e resultados reais em cada sessão. 
-        Venha para a FisioVida e sinta a diferença!
-      </p>
-    </div>
-
-    <div class="col-12 col-lg-6 text-center">
-      <img src="../img/ChatGPT Image 23 de set. de 2025, 15_28_44.png" 
-           alt="imagem" 
-           class="img-fluid rounded shadow" 
-           style="object-fit: cover; max-height: 400px;">
-    </div>
-
-  </div>
-</div>
-<!-- Fim da Propaganda -->
-
-<!-- Segundo carrossel -->
-
-    <div class="container-fluid bg-testimonial my-5">
-        <div class="container py-5">
+    <!-- TESTIMONIALS / Segundo carrossel repaginado (sem fundo sólido) -->
+    <section class="testimonials">
+        <div class="container" data-aos="fade-up" data-aos-delay="180">
             <div class="row justify-content-center">
+                <div class="col-lg-10 text-center mb-4">
+                    <h2 class="mb-3">Nosso ambiente é sempre acolhedor e confortável</h2>
+                    <p class="text-muted">A melhor experiência para pacientes de todas as idades.</p>
+                </div>
+
                 <div class="col-lg-10">
-                  <h1 class="text-center text-white py-1 fs-2 bg-danger rounded">Nosso ambiente sempre será o mais acolhedor e confortavel possivel para a melhor experiência.</h1>
-                    <div id="carouselExample" class="carousel slide">
-                      <div class="carousel-inner">
-                        <div class="carousel-item">
-                          <img src="../img/Clinica foto.png" class="d-block w-100" alt="...">
+                    <div id="testiCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="../img/Clinica foto.png" class="d-block w-100" alt="Clinica">
+                                <div class="testimonial-caption mx-auto mt-4" style="max-width:880px;">
+                                    <p class="mb-0"><strong>Ambiente acolhedor:</strong> salas amplas, iluminação natural e equipe preparada.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../img/Clinica foto 2.png" class="d-block w-100" alt="Clinica2">
+                                <div class="testimonial-caption mx-auto mt-4" style="max-width:880px;">
+                                    <p class="mb-0"><strong>Conforto e segurança:</strong> higiene rigorosa e equipamentos modernos.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../img/Fisioterapeutas na clinica.png" class="d-block w-100" alt="Equipe">
+                                <div class="testimonial-caption mx-auto mt-4" style="max-width:880px;">
+                                    <p class="mb-0"><strong>Equipe qualificada:</strong> profissionais experientes dedicados ao seu tratamento.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="carousel-item">
-                          <img src="../img/Clinica foto 2.png" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item active">
-                          <img src="../img/Fisioterapeutas na clinica.png" class="d-block w-100" alt="...">
-                        </div>
-                      </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                      </button>
-                  </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#testiCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon rounded-circle p-3" aria-hidden="true" style="background: linear-gradient(90deg,#b3e5fc,#0288d1);"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#testiCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon rounded-circle p-3" aria-hidden="true" style="background: linear-gradient(90deg,#b3e5fc,#0288d1);"></span>
+              <span class="visually-hidden">Próximo</span>
+            </button>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
+
+ <!-- Rodapé -->
+ <footer class="bg-light text-center text-lg-start mt-auto">
+    <div class="container p-4">
+      <div class="row">
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-right">
+          <h5 class="text-uppercase">Fisiovida</h5>
+          <p>
+            Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
+            Telefone: +55 12 3456-7890<br>
+            Email: fisiovidarmnf@gmail.com
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+          <h5 class="text-uppercase mb-0">Redes sociais</h5>
+          <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
+            <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-left" data-aos-delay="400">
+          <h5 class="text-uppercase">Slogan</h5>
+          <p>
+            Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
+          </p>
+        </div>
+      </div>
     </div>
+    <div class="text-center p-3 bg-secondary text-white">
+        © 2025 Fisiovida. Todos os direitos reservados.
+    </div>
+  </footer>
 
-<!-- Fim do segundo carrossel -->   
+    <!-- Bootstrap + AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
-<!-- Apartir daqui começa o Rodapé da pagina. -->
+    <script>
+        // Inicializa AOS
+        AOS.init({
+            duration: 700,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
 
-<footer class="bg-light text-center text-lg-start mt-auto">
-        <div class="container p-4">
-          <div class="row">
-            
-            <div class="col-lg-3 col-md-12 mb-4 mb-md-0">
-              <h5 class="text-uppercase">Fisiovida</h5>
-              <p>
-                Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
-                Telefone: +55 12 3456-7890<br>
-                Email: contato@fisiovida.com.br
-              </p>
-            </div>
-               
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <h5 class="text-uppercase mb-0">Redes sociais</h5>
-              <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
-                <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
-                <li><a href="#!" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
-                <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
-              </ul>
-            </div>
-            
-            <div class="col-lg-3 col-md-12 mb-4 mb-md-0">
-              <h5 class="text-uppercase">Slogan</h5>
-              <p>
-                Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
-              </p>
-            </div>
+        // Pequeno ajuste: pausa o carousel quando o usuário focar realizando interação (acessibilidade)
+        document.querySelectorAll('.carousel').forEach(car => {
+            // obtém (ou cria) a instância do Bootstrap Carousel associada ao elemento
+            const bsCarousel = bootstrap.Carousel.getInstance(car) || new bootstrap.Carousel(car);
 
-          </div>
-        </div>
-        <div class="text-center p-3 bg-secondary text-white">
-          © 2025 Fisiovida. Todos os direitos reservados.
-        </div>
-      </footer>
-<!-- Fim do Rodapé da pagina. -->
+            // pausa ao entrar com o mouse
+            car.addEventListener('mouseenter', () => {
+                bsCarousel.pause();
+            });
+
+            // retoma o ciclo ao sair do mouse
+            car.addEventListener('mouseleave', () => {
+                bsCarousel.cycle();
+            });
+        });
+    </script>
 </body>
+
 </html>

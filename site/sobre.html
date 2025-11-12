@@ -1,163 +1,265 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <title> Fisiovida</title>
-    <link rel="icon" href="../img/Icone fisiovida.jfif">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fisiovida - Sobre</title>
+  <link rel="icon" href="../img/Icone fisiovida.jfif">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- 🌟 Estilo principal (idêntico ao da página inicial) -->
+    <!-- Estilo principal (mesmo da página inicial) -->
     <style>
-        
-    </style>
+        :root {
+            --azul-base: #b3e5fc;
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .top-info {
+            background: transparent;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+
+        .top-info .contact-pill {
+            background: var(--azul-base);
+            color: #0b3b56;
+            border-radius: 8px;
+            padding: .35rem .9rem;
+            font-weight: 600;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+        }
+
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
+
+    /* Section - Sobre */
+    #sobre h1,
+    #sobre h2 {
+      color: var(--azul-escuro);
+    }
+
+    #sobre p,
+    #sobre li {
+      color: #374151;
+    }
+
+    #sobre ul li {
+      margin-bottom: .6rem;
+    }
+
+    #sobre .btn-success {
+      background: linear-gradient(90deg, var(--azul-escuro), #016699);
+      border: none;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    #sobre .btn-success:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(3, 24, 56, 0.12);
+    }
+
+    /* Footer */
+    footer {
+            background: #ffffff;
+            color: #243b4a;
+        }
+
+        footer .bg-secondary {
+            background: var(--azul-escuro) !important;
+        }
+
+    footer a:hover {
+      color: var(--azul-escuro);
+    }
+
+    /* Responsividade */
+    @media (max-width: 991px) {
+      .navbar .nav-link {
+        text-align: center;
+        padding: 0.8rem 0;
+      }
+    }
+  </style>
 </head>
+
 <body>
-     <!-- Barra superior do site. -->
-     <div class="container-fluid bg-light ps-1 pe-0 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-md-6 text-center text-lg-start mb-0">
-                <div class="d-inline-flex align-items-center">
-                    <small class="py-2"><i class="bi bi-clock container"></i>Aberto de Segunda-feira a Sexta-feira das 8 : 00 AM até 18 : 00 PM.</small>
+    <!-- Top info bar -->
+    <div class="container-fluid top-info py-2 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <small><i class="bi bi-clock me-2"></i>Aberto de Segunda a Sexta das 8:00 às 18:00</small>
                 </div>
-            </div>
-            <div class="col-md-6 text-center text-lg-end">
-                <div class="position-relative d-inline-flex align-items-center bg-success text-white top-shape px-4">
-                    <div class="me-3 pe-3 border-end py-2">
-                        <p class="m-0"><i class="bi bi-envelope-at me-2"></i>fisiovidarmnf@gmail.com</p>
-                    </div>
-                    <div class="py-2">
-                        <p class="m-0"><i class="bi bi-telephone me-2"></i>+012 345 6789</p>
-                    </div>
+                <div class="col-lg-6 text-lg-end">
+                    <span class="contact-pill me-2"><i class="bi bi-envelope-at me-1"></i> fisiovidarmnf@gmail.com</span>
+                    <span class="contact-pill"><i class="bi bi-telephone me-1"></i> +012 345 6789</span>
                 </div>
             </div>
         </div>
     </div>
-  <!--fim da barra superior do site. -->
 
-<!-- Barra de navegação do site. -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <!-- Barra de navegação do site. -->
+            <div class="collapse navbar-collapse" id="menunavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="servico.html">SERVIÇOS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">SOBRE</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">CONTATO</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="./login.php"><button class="btn btn-outline-primary"><i class="bi bi-person-fill me-2"></i>Login</button></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>  
 
-<nav class="navbar navbar-expand-lg bg-light sticky-xxl-top">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <!-- Logo colado à esquerda -->
-    <a href="index.html" class="navbar-brand">
-      <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="90">
-    </a>
-
-    <!-- Botão toggle para mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Menu e botões alinhados à direita -->
-    <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
-      <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center">
-        <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
-        <li class="nav-item"><a href="servico.html" class="nav-link ">SERVIÇOS</a></li>
-        <li class="nav-item"><a href="sobre.html" class="nav-link active">SOBRE</a></li>
-        <li class="nav-item"><a href="contato.php" class="nav-link">CONTATO</a></li>
-      </ul>
-
-      <div class="d-flex gap-2 ms-3">
-        <a href="./login.php"><button type="button" class="btn btn-outline-primary"><i class="bi bi-person-fill"></i> Login</button></a>
-      </div>
-    </div>
-  </div>
-</nav>
-
-
-<!-- Pagina do site. -->
-
-<section id="sobre" class="container my-5">
-  <div class="row justify-content-center">
+  <!-- Seção Sobre -->
+  <section id="sobre" class="container my-5">
+    <div class="row justify-content-center" data-aos="fade-up">
       <div class="col-lg-10">
-          <h1 class="text-center mb-5 display-5 fw-bold text-success">Quem Somos</h1>
+        <h1 class="text-center mb-5 display-5 fw-bold">Quem Somos</h1>
 
-          <p class="fs-5 lh-lg text-justify">
-              A <strong>Fisiovida</strong> nasceu com um propósito claro: redefinir a forma como você cuida da sua saúde. Sabemos que a fisioterapia não trata apenas de dores – ela é o caminho para você retomar sua liberdade, recuperar a confiança no próprio corpo e voltar a viver com qualidade e bem-estar.
-          </p>
+        <p class="fs-5 lh-lg text-justify">
+          A <strong>Fisiovida</strong> nasceu com um propósito claro: redefinir a forma como você cuida da sua saúde. Sabemos que a fisioterapia não trata apenas de dores – ela é o caminho para você retomar sua liberdade, recuperar a confiança no próprio corpo e voltar a viver com qualidade e bem-estar.
+        </p>
 
-          <p class="fs-5 lh-lg text-justify">
-              Criamos este espaço pensando em você. Um site simples, intuitivo e seguro, onde é possível agendar suas sessões de fisioterapia em poucos cliques, com flexibilidade e sem complicações. Acreditamos que saúde deve ser algo acessível, humano e conectado ao seu dia a dia.
-          </p>
+        <p class="fs-5 lh-lg text-justify">
+          Criamos este espaço pensando em você. Um site simples, intuitivo e seguro, onde é possível agendar suas sessões de fisioterapia em poucos cliques, com flexibilidade e sem complicações. Acreditamos que saúde deve ser algo acessível, humano e conectado ao seu dia a dia.
+        </p>
 
-          <h2 class="mt-5 mb-3 text-success h4">Atendimento com Cuidado e Empatia</h2>
-          <p class="fs-5 lh-lg text-justify">
-              Cada pessoa tem sua história, seus desafios e seu ritmo. Por isso, oferecemos um atendimento individualizado, com fisioterapeutas altamente qualificados que unem técnica, experiência e empatia. Nosso time está preparado para estar ao seu lado em cada etapa do processo de reabilitação – dos primeiros passos até a sua completa recuperação.
-          </p>
+        <h2 class="mt-5 mb-3 h4">Atendimento com Cuidado e Empatia</h2>
+        <p class="fs-5 lh-lg text-justify">
+          Cada pessoa tem sua história, seus desafios e seu ritmo. Por isso, oferecemos um atendimento individualizado, com fisioterapeutas altamente qualificados que unem técnica, experiência e empatia. Nosso time está preparado para estar ao seu lado em cada etapa do processo de reabilitação – dos primeiros passos até a sua completa recuperação.
+        </p>
 
-          <h2 class="mt-5 mb-3 text-success h4">Tecnologia a Favor da Sua Saúde</h2>
-          <p class="fs-5 lh-lg text-justify">
-              Com nossa plataforma, você pode escolher seu profissional de preferência, selecionar o melhor horário para sua rotina e realizar todo o agendamento online de forma prática e segura. Nosso sistema foi desenvolvido para facilitar, não complicar.
-          </p>
+        <h2 class="mt-5 mb-3 h4">Tecnologia a Favor da Sua Saúde</h2>
+        <p class="fs-5 lh-lg text-justify">
+          Com nossa plataforma, você pode escolher seu profissional de preferência, selecionar o melhor horário para sua rotina e realizar todo o agendamento online de forma prática e segura. Nosso sistema foi desenvolvido para facilitar, não complicar.
+        </p>
 
-          <h2 class="mt-5 mb-3 text-success h4">Missão, Visão e Valores</h2>
-          <ul class="fs-5 lh-lg">
-              <li><strong>Missão:</strong> Promover a saúde física e emocional das pessoas por meio de uma fisioterapia acessível, humanizada e de excelência.</li>
-              <li><strong>Visão:</strong> Ser referência em inovação e cuidado no agendamento e atendimento fisioterapêutico online no Brasil.</li>
-              <li><strong>Valores:</strong> Empatia, ética, compromisso, inovação, acolhimento e respeito à individualidade.</li>
-          </ul>
+        <h2 class="mt-5 mb-3 h4">Missão, Visão e Valores</h2>
+        <ul class="fs-5 lh-lg">
+          <li><strong>Missão:</strong> Promover a saúde física e emocional das pessoas por meio de uma fisioterapia acessível, humanizada e de excelência.</li>
+          <li><strong>Visão:</strong> Ser referência em inovação e cuidado no agendamento e atendimento fisioterapêutico online no Brasil.</li>
+          <li><strong>Valores:</strong> Empatia, ética, compromisso, inovação, acolhimento e respeito à individualidade.</li>
+        </ul>
 
-          <h2 class="mt-5 mb-3 text-success h4">Por que escolher a Fisiovida?</h2>
-          <ul class="fs-5 lh-lg">
-              <li>✅ Atendimento personalizado e humanizado.</li>
-              <li>✅ Profissionais qualificados e experientes.</li>
-              <li>✅ Plataforma simples, moderna e segura para agendamentos.</li>
-              <li>✅ Flexibilidade de horários para se adaptar à sua rotina.</li>
-              <li>✅ Compromisso real com sua recuperação e bem-estar.</li>
-          </ul>
+        <h2 class="mt-5 mb-3 h4">Por que escolher a Fisiovida?</h2>
+        <ul class="fs-5 lh-lg">
+          <li>✅ Atendimento personalizado e humanizado.</li>
+          <li>✅ Profissionais qualificados e experientes.</li>
+          <li>✅ Plataforma simples, moderna e segura para agendamentos.</li>
+          <li>✅ Flexibilidade de horários para se adaptar à sua rotina.</li>
+          <li>✅ Compromisso real com sua recuperação e bem-estar.</li>
+        </ul>
 
-          <div class="text-center mt-5">
-              <a href="contato.php" class="btn btn-success btn-lg px-4 py-2">
-                  Avalie-nos <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-          </div>
+        <div class="text-center mt-5" data-aos="zoom-in" data-aos-delay="200">
+          <a href="contato.php" class="btn btn-success btn-lg px-4 py-2">
+            Avalie-nos <i class="bi bi-arrow-right ms-2"></i>
+          </a>
+        </div>
       </div>
-  </div>
-</section>
+    </div>
+  </section>
 
-
-<!-- Apartir daqui começa o Rodapé da pagina. -->
-
-    <footer class="bg-light text-center text-lg-start mt-auto">
-        <div class="container p-4">
-          <div class="row">
-            
-            <div class="col-lg-3 col-md-12 mb-4 mb-md-0">
-              <h5 class="text-uppercase">Fisiovida</h5>
-              <p>
-                Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
-                Telefone: +55 12 3456-7890<br>
-                Email: fisiovidarmnf@gmail.com
-              </p>
-            </div>
-            
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <h5 class="text-uppercase mb-0">Redes sociais</h5>
-              <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
-                <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
-                <li><a href="#!" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
-                <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
-              </ul>
-            </div>
-            
-            <div class="col-lg-3 col-md-12 mb-4 mb-md-0">
-              <h5 class="text-uppercase">Slogan</h5>
-              <p>
-                Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
-              </p>
-            </div>
-
-          </div>
+  <!-- Rodapé -->
+  <footer class="bg-light text-center text-lg-start mt-auto">
+    <div class="container p-4">
+      <div class="row">
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-right">
+          <h5 class="text-uppercase">Fisiovida</h5>
+          <p>
+            Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
+            Telefone: +55 12 3456-7890<br>
+            Email: fisiovidarmnf@gmail.com
+          </p>
         </div>
-        <div class="text-center p-3 bg-secondary text-white">
-          © 2025 Fisiovida. Todos os direitos reservados.
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+          <h5 class="text-uppercase mb-0">Redes sociais</h5>
+          <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
+            <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
+          </ul>
         </div>
-      </footer>
-      
+
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-left" data-aos-delay="400">
+          <h5 class="text-uppercase">Slogan</h5>
+          <p>
+            Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center p-3 bg-secondary text-white">
+        © 2025 Fisiovida. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-out-cubic'
+    });
+  </script>
 </body>
 </html>

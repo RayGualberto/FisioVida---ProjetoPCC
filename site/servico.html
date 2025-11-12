@@ -4,234 +4,344 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <title> Fisiovida</title>
+    <title>Fisiovida</title>
     <link rel="icon" href="../img/Icone fisiovida.jfif">
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <!-- Optional: Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+
+    <!-- Estilo principal (mesmo da página inicial) -->
     <style>
-        
+        :root {
+            --azul-base: #b3e5fc;
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .top-info {
+            background: transparent;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+
+        .top-info .contact-pill {
+            background: var(--azul-base);
+            color: #0b3b56;
+            border-radius: 8px;
+            padding: .35rem .9rem;
+            font-weight: 600;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+        }
+
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
+
+        /* Serviço Cards */
+        #servicos h1 {
+            color: var(--azul-escuro);
+            font-weight: 700;
+        }
+
+        #servicos .card {
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(2, 24, 56, 0.06);
+            transition: transform .3s ease, box-shadow .3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        #servicos .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(2, 24, 56, 0.09);
+        }
+
+        #servicos h4 {
+            color: var(--azul-escuro);
+        }
+
+    /* Footer */
+    footer {
+            background: #ffffff;
+            color: #243b4a;
+        }
+
+        footer .bg-secondary {
+            background: var(--azul-escuro) !important;
+        }
+
+    footer a:hover {
+      color: var(--azul-escuro);
+    }
+
+    /* Responsividade */
+    @media (max-width: 991px) {
+      .navbar .nav-link {
+        text-align: center;
+        padding: 0.8rem 0;
+      }
+    }
     </style>
 </head>
+
 <body>
-     <!-- Barra superior do site. -->
-     <div class="container-fluid bg-light ps-1 pe-0 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-md-6 text-center text-lg-start mb-0">
-                <div class="d-inline-flex align-items-center">
-                    <small class="py-2"><i class="bi bi-clock container"></i>Aberto de Segunda-feira a Sexta-feira das 8 : 00 AM até 18 : 00 PM.</small>
+    <!-- Top info bar -->
+    <div class="container-fluid top-info py-2 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <small><i class="bi bi-clock me-2"></i>Aberto de Segunda a Sexta das 8:00 às 18:00</small>
                 </div>
-            </div>
-            <div class="col-md-6 text-center text-lg-end">
-                <div class="position-relative d-inline-flex align-items-center bg-success text-white top-shape px-4">
-                    <div class="me-3 pe-3 border-end py-2">
-                        <p class="m-0"><i class="bi bi-envelope-at me-2"></i>fisiovidarmnf@gmail.com</p>
-                    </div>
-                    <div class="py-2">
-                        <p class="m-0"><i class="bi bi-telephone me-2"></i>+012 345 6789</p>
-                    </div>
+                <div class="col-lg-6 text-lg-end">
+                    <span class="contact-pill me-2"><i class="bi bi-envelope-at me-1"></i> fisiovidarmnf@gmail.com</span>
+                    <span class="contact-pill"><i class="bi bi-telephone me-1"></i> +012 345 6789</span>
                 </div>
             </div>
         </div>
     </div>
-  <!--fim da barra superior do site. -->
 
-<!-- Barra de navegação do site. -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<nav class="navbar navbar-expand-lg bg-light sticky-xxl-top">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <!-- Logo colado à esquerda -->
-    <a href="index.html" class="navbar-brand">
-      <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="90">
-    </a>
-
-    <!-- Botão toggle para mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Menu e botões alinhados à direita -->
-    <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
-      <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center">
-        <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
-        <li class="nav-item"><a href="servico.html" class="nav-link active">SERVIÇOS</a></li>
-        <li class="nav-item"><a href="sobre.html" class="nav-link">SOBRE</a></li>
-        <li class="nav-item"><a href="contato.php" class="nav-link">CONTATO</a></li>
-      </ul>
-
-      <div class="d-flex gap-2 ms-3">
-        <a href="./login.php"><button type="button" class="btn btn-outline-primary"><i class="bi bi-person-fill"></i> Login</button></a>
-      </div>
-    </div>
-  </div>
-</nav>
-
-
-<!-- Pagina do site. -->
-
-<section id="servicos" class="container my-5">
-  <h1 class="mb-4 text-center">Nossos Serviços de Fisioterapia</h1>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Ortopédica e Traumatológica</h4>
-        <p>Tratamento de lesões musculoesqueléticas, como entorses, fraturas, tendinites e recuperação pós-cirúrgica.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Ortopédica.jpg" class="img-fluid rounded-end" alt="Fisioterapia Ortopédica">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center flex-md-row-reverse">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Neurológica</h4>
-        <p>Reabilitação de pacientes com AVC, lesões medulares, Parkinson, esclerose múltipla e outras condições neurológicas.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Neutologica.jpeg" class="img-fluid rounded-start" alt="Fisioterapia Neurológica">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Respiratória</h4>
-        <p>Tratamento para doenças pulmonares, auxílio em pós-operatório e melhoria da capacidade respiratória.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Respiratória.jpg" class="img-fluid rounded-end" alt="Fisioterapia Respiratória">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center flex-md-row-reverse">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Esportiva</h4>
-        <p>Prevenção e tratamento de lesões relacionadas à prática esportiva e exercícios físicos.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Esportiva.jpg" class="img-fluid rounded-start" alt="Fisioterapia Esportiva">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Pediátrica</h4>
-        <p>Atendimento especializado para crianças com atrasos no desenvolvimento motor e outras condições pediátricas.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Pediátrica.png" class="img-fluid rounded-end" alt="Fisioterapia Pediátrica">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center flex-md-row-reverse">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Geriátrica</h4>
-        <p>Melhora da mobilidade, equilíbrio e qualidade de vida para a população idosa.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Geriátrica.jpg" class="img-fluid rounded-start" alt="Fisioterapia Geriátrica">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Dermatofuncional</h4>
-        <p>Tratamentos estéticos e terapêuticos para pele, cicatrizes, celulite e edemas.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Dermatofuncional.jpeg" class="img-fluid rounded-end" alt="Fisioterapia Dermatofuncional">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center flex-md-row-reverse">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Uroginecológica e Obstétrica</h4>
-        <p>Tratamento de disfunções do assoalho pélvico, incontinência urinária e preparação para o parto.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Uroginecológica.png" class="img-fluid rounded-start" alt="Fisioterapia Uroginecológica">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Cardiorrespiratória</h4>
-        <p>Reabilitação após infarto, cirurgias cardíacas e doenças do coração.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Cardiorrespiratória.jpeg" class="img-fluid rounded-end" alt="Fisioterapia Cardiorrespiratória">
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-4 shadow-sm border-0 rounded-3">
-    <div class="row g-0 align-items-center flex-md-row-reverse">
-      <div class="col-md-8 p-4">
-        <h4 class="fw-bold">Fisioterapia Aquática (Hidroterapia)</h4>
-        <p>Uso da água para exercícios terapêuticos e reabilitação com menor impacto.</p>
-      </div>
-      <div class="col-md-4">
-        <img src="../img/Aquática.jpg" class="img-fluid rounded-start" alt="Fisioterapia Aquática">
-      </div>
-    </div>
-  </div>
-</section>
-
-      
-<!-- Apartir daqui começa o Rodapé da pagina. -->
-
-      <footer class="bg-light text-center text-lg-start mt-auto">
-        <div class="container p-4">
-          <div class="row">
-            
-            <div class="col-lg-3 col-md-12 mb-4 mb-md-0">
-              <h5 class="text-uppercase">Fisiovida</h5>
-              <p>
-                Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
-                Telefone: +55 12 3456-7890<br>
-                Email: contato@fisiovida.com.br
-              </p>
+            <div class="collapse navbar-collapse" id="menunavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="servico.html">SERVIÇOS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">SOBRE</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">CONTATO</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="./login.php"><button class="btn btn-outline-primary"><i class="bi bi-person-fill me-2"></i>Login</button></a>
+                    </li>
+                </ul>
             </div>
-            
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <h5 class="text-uppercase mb-0">Redes sociais</h5>
-              <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
-                <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
-                <li><a href="https://www.instagram.com/fisiovida515" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
-                <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
-              </ul>
-            </div>
-            
-            <div class="col-lg-3 col-md-12 mb-4 mb-md-0">
-              <h5 class="text-uppercase">Slogan</h5>
-              <p>
-                Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
-              </p>
-            </div>
+        </div>
+    </nav>
 
+    <!-- Conteúdo principal -->
+    <section id="servicos" class="container my-5" data-aos="fade-up">
+        <h1 class="mb-4 text-center">Nossos Serviços de Fisioterapia</h1>
+
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Ortopédica e Traumatológica</h4>
+              <p>Tratamento de lesões musculoesqueléticas, como entorses, fraturas, tendinites e recuperação pós-cirúrgica.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Ortopédica.jpg" class="img-fluid rounded-end" alt="Fisioterapia Ortopédica">
+            </div>
           </div>
         </div>
-        <div class="text-center p-3 bg-secondary text-white">
-          © 2025 Fisiovida. Todos os direitos reservados.
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center flex-md-row-reverse">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Neurológica</h4>
+              <p>Reabilitação de pacientes com AVC, lesões medulares, Parkinson, esclerose múltipla e outras condições neurológicas.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Neutologica.jpeg" class="img-fluid rounded-start" alt="Fisioterapia Neurológica">
+            </div>
+          </div>
         </div>
-      </footer>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Respiratória</h4>
+              <p>Tratamento para doenças pulmonares, auxílio em pós-operatório e melhoria da capacidade respiratória.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Respiratória.jpg" class="img-fluid rounded-end" alt="Fisioterapia Respiratória">
+            </div>
+          </div>
+        </div>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center flex-md-row-reverse">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Esportiva</h4>
+              <p>Prevenção e tratamento de lesões relacionadas à prática esportiva e exercícios físicos.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Esportiva.jpg" class="img-fluid rounded-start" alt="Fisioterapia Esportiva">
+            </div>
+          </div>
+        </div>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Pediátrica</h4>
+              <p>Atendimento especializado para crianças com atrasos no desenvolvimento motor e outras condições pediátricas.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Pediátrica.png" class="img-fluid rounded-end" alt="Fisioterapia Pediátrica">
+            </div>
+          </div>
+        </div>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center flex-md-row-reverse">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Geriátrica</h4>
+              <p>Melhora da mobilidade, equilíbrio e qualidade de vida para a população idosa.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Geriátrica.jpg" class="img-fluid rounded-start" alt="Fisioterapia Geriátrica">
+            </div>
+          </div>
+        </div>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Dermatofuncional</h4>
+              <p>Tratamentos estéticos e terapêuticos para pele, cicatrizes, celulite e edemas.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Dermatofuncional.jpeg" class="img-fluid rounded-end" alt="Fisioterapia Dermatofuncional">
+            </div>
+          </div>
+        </div>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center flex-md-row-reverse">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Uroginecológica e Obstétrica</h4>
+              <p>Tratamento de disfunções do assoalho pélvico, incontinência urinária e preparação para o parto.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Uroginecológica.png" class="img-fluid rounded-start" alt="Fisioterapia Uroginecológica">
+            </div>
+          </div>
+        </div>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Cardiorrespiratória</h4>
+              <p>Reabilitação após infarto, cirurgias cardíacas e doenças do coração.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Cardiorrespiratória.jpeg" class="img-fluid rounded-end" alt="Fisioterapia Cardiorrespiratória">
+            </div>
+          </div>
+        </div>
+      
+        <div class="card mb-4 shadow-sm border-0 rounded-3" data-aos="fade-up" data-aos-delay="10000">  
+          <div class="row g-0 align-items-center flex-md-row-reverse">
+            <div class="col-md-8 p-4">
+              <h4 class="fw-bold">Fisioterapia Aquática (Hidroterapia)</h4>
+              <p>Uso da água para exercícios terapêuticos e reabilitação com menor impacto.</p>
+            </div>
+            <div class="col-md-4">
+              <img src="../img/Aquática.jpg" class="img-fluid rounded-start" alt="Fisioterapia Aquática">
+            </div>
+          </div>
+        </div>
+      
+
+    </section>
+
+ <!-- Rodapé -->
+ <footer class="bg-light text-center text-lg-start mt-auto">
+  <div class="container p-4">
+    <div class="row">
+      <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-right">
+        <h5 class="text-uppercase">Fisiovida</h5>
+        <p>
+          Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
+          Telefone: +55 12 3456-7890<br>
+          Email: fisiovidarmnf@gmail.com
+        </p>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+        <h5 class="text-uppercase mb-0">Redes sociais</h5>
+        <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
+          <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
+          <li><a href="#!" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
+          <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-left" data-aos-delay="400">
+        <h5 class="text-uppercase">Slogan</h5>
+        <p>
+          Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="text-center p-3 bg-secondary text-white">
+      © 2025 Fisiovida. Todos os direitos reservados.
+  </div>
+</footer>
+
+    <!-- Bootstrap + AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- AOS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 3000,   // duração da animação
+        offset: 120,      // distância do topo para começar a animação
+        delay: 0,         // delay padrão (se quiser aplicar a todos)
+        once: true        // anima só na primeira vez que aparece
+      // anima só uma vez
+      });
+    </script>
 
 </body>
 </html>
