@@ -53,7 +53,6 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   <link rel="icon" href="../img/Icone fisiovida.jfif">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
 <style> 
 #contadorNotificacoes {
   font-size: 0.7rem;
@@ -75,13 +74,24 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   font-weight: 600;
 }
 
-  body {
-    background-color: whitesmoke;
-    min-height: 100vh;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
+         :root {
+            --azul-base: #b3e5fc;
+            /* pedido */
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
   /* Sidebar lateral moderna */
   #sidebar {
@@ -138,11 +148,32 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     transition: margin-left 0.3s ease;
   }
 
-  /* Navbar superior */
-  .navbar {
-    z-index: 1100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
+        /* Navbar */
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+            position: relative;
+            z-index: 2000;
+        }
+        
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+        
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+        
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
 
   /* Responsividade */
   @media (max-width: 768px) {
@@ -245,7 +276,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
 
 <!-- Navbar superior -->
-<nav class="navbar navbar-expand-md bg-light sticky-top">
+<nav class="navbar navbar-expand-lg bg-light sticky-top py-3">
   <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 55px;">
     <a href="fisio_dashboard.php" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">

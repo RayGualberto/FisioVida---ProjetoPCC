@@ -38,156 +38,45 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Estilo Global do Sistema -->
-  <style>
-    /* === ESTILO PRINCIPAL REUTILIZADO === */
-    :root {
-      --azul-base: #b3e5fc;
-      --azul-escuro: #0288d1;
-      --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
-      --glass: rgba(255, 255, 255, 0.72);
-      --muted: #6b7280;
-    }
-
-    html, body {
-      height: 100%;
-      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: var(--bg-soft);
-      color: #0f172a;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .navbar {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
-    }
-
-    .navbar .nav-link {
-      color: #0b3b56;
-      font-weight: 600;
-    }
-
-    .navbar .btn-outline-primary {
-      border-color: transparent;
-      background: transparent;
-      color: var(--azul-escuro);
-      border-radius: 30px;
-    }
-
-    .navbar .btn-outline-primary:hover {
-      background: var(--azul-base);
-      color: #033748;
-    }
-
-    h2, h3, h5 {
-      color: var(--azul-escuro);
-      font-weight: 700;
-    }
-
-    .form-control, textarea {
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(2, 24, 56, 0.04);
-      border: 1px solid rgba(3, 24, 56, 0.1);
-    }
-
-    .btn-primary {
-      background: linear-gradient(90deg, var(--azul-escuro), #016699);
-      border: none;
-      border-radius: 999px;
-      box-shadow: 0 8px 20px rgba(3, 24, 56, 0.12);
-    }
-
-    .btn-primary:hover {
-      background: var(--azul-base);
-      color: #033748;
-    }
-
-    /* Estilo das estrelas */
-    .star-rating {
-      display: flex;
-      justify-content: center;
-      flex-direction: row-reverse;
-      gap: 5px;
-    }
-    .star-rating input {
-      display: none;
-    }
-    .star-rating label {
-      font-size: 2rem;
-      color: #ccc;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .star-rating input:checked ~ label,
-    .star-rating label:hover,
-    .star-rating label:hover ~ label {
-      color: #f8c10a;
-    }
-
-    /* Cards de avaliações */
-    .avaliacoes-container {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .avaliacao-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 18px 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(2, 24, 56, 0.06);
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-
-    .avaliacao-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(2, 24, 56, 0.09);
-    }
-
-    footer {
-      background: #ffffff;
-      color: #243b4a;
-    }
-
-    footer .bg-bottom {
-      background: var(--azul-escuro);
-      color: #fff;
-    }
-
-    .fade-zoom-up {
-      transform-origin: 50% 100%;
-      transition: transform .5s cubic-bezier(.2, .9, .3, 1), opacity .5s;
-    }
-
-    .fade-zoom-up:hover {
-      transform: translateY(-6px) scale(1.01);
-    }
-  </style>
+  <!-- Link css -->
+  <link rel="stylesheet" href="../css/avaliacao.css">
 </head>
-
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-primary" href="#">
-        <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="120" height="90">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+    <!-- Top info bar -->
+    <div class="container-fluid top-info py-2 d-none d-lg-block">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <small><i class="bi bi-clock me-2"></i>Aberto de Segunda a Sexta das 8:00 às 18:00</small>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <span class="contact-pill me-2"><i class="bi bi-envelope-at me-1"></i> fisiovidarmnf@gmail.com</span>
+                    <span class="contact-pill"><i class="bi bi-telephone me-1"></i> +012 345 6789</span>
+                </div>
+            </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end" id="menuNav">
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item"><a href="index.html" class="nav-link">HOME</a></li>
-          <li class="nav-item"><a href="servico.html" class="nav-link">SERVIÇOS</a></li>
-          <li class="nav-item"><a href="sobre.html" class="nav-link">SOBRE</a></li>
-          <li class="nav-item"><a href="contato.php" class="nav-link active">CONTATO</a></li>
-        </ul>
-        <a href="./login.php" class="btn btn-outline-primary ms-3"><i class="bi bi-person-fill"></i> Login</a>
-      </div>
-    </div>
-  </nav>
+
+            <div class="collapse navbar-collapse" id="menunavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="servico.html">SERVIÇOS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">SOBRE</a></li>
+                    <li class="nav-item"><a class="nav-link" href="avaliacao.php">AVALIAÇÃO</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="./login.php"><button class="btn btn-outline-primary"><i class="bi bi-person-fill me-2"></i>Login</button></a>
+                    </li>
+                </ul>
+            </div>
+    </nav>
 
   <!-- Formulário -->
   <section class="container my-5" data-aos="fade-up">

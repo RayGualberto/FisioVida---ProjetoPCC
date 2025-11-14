@@ -1,126 +1,183 @@
-/* ==========================
-   Fisioterapeuta - Layout Responsivo
-   ========================== */
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: whitesmoke;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+#contadorNotificacoes {
+  font-size: 0.7rem;
+  padding: 3px 6px;
 }
 
-/* Conteúdo principal */
-.main-content {
-  padding: 2rem;
-  margin-left: 260px;
-  transition: margin 0.3s ease;
+#listaNotificacoes li {
+  list-style: none;
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
 }
 
-h2 {
-  font-size: 1.8rem;
-  color: #0a4a91;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+#listaNotificacoes li:last-child {
+  border-bottom: none;
 }
 
-/* Tabelas */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
+#listaNotificacoes .nao-lida {
+  background-color: #e9f5ff;
+  font-weight: 600;
 }
 
-table th, table td {
-  padding: 12px;
-  text-align: left;
-}
-
-table th {
-  background-color: #007bff;
-  color: white;
-}
-
-table tr:nth-child(even) {
-  background-color: #f5f5f5;
-}
-
-/* Responsividade */
-@media (max-width: 1024px) {
-  .main-content {
-    margin-left: 220px;
-    padding: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-    padding: 1rem;
+  body {
+    background-color: whitesmoke;
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
-  h2 {
-    font-size: 1.4rem;
-    justify-content: center;
-    text-align: center;
+  /* Sidebar lateral moderna */
+  #sidebar {
+    width: 230px;
+    background: #0b8ecb; /* azul escuro elegante */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
   }
 
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
+  #sidebar .nav-link {
+    width: 85%;
+    color: #e6e6e6;
+    padding: 12px 15px;
+    margin: 6px 0;
+    border-radius: 10px;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
   }
 
-  .btn {
+  #sidebar .nav-link i {
+    font-size: 1.2rem;
+  }
+
+  #sidebar .nav-link:hover {
+    background-color: #0078ff;
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+  }
+
+  #sidebar .nav-link.active {
+    background-color: #0078ff;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Conteúdo principal */
+  #main-content {
+    margin-left: 230px;
+    padding: 25px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+  }
+
+  /* Navbar superior */
+  .navbar {
+    z-index: 1100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    #sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      justify-content: space-around;
+      padding-top: 10px;
+    }
+
+    #sidebar .nav-link {
+      flex: 1;
+      text-align: center;
+      margin: 0 5px;
+      border-radius: 6px;
+    }
+
+    #main-content {
+      margin-left: 0;
+    }
+  }
+
+  #sidebar .nav-link:active,
+  #sidebar .nav-link:focus,
+  #sidebar .nav-link:visited {
+    font-weight: normal;
+  }
+
+ /* Modal */
+  .profile-modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
     width: 100%;
-    margin-top: 5px;
+    height: 100%;
+    background-color: rgba(0,0,0,0.45);
   }
-}
 
-/* ==============================
-   GRÁFICOS E RESUMOS
-============================== */
+  .profile-content {
+    background-color: #fff;
+    margin: 4% auto;
+    padding: 35px 45px;
+    border-radius: 18px;
+    width: 100vh;
+    max-width: 90%;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease;
+  }
 
-.chart-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+  .profile-content p {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 15px;
+  }
 
-.summary {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
+  .profile-content strong {
+    color: #004b87;
+  }
 
-.summary-card {
-  background: white;
-  padding: 1.2rem 2rem;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  flex: 1;
-  min-width: 200px;
-  max-width: 250px;
-}
+  .close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+  }
 
-.summary-card h3 {
-  margin-bottom: 0.5rem;
-  color: #2e8b57;
-}
+  .close-btn:hover { color: #000; }
 
-.summary-card p {
-  font-size: 1.6rem;
-  font-weight: bold;
-}
+  .profile-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .profile-photo img {
+    border-radius: 50%;
+    border: 3px solid #0b8ecb;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  label[for="novaFoto"] {
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }

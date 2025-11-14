@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FisioVida</title>
-    <link rel="icon" href="../img/Fisiovida logo.png">
+    <link rel="icon" href="../img/Icone fisiovida.png">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -20,237 +20,13 @@
     <!-- Optional: Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <style>
-         :root {
-            --azul-base: #b3e5fc;
-            /* pedido */
-            --azul-escuro: #0288d1;
-            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
-            --glass: rgba(255, 255, 255, 0.72);
-            --muted: #6b7280;
-        }
-        
-        html,
-        body {
-            height: 100%;
-            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            background: var(--bg-soft);
-            color: #0f172a;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        /* Top info bar */
-        
-        .top-info {
-            background: transparent;
-            color: var(--muted);
-            font-size: .92rem;
-        }
-        
-        .top-info .contact-pill {
-            background: var(--azul-base);
-            color: #0b3b56;
-            border-radius: 8px;
-            padding: .35rem .9rem;
-            font-weight: 600;
-        }
-        /* Navbar */
-        
-        .navbar {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(6px);
-            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
-        }
-        
-        .navbar .nav-link {
-            color: #0b3b56;
-            font-weight: 600;
-        }
-        
-        .navbar .btn-outline-primary {
-            border-color: transparent;
-            background: transparent;
-            color: var(--azul-escuro);
-            border-radius: 30px;
-        }
-        
-        .navbar .btn-outline-primary:hover {
-            background: var(--azul-base);
-            color: #033748;
-        }
-        /* Hero / Carousel */
-        
-        .hero-carousel .carousel-item {
-            min-height: 420px;
-            position: relative;
-        }
-        
-        .hero-carousel .carousel-item img.bg-img {
-            width: 100%;
-            height: 520px;
-            object-fit: cover;
-            filter: brightness(0.46) saturate(0.95);
-            border-radius: 16px;
-        }
-        
-        .hero-caption {
-            position: absolute;
-            left: 5%;
-            top: 12%;
-            max-width: 60%;
-            color: #fff;
-            text-shadow: 0 8px 20px rgba(2, 24, 36, 0.45);
-            border-radius: 12px;
-            padding: 18px 22px;
-            background: linear-gradient(180deg, rgba(3, 24, 56, 0.18), rgba(3, 24, 56, 0.08));
-            backdrop-filter: blur(4px);
-            transition: transform .45s ease;
-        }
-        
-        .hero-caption h1 {
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.5px;
-            line-height: 1.05;
-        }
-        
-        .hero-caption p {
-            color: #e9f6ff;
-        }
-        
-        .hero-buttons .btn {
-            border-radius: 999px;
-            padding: .9rem 1.6rem;
-            font-weight: 600;
-            box-shadow: 0 8px 20px rgba(3, 24, 56, 0.12);
-        }
-        
-        .hero-buttons .btn-primary {
-            background: linear-gradient(90deg, var(--azul-escuro), #016699);
-            border: none;
-        }
-        
-        .hero-buttons .btn-outline {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.16);
-            color: #fff;
-        }
-        /* Cards section */
-        
-        .banner .card {
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(2, 24, 56, 0.06);
-            transition: transform .3s ease, box-shadow .3s ease;
-        }
-        
-        .banner .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 40px rgba(2, 24, 56, 0.09);
-        }
-        
-        .card .icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.85);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            color: var(--azul-escuro);
-            box-shadow: 0 8px 20px rgba(2, 24, 56, 0.06);
-        }
-        /* Promotional / text section */
-        
-        .promo h1 {
-            color: var(--azul-escuro);
-            font-weight: 800;
-        }
-        
-        .promo p {
-            color: #374151;
-        }
-        /* Testimonials / second carousel (reworked) */
-        
-        .testimonials {
-            background: linear-gradient(180deg, rgba(179, 229, 252, 0.14), rgba(255, 255, 255, 0.0));
-            padding: 48px 0;
-        }
-        
-        .testimonials .carousel-item img {
-            border-radius: 12px;
-            object-fit: cover;
-            height: 340px;
-            width: 100%;
-            box-shadow: 0 12px 30px rgba(2, 24, 56, 0.08);
-            border: 1px solid rgba(3, 24, 56, 0.03);
-        }
-        /* Remove solid bg on carousel, center captions */
-        
-        .testimonials .carousel-inner {
-            background: transparent;
-        }
-        
-        .testimonials .testimonial-caption {
-            margin-top: -80px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-            padding: 18px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(2, 24, 56, 0.06);
-        }
-        /* Footer */
-        
-    /* Footer */
-    footer {
-            background: #ffffff;
-            color: #243b4a;
-        }
-
-        footer .bg-secondary {
-            background: var(--azul-escuro) !important;
-        }
-
-    footer a:hover {
-      color: var(--azul-escuro);
-    }
-
-    /* Responsividade */
-    @media (max-width: 991px) {
-      .navbar .nav-link {
-        text-align: center;
-        padding: 0.8rem 0;
-      }
-    }
-        /* Small responsive tweaks */
-        
-        @media (max-width: 991px) {
-            .hero-caption {
-                max-width: 86%;
-                top: 8%;
-                left: 6%;
-            }
-            .hero-carousel .carousel-item img.bg-img {
-                height: 420px;
-            }
-        }
-        /* Minor animations for interactive elements */
-        
-        .fade-zoom-up {
-            transform-origin: 50% 100%;
-            transition: transform .5s cubic-bezier(.2, .9, .3, 1), opacity .5s;
-        }
-        
-        .fade-zoom-up:hover {
-            transform: translateY(-6px) scale(1.01);
-        }
-    </style>
+    <!-- Link css -->
+    <link rel="stylesheet" href="../css/index.css">
 </head>
-
 <body>
 
     <!-- Top info bar -->
     <div class="container-fluid top-info py-2 d-none d-lg-block">
-        <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <small><i class="bi bi-clock me-2"></i>Aberto de Segunda a Sexta das 8:00 às 18:00</small>
@@ -260,12 +36,10 @@
                     <span class="contact-pill"><i class="bi bi-telephone me-1"></i> +012 345 6789</span>
                 </div>
             </div>
-        </div>
     </div>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
-        <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
             </a>
@@ -279,13 +53,12 @@
                     <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
                     <li class="nav-item"><a class="nav-link" href="servico.html">SERVIÇOS</a></li>
                     <li class="nav-item"><a class="nav-link" href="sobre.html">SOBRE</a></li>
-                    <li class="nav-item"><a class="nav-link" href="avaliacao.php">CONTATO</a></li>
+                    <li class="nav-item"><a class="nav-link" href="avaliacao.php">AVALIAÇÃO</a></li>
                     <li class="nav-item ms-lg-3">
                         <a href="./login.php"><button class="btn btn-outline-primary"><i class="bi bi-person-fill me-2"></i>Login</button></a>
                     </li>
                 </ul>
             </div>
-        </div>
     </nav>
 
     <!-- HERO: Carousel principal -->

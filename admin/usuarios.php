@@ -81,7 +81,7 @@ include __DIR__ . '/partials/header.php';
     .btn-paciente { background-color: #198754; }
     .btn-fisio { background-color: #0dcaf0; }
     .btn-novo { background-color: #0d6efd; }
-    .btn-novofisio { background-color: #a80df0ff; }
+    .btn-novofisio { background-color: #08306dff; }
 
     .table thead {
       background-color: #f8f9fa;

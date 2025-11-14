@@ -70,8 +70,70 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   <link rel="icon" href="../img/Icone fisiovida.jfif">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
 <style> 
+           :root {
+            --azul-base: #b3e5fc;
+            /* pedido */
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+            }
+        
+            html,
+            body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            }
+        /* Top info bar */
+        
+        .top-info {
+            background: #b3e5fc;
+            background: var(--bg-soft);
+            color: var(--muted);
+            font-size: .92rem;
+            position: relative;
+            z-index: 2000;
+        }
+        
+        .top-info .contact-pill {
+            background: var(--azul-base);
+            color: #0b3b56;
+            border-radius: 8px;
+            padding: .35rem .9rem;
+            font-weight: 600;
+        }
+        /* Navbar */
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+            position: relative;
+            z-index: 2000;
+        }
+        
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+        
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+        
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
+
 #contadorNotificacoes {
   font-size: 0.7rem;
   padding: 3px 6px;
@@ -92,18 +154,11 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   font-weight: 600;
 }
 
-  body {
-    background-color: whitesmoke;
-    min-height: 100vh;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
 
   /* Sidebar lateral moderna */
   #sidebar {
     width: 230px;
-    background: #0b8ecb; /* azul escuro elegante */
+    background: #0b8ecb;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -113,7 +168,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     flex-direction: column;
     align-items: center;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+    z-index: 900;
     padding-top: 140px;
   }
 
@@ -154,12 +209,6 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     padding: 25px;
     min-height: 100vh;
     transition: margin-left 0.3s ease;
-  }
-
-  /* Navbar superior */
-  .navbar {
-    z-index: 1100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
   /* Responsividade */
@@ -209,7 +258,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     margin: 4% auto;
     padding: 35px 45px;
     border-radius: 18px;
-    width: 100vh;
+    width: 50vh;
     max-width: 90%;
     box-shadow: 0 5px 25px rgba(0,0,0,0.3);
     animation: fadeIn 0.3s ease;
@@ -257,38 +306,40 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+      /* Footer */
+    footer {
+            background: #ffffff;
+            color: #243b4a;
+        }
+
+        footer .bg-secondary {
+            background: var(--azul-escuro) !important;
+        }
+
+    footer a:hover {
+      color: var(--azul-escuro);
+    }
 </style>
-
 </head>
-
 <body>
-
-<!-- Barra superior -->
-<div class="container-fluid bg-light ps-1 pe-0 d-none d-lg-block sticky-top">
-  <div class="row gx-0">
-    <div class="col-md-6 text-center text-lg-start mb-0">
-      <div class="d-inline-flex align-items-center">
-        <small class="py-2"><i class="bi bi-clock container"></i> Aberto de Segunda a Sexta, das 08:00 às 18:00.</small>
-      </div>
+   <!-- Top info bar -->
+    <div class="container-fluid top-info py-2 d-none d-lg-block">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <small><i class="bi bi-clock me-2"></i>Aberto de Segunda a Sexta das 8:00 às 18:00</small>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <span class="contact-pill me-2"><i class="bi bi-envelope-at me-1"></i> fisiovidarmnf@gmail.com</span>
+                    <span class="contact-pill"><i class="bi bi-telephone me-1"></i> +012 345 6789</span>
+                </div>
+            </div>
     </div>
-    <div class="col-md-6 text-center text-lg-end">
-      <div class="position-relative d-inline-flex align-items-center bg-success text-white top-shape px-4">
-        <div class="me-3 pe-3 border-end py-2">
-          <p class="m-0"><i class="bi bi-envelope-at me-2"></i>fisiovidarmnf@gmail.com</p>
-        </div>
-        <div class="py-2">
-          <p class="m-0"><i class="bi bi-telephone me-2"></i>+012 345 6789</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Navbar superior -->
-<nav class="navbar navbar-expand-md bg-light sticky-top">
-  <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 55px;">
+<nav class="navbar navbar-expand-md bg-light sticky-top py-3">
+  <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 61px;">
     <a href="paciente_dashboard.php" class="navbar-brand">
-      <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">
+      <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">

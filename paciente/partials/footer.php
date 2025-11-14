@@ -1,7 +1,70 @@
   </div>
 <div aria-live="polite" aria-atomic="true" class="position-relative">
-  <div id="toastArea" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1080;"></div>
+  <div id="toastArea" class="toast-container position-fixed top-0 end-0 p-3"></div>
 </div>
+ <!-- Rodapé -->
+ <footer class="bg-light text-center text-lg-start mt-auto">
+    <div class="container p-4">
+      <div class="row">
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-right">
+          <h5 class="text-uppercase">Fisiovida</h5>
+          <p>
+            Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
+            Telefone: +55 12 3456-7890<br>
+            Email: fisiovidarmnf@gmail.com
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+          <h5 class="text-uppercase mb-0">Redes sociais</h5>
+          <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
+            <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-left" data-aos-delay="400">
+          <h5 class="text-uppercase">Slogan</h5>
+          <p>
+            Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center p-3 bg-secondary text-white">
+        © 2025 Fisiovida. Todos os direitos reservados.
+    </div>
+  </footer>
+
+      <!-- Bootstrap + AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        // Inicializa AOS
+        AOS.init({
+            duration: 700,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+
+        // Pequeno ajuste: pausa o carousel quando o usuário focar realizando interação (acessibilidade)
+        document.querySelectorAll('.carousel').forEach(car => {
+            // obtém (ou cria) a instância do Bootstrap Carousel associada ao elemento
+            const bsCarousel = bootstrap.Carousel.getInstance(car) || new bootstrap.Carousel(car);
+
+            // pausa ao entrar com o mouse
+            car.addEventListener('mouseenter', () => {
+                bsCarousel.pause();
+            });
+
+            // retoma o ciclo ao sair do mouse
+            car.addEventListener('mouseleave', () => {
+                bsCarousel.cycle();
+            });
+        });
+    </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // Função para aplicar o tema

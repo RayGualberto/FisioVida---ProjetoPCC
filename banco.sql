@@ -129,17 +129,3 @@ CREATE TABLE IF NOT EXISTS notificacoes (
   data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,  -- data e hora do envio
   lida TINYINT(1) DEFAULT 0          -- 0 = não lida, 1 = lida
 );
-
-CREATE TABLE perfil (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100),
-    email VARCHAR(50) UNIQUE,
-    senha VARCHAR(100),
-    cpf VARCHAR(14) UNIQUE,
-    data_nasc DATE,
-    telefone VARCHAR(20),
-    cep VARCHAR(200),
-    sexo ENUM('M','F','Outro'),
-    foto VARCHAR(255) DEFAULT '../img/imagem_perfil.JPEG',
-    tipo_usuario ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
-)

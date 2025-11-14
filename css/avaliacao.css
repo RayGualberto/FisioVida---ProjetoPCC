@@ -1,0 +1,144 @@
+         :root {
+            --azul-base: #b3e5fc;
+            /* pedido */
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Top info bar */
+        
+        .top-info {
+            background: transparent;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+        
+        .top-info .contact-pill {
+            background: var(--azul-base);
+            color: #0b3b56;
+            border-radius: 8px;
+            padding: .35rem .9rem;
+            font-weight: 600;
+        }
+        /* Navbar */
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+        }
+        .navbar-nav {
+            margin-right: 5vh !important; /* ajuste aqui */
+        }
+
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+        
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+        
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
+
+    h2, h3, h5 {
+      color: var(--azul-escuro);
+      font-weight: 700;
+    }
+
+    .form-control, textarea {
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(2, 24, 56, 0.04);
+      border: 1px solid rgba(3, 24, 56, 0.1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--azul-escuro), #016699);
+      border: none;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(3, 24, 56, 0.12);
+    }
+
+    .btn-primary:hover {
+      background: var(--azul-base);
+      color: #033748;
+    }
+
+    /* Estilo das estrelas */
+    .star-rating {
+      display: flex;
+      justify-content: center;
+      flex-direction: row-reverse;
+      gap: 5px;
+    }
+    .star-rating input {
+      display: none;
+    }
+    .star-rating label {
+      font-size: 2rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #f8c10a;
+    }
+
+    /* Cards de avaliações */
+    .avaliacoes-container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .avaliacao-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(2, 24, 56, 0.06);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .avaliacao-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(2, 24, 56, 0.09);
+    }
+
+    footer {
+      background: #ffffff;
+      color: #243b4a;
+    }
+
+    footer .bg-bottom {
+      background: var(--azul-escuro);
+      color: #fff;
+    }
+
+    .fade-zoom-up {
+      transform-origin: 50% 100%;
+      transition: transform .5s cubic-bezier(.2, .9, .3, 1), opacity .5s;
+    }
+
+    .fade-zoom-up:hover {
+      transform: translateY(-6px) scale(1.01);
+    }

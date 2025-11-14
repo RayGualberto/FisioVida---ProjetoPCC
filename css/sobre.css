@@ -1,0 +1,107 @@
+        :root {
+            --azul-base: #b3e5fc;
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Top info bar */
+        
+        .top-info {
+            background: transparent;
+            color: var(--muted);
+            font-size: .92rem;
+        }
+        
+        .top-info .contact-pill {
+            background: var(--azul-base);
+            color: #0b3b56;
+            border-radius: 8px;
+            padding: .35rem .9rem;
+            font-weight: 600;
+        }
+        /* Navbar */
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+        }
+        .navbar-nav {
+            margin-right: 5vh !important; /* ajuste aqui */
+        }
+
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+        
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+        
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
+
+    /* Section - Sobre */
+    #sobre h1,
+    #sobre h2 {
+      color: var(--azul-escuro);
+    }
+
+    #sobre p,
+    #sobre li {
+      color: #374151;
+    }
+
+    #sobre ul li {
+      margin-bottom: .6rem;
+    }
+
+    #sobre .btn-success {
+      background: linear-gradient(90deg, var(--azul-escuro), #016699);
+      border: none;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    #sobre .btn-success:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(3, 24, 56, 0.12);
+    }
+
+    /* Footer */
+    footer {
+            background: #ffffff;
+            color: #243b4a;
+        }
+
+        footer .bg-secondary {
+            background: var(--azul-escuro) !important;
+        }
+
+    footer a:hover {
+      color: var(--azul-escuro);
+    }
+
+    /* Responsividade */
+    @media (max-width: 991px) {
+      .navbar .nav-link {
+        text-align: center;
+        padding: 0.8rem 0;
+      }
+    }
