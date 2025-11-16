@@ -225,9 +225,6 @@ $(document).ready(function() {
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   
   <!-- Flatpickr JS -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="/FisioVida/js/main.js"></script>
-
 </body>
 
 <!-- Modal de erro -->

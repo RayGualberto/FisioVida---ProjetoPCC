@@ -1,10 +1,11 @@
 <?php
+session_start();
 include 'db.php';
 
 // Recebe os dados do formulário com filtro para evitar XSS
 $nome = htmlspecialchars(trim($_POST['nome']));
 $email = htmlspecialchars(trim($_POST['email']));
-$senha = $_POST['senha']; // será tratada depois
+$senha = $_POST['senha'];
 $telefone = htmlspecialchars(trim($_POST['telefone']));
 $cep = htmlspecialchars(trim($_POST['cep']));
 $cpf = htmlspecialchars(trim($_POST['cpf']));
@@ -13,24 +14,23 @@ $data_nasc = htmlspecialchars(trim($_POST['data_nasc']));
 
 // Validações básicas
 if (empty($nome) || empty($email) || empty($senha) || empty($cpf) || empty($sexo) || empty($data_nasc)) {
-    echo "<script>
-            alert('Por favor, preencha todos os campos obrigatórios.');
-            window.history.back();
-          </script>";
+    $_SESSION['msg'] = "Por favor, preencha todos os campos obrigatórios.";
+    $_SESSION['msg_tipo'] = "erro";
+    header("Location: ../site/cadastro.php");
     exit;
 }
+
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo "<script>
-            alert('Email inválido.');
-            window.history.back();
-          </script>";
+    $_SESSION['msg'] = "Email inválido.";
+    $_SESSION['msg_tipo'] = "erro";
+    header("Location: ../site/cadastro.php");
     exit;
 }
+
 if (strlen($senha) < 6) {
-    echo "<script>
-            alert('A senha deve ter pelo menos 6 caracteres.');
-            window.history.back();
-          </script>";
+    $_SESSION['msg'] = "A senha deve ter pelo menos 6 caracteres.";
+    $_SESSION['msg_tipo'] = "erro";
+    header("Location: ../site/cadastro.php");
     exit;
 }
 
@@ -40,42 +40,40 @@ try {
     $stmt_check->execute([$email, $cpf]);
 
     if ($stmt_check->rowCount() > 0) {
-        echo "<script>
-            alert('Este e-mail ou CPF já está cadastrado.');
-            window.history.back();
-          </script>";
+        $_SESSION['msg'] = "Este e-mail ou CPF já está cadastrado.";
+        $_SESSION['msg_tipo'] = "erro";
+        header("Location: ../site/cadastro.php");
         exit;
     }
 
     // Criptografar senha
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
     $tipo_usuario = 'paciente';
-    $fotoPadrao = "../img/imagem_perfil.JPEG"; // FOTO PADRÃO
+    $fotoPadrao = "../img/imagem_perfil.JPEG";
 
-    // Iniciar transação
     $pdo->beginTransaction();
 
-    // Inserir usuário com foto padrão
-    $stmt1 = $pdo->prepare("INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, sexo, foto, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $pdo->prepare("INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, sexo, foto, tipo_usuario)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt1->execute([$nome, $email, $senhaHash, $cpf, $data_nasc, $telefone, $cep, $sexo, $fotoPadrao, $tipo_usuario]);
 
-    // Pega o ID do usuário recém-criado
-    $id = $pdo->lastInsertId();
-
-    // Inserir paciente
     $stmt2 = $pdo->prepare("INSERT INTO paciente (nome, telefone, cep, sexo, cpf) VALUES (?, ?, ?, ?, ?)");
     $stmt2->execute([$nome, $telefone, $cep, $sexo, $cpf]);
 
-    // Commit
     $pdo->commit();
 
-    // Redirecionar para login
+    // 🔥 AQUI: mensagem para aparecer na página de login
+    $_SESSION['msg'] = "Cadastro realizado com sucesso!";
+    $_SESSION['msg_tipo'] = "sucesso";
+
     header("Location: ../site/login.php");
-    exit();
+    exit;
 
 } catch (PDOException $e) {
-    // Rollback se algo falhar
     $pdo->rollBack();
-    die("Erro no cadastro: " . $e->getMessage());
+    $_SESSION['msg'] = "Erro no cadastro: " . $e->getMessage();
+    $_SESSION['msg_tipo'] = "erro";
+    header("Location: ../site/cadastro.php");
+    exit;
 }
 ?>

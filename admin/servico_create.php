@@ -1,6 +1,6 @@
 <?php
 require_once '../php/db.php'; // conexão $pdo
-
+session_start();
 $errors = [];
 $nome_servico = $descricao_servico = '';
 $status = 'Ativo';
@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare('INSERT INTO servico (nome_servico, descricao_servico, status) VALUES (?, ?, ?)');
             $stmt->execute([$nome_servico, $descricao_servico, $status]);
             $pdo->commit();
+            $_SESSION['msg'] = "Serviço criado com sucesso!";
+            $_SESSION['msg_tipo'] = "sucesso";
             header('Location: servicos.php');
             exit;
         } catch (PDOException $e) {
@@ -32,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 include __DIR__ . '/partials/header.php';
 ?>
 

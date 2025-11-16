@@ -8,9 +8,15 @@ if (isset($_POST['id'])) {
     try {
         $stmt = $pdo->prepare("UPDATE agenda SET status = 'recusado' WHERE id_Agenda = ?");
         $stmt->execute([$id]);
-        $_SESSION['msg'] = "❌ Agendamento recusado com sucesso.";
+
+        // 🔥 Mensagem vermelha
+        $_SESSION['msg'] = "Sessão cancelada!";
+        $_SESSION['msg_tipo'] = "erro";
+
     } catch (PDOException $e) {
+
         $_SESSION['msg'] = "⚠️ Erro ao recusar: " . $e->getMessage();
+        $_SESSION['msg_tipo'] = "erro"; // mantém vermelho também
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 require_once '../php/db.php'; // mantém o caminho original conforme sua preferência
-
+session_start();
 // Inserção no banco de dados
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome      = trim($_POST['nome'] ?? '');
@@ -13,6 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO avaliacao (nome_paciente, telefone, email, avaliacao) VALUES (?, ?, ?, ?)");
         $stmt->execute([$nome, $telefone, $email, "Nota: $rating ⭐ - $mensagem"]);
     }
+    // 🔥 AQUI: mensagem para aparecer na página de login
+    $_SESSION['msg'] = "Agradeçemos sua avaliação!!";
+    $_SESSION['msg_tipo'] = "sucesso";
 }
 
 // Buscar avaliações existentes
@@ -169,5 +172,18 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <script>
     AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
   </script>
+     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="../js/notificacoes.js"></script>
+
+  <?php if (!empty($_SESSION['msg'])): ?>
+  <script>
+  mostrarMensagem("<?= $_SESSION['msg'] ?>", "<?= $_SESSION['msg_tipo'] ?>" === "sucesso");
+  </script>
+  <?php 
+  unset($_SESSION['msg']);
+  unset($_SESSION['msg_tipo']);
+  endif;
+  ?>
 </body>
 </html>

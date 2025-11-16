@@ -87,5 +87,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="../js/notificacoes.js"></script>
+
+  <?php if (!empty($_SESSION['msg'])): ?>
+  <script>
+  mostrarMensagem("<?= $_SESSION['msg'] ?>", "<?= $_SESSION['msg_tipo'] ?>" === "sucesso");
+  </script>
+  <?php 
+  unset($_SESSION['msg']);
+  unset($_SESSION['msg_tipo']);
+  endif;
+  ?>
 </body>
 </html>
