@@ -56,10 +56,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
   <title>Remarcar Agendamento</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
+                 :root {
+            --azul-base: #b3e5fc;
+            /* pedido */
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            
+        }
     body {
       margin: 0;
       padding: 0;
-      background-color: whitesmoke;
       min-height: 100vh;
       display: flex;
       justify-content: center;
