@@ -1,5 +1,6 @@
 <?php
 require_once '../php/db.php';
+include __DIR__ . '../partials/header.php';
 
 // Parâmetros de filtro e paginação
 $page         = max(1, (int)($_GET['page'] ?? 1));
@@ -42,8 +43,6 @@ $sqlagendamentos = "SELECT id_Agenda, nome_paciente, data, data_agendamento, hor
 $stmt = $pdo->prepare($sqlagendamentos);
 $stmt->execute($agendaParams);
 $agenda = $stmt->fetchAll();
-
-include __DIR__ . '../partials/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -237,7 +236,14 @@ include __DIR__ . '../partials/header.php';
                   <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
                   <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
                   <td class="text-end">
-                    <a class="btn btn-sm btn-outline-warning text-dark" href="agenda_edit.php?id=<?= (int)$a['id_Agenda'] ?>">Remarcar</a>
+                  <form action="recusar_agenda.php" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Recusar</button>
+                  </form>
+                  <form action="remarcar_agenda.php" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-warning text-dark">Remarcar</button>
+                  </form>
                     <form action="agenda_delete.php" method="post" class="d-inline" onsubmit="return confirm('Deseja excluir este agendamento?');">
                       <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
                       <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>

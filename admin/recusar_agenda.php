@@ -14,7 +14,6 @@ if (isset($_POST['id'])) {
         $stmtInfo = $pdo->prepare("SELECT paciente_id_paciente, nome_paciente FROM agenda WHERE id_Agenda = ?");
         $stmtInfo->execute([$id]);
         $agenda = $stmtInfo->fetch(PDO::FETCH_ASSOC);
-
         if ($agenda) {
             // Envia notificação ao paciente
             $msg = "❌ Sua sessão foi recusada.";
@@ -37,5 +36,5 @@ if (isset($_POST['id'])) {
     }
 }
 
-header("Location: agenda.php");
+header("Location: agendamentos.php");
 exit;

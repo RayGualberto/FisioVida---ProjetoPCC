@@ -1,6 +1,6 @@
 <?php
+session_start();
 require_once '../php/db.php'; // conexão $pdo
-
 $errors = [];
 $nome = $email = $tipo_usuario = $cpf = $telefone = $cep = $sexo = $data_nasc = '';
 
@@ -58,7 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $pdo->commit();
-
+            $_SESSION['msg'] = "Úsuario cadastrado com sucesso!";
+            $_SESSION['msg_tipo'] = "sucesso";
             header('Location: usuarios.php');
             exit;
         } catch (PDOException $e) {
@@ -71,8 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
-
 include __DIR__ . '/partials/header.php';
 ?>
 <!DOCTYPE html>

@@ -1,5 +1,6 @@
 <?php
 require_once '../php/db.php';
+include __DIR__ . '../partials/header.php';
 
 // Parâmetros de filtro e paginação
 $tipoFiltro   = $_GET['tipo'] ?? '';
@@ -43,8 +44,6 @@ $sqlServicos = "SELECT id_servico, nome_servico, descricao_servico, status
 $stmt = $pdo->prepare($sqlServicos);
 $stmt->execute($servParams);
 $servicos = $stmt->fetchAll();
-
-include __DIR__ . '../partials/header.php';
 ?>
 
 <!DOCTYPE html>

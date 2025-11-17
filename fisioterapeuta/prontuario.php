@@ -10,7 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($evolucao && $nomePaciente) {
         $stmt = $pdo->prepare("INSERT INTO prontuario (evolucao, data, assinatura) VALUES (?, ?, ?)");
         $stmt->execute([$evolucao, $data, $nomePaciente]);
-        $mensagem = "Prontuário salvo com sucesso!";
+        $_SESSION['msg'] = "Prontuário salvo com sucesso!";
+        $_SESSION['msg_tipo'] = "sucesso";
     } else {
         $mensagem = "Por favor, preencha todos os campos.";
     }

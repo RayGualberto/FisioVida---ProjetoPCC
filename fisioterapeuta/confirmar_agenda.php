@@ -36,11 +36,12 @@ if (isset($_POST['id'])) {
             ]);
         }
 
-        $_SESSION['msg'] = "✅ Agendamento confirmado e notificação enviada!";
+        $_SESSION['msg'] = "Sessão confirmada com sucesso!";
+        $_SESSION['msg_tipo'] = "sucesso";
     } catch (Exception $e) {
         $_SESSION['msg'] = "⚠️ Erro ao confirmar: " . $e->getMessage();
     }
 }
 
-header("Location: fisio_dashboard.php");
+header("Location: agenda.php");
 exit;

@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 $id = (int)($_POST['id'] ?? $_GET['id'] ?? 0);
 if ($id <= 0) {
-    header('Location: fisio_dashboard.php');
+    header('Location: agendamentos.php');
     exit;
 }
 
@@ -14,7 +14,7 @@ $stmt->execute([$id]);
 $agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$agendamento) {
-    header('Location: fisio_dashboard.php');
+    header('Location: agendamentos.php');
     exit;
 }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
 
         $_SESSION['msg'] = "Sessão remarcada com sucesso!";
         $_SESSION['msg_tipo'] = "sucesso";
-    header('Location: agenda.php');
+    header('Location: agendamentos.php');
     exit;
 }
 ?>
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
 
       <div class="text-center">
         <button type="submit" class="btn btn-warning px-4">Confirmar</button>
-        <a href="fisio_dashboard.php" class="btn btn-secondary px-4">Cancelar</a>
+        <a href="agendamentos.php" class="btn btn-secondary px-4">Cancelar</a>
       </div>
     </form>
   </div>

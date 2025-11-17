@@ -1,6 +1,6 @@
 <?php
 require_once '../php/db.php';
-
+session_start();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: servicos.php');
     exit;
@@ -36,7 +36,8 @@ try {
     $stmt->execute([$id]);
 
     $pdo->commit();
-
+    $_SESSION['msg'] = "Serviço excluído com sucesso!";
+    $_SESSION['msg_tipo'] = "erro";
 } catch (PDOException $e) {
     $pdo->rollBack();
     die('Erro ao excluir serviço: ' . $e->getMessage());
