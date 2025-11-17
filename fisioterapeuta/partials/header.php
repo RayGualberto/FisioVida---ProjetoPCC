@@ -53,6 +53,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   <link rel="icon" href="../img/Icone fisiovida.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 <style> 
 #contadorNotificacoes {
   font-size: 0.7rem;
@@ -276,7 +277,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
 
 <!-- Navbar superior -->
-<nav class="navbar navbar-expand-lg bg-light sticky-top py-3">
+<nav class="navbar navbar-expand-md bg-light sticky-top py-3" data-aos="fade-down" data-aos-delay="150">
   <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 55px;">
     <a href="fisio_dashboard.php" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">
@@ -289,12 +290,13 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
       <ul class="navbar-nav ms-auto d-flex align-items-center">
         <li class="nav-item me-2">
-          <a class="btn btn-outline-danger btn-sm" href="../php/logout.php">Sair</a>
+          <a class="btn btn-outline-danger btn-sm" href="../php/logout.php" data-aos="fade-left" data-aos-delay="300">Sair</a>
         </li>
 
         <!-- Ícone de perfil com a foto do usuário -->
         <li class="nav-item">
-          <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil">
+        <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil" 
+        data-aos="zoom-in" data-aos-delay="350">
             <img 
               src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? ($usuario['foto'] ?? '../img/imagem_perfil.JPEG')); ?>" 
               alt="Foto de perfil" 
@@ -307,7 +309,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         </li>
         <!-- Ícone de notificações -->
 <li class="nav-item dropdown me-3">
-  <a class="btn position-relative" href="#" id="notificacoesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<a class="btn position-relative" href="#" id="notificacoesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-aos="zoom-in" data-aos-delay="400">
     <i class="bi bi-bell fs-5"></i>
     <span id="contadorNotificacoes" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
       0
@@ -372,11 +374,11 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 </div>
 
 <!-- Sidebar lateral -->
-<div id="sidebar">
-  <a href="fisio_dashboard.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'fisio_dashboard.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
-  <a href="prontuario.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Prontuários</a>
-  <a href="agenda.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agenda.php') ? 'active' : ''; ?>"><i class="bi bi-calendar3"></i> Agendamentos</a>
-  <a href="relatorio.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'relatorio.php') ? 'active' : ''; ?>"><i class="bi bi-bar-chart"></i> Relatórios</a>
+<div id="sidebar" data-aos="fade-right" data-aos-delay="200">
+  <a href="fisio_dashboard.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="250" <?php echo (basename($_SERVER['PHP_SELF']) == 'fisio_dashboard.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
+  <a href="prontuario.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="300" <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Prontuários</a>
+  <a href="agenda.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="350" <?php echo (basename($_SERVER['PHP_SELF']) == 'agenda.php') ? 'active' : ''; ?>"><i class="bi bi-calendar3"></i> Agendamentos</a>
+  <a href="relatorio.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="400" <?php echo (basename($_SERVER['PHP_SELF']) == 'relatorio.php') ? 'active' : ''; ?>"><i class="bi bi-bar-chart"></i> Relatórios</a>
 
 </div>
 
@@ -500,6 +502,10 @@ window.addEventListener('click', (e) => {
     if (e.target === modal) modal.style.display = 'none';
 });
 
+</script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
 </script>
 
 <!-- Conteúdo principal -->

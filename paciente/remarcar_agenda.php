@@ -4,7 +4,7 @@ session_start();
 
 $id = (int)($_POST['id'] ?? 0);
 if ($id <= 0) {
-    header('Location: fisio_dashboard.php');
+    header('Location: agendamentos.php');
     exit;
 }
 
@@ -13,7 +13,7 @@ $stmt->execute([$id]);
 $agendamento = $stmt->fetch();
 
 if (!$agendamento) {
-    header('Location: fisio_dashboard.php');
+    header('Location: agendamentos.php');
     exit;
 }
 
@@ -91,22 +91,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     }
 
     .btn-warning {
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .btn-warning:hover {
-      background-color: #ffae00ff;
-      border-color: #ffae00ff;
-    }
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: #000 !important;
+}
+.btn-warning:hover {
+  background-color: #ffae00ff;
+  border-color: #ffae00ff;
+  color: #000 !important;
+}
 
     .btn-secondary {
-      background-color: #b0b0c0;
-      border-color: #b0b0c0;
-      color: #000;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
+  background-color: #b0b0c0;
+  border-color: #b0b0c0;
+  color: #000 !important;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
 
     .btn-secondary:hover {
       background-color: #9898a8;
@@ -141,13 +142,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Novo Horário</label>
-      <input type="time" name="nova_hora" class="form-control" required min="08:00" max="18:00" step="60"> <!-- step="900" = 15 minutos -->
-    </div>
-      <div class="text-center">
-        <button type="submit" class="btn btn-warning px-4">Confirmar Remarcação</button>
-        <a href="agendamentos.php" class="btn btn-secondary px-4">Cancelar</a>
-      </div>
+    <label class="form-label">Novo Horário</label>
+    <input type="time" name="nova_hora" class="form-control" required min="08:00" max="18:00" step="60">
+</div>
+<div class="text-center">
+    <button type="submit" class="btn btn-warning px-4">Confirmar Remarcação</button>
+    <a href="agendamentos.php" class="btn btn-secondary px-4">Cancelar</a>
+</div>
     </form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -163,6 +164,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
   unset($_SESSION['msg_tipo']);
   endif;
   ?>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Animação principal do card
+    gsap.from(".card", {
+        duration: 0.8,
+        opacity: 0,
+        y: 40,
+        ease: "power2.out"
+    });
+
+    // Título "Remarcar Agendamento"
+    gsap.from("h3", {
+        duration: 0.9,
+        opacity: 0,
+        y: -20,
+        delay: 0.2,
+        ease: "power2.out"
+    });
+
+    // Campos do formulário (inputs)
+    gsap.from(".form-control", {
+        duration: 0.6,
+        opacity: 0,
+        y: 20,
+        stagger: 0.12,
+        delay: 0.3,
+        ease: "power2.out"
+    });
+});
+</script>
 </body>
 </html>
 

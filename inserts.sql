@@ -28,6 +28,6 @@ VALUES
 ('Miguel', 'M', '00199288445', 'admin2@gmail.com', '123456');
 
 -- FISIOTERAPEUTAS (EXEMPLOS)
-INSERT INTO fisioterapeuta (id_fisioterapeuta, nome, telefone, endereco, cpf, registro_crefito, especialidade) VALUES
+INSERT INTO fisioterapeuta (nome, telefone, endereco, cpf, registro_crefito, especialidade) VALUES
 ('Mariana Costa', '11987654321', 'Rua das Flores, 120 - São Paulo/SP', '12345678900', 'CREFITO-001', 'Neurológica'),
 ('Pedro Almeida', '21998765432', 'Av. Atlântica, 450 - Rio de Janeiro/RJ', '23456789011', 'CREFITO-002', 'Pediátrica');

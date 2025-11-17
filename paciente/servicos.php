@@ -20,13 +20,15 @@ include __DIR__ . '/partials/header.php';
         }
     </style>
 </head>
-    <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Serviços - FisioVida</h2>
 
-    <span class="badge text-bg-primary">Perfil: paciente</span>
-  </div>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0" data-aos="fade-right">Serviços - FisioVida</h2>
+
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: paciente</span>
+</div>
+
 <div class="container">
-    <h2 class="text-center mb-5">Nossos Serviços</h2>
+    <h2 class="text-center mb-5" data-aos="zoom-in">Nossos Serviços</h2>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
 
@@ -35,7 +37,7 @@ include __DIR__ . '/partials/header.php';
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
       ?>
 
-      <div class="col">
+      <div class="col" data-aos="fade-up" data-aos-delay="100">
 
         <?php if ($row['status'] === 'Ativo'): ?>
             <!-- SERVIÇO ATIVO → CLICÁVEL -->
@@ -69,4 +71,3 @@ include __DIR__ . '/partials/header.php';
 <?php include __DIR__ . '/partials/footer.php'; ?>
 
 </html>
-

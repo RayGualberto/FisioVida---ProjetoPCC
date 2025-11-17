@@ -29,6 +29,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   <link rel="icon" href="../img/Icone fisiovida.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 
 <style> 
            :root {
@@ -234,7 +235,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
 
 <!-- Navbar superior -->
-<nav class="navbar navbar-expand-md bg-light sticky-top py-3">
+<nav class="navbar navbar-expand-md bg-light sticky-top py-3" data-aos="fade-down" data-aos-delay="150">
   <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 61px;">
     <a href="admin.php" class="navbar-brand">
       <img src="../img/Fisiovida logo.png" alt="imagemfisiovida" width="120" height="78">
@@ -247,12 +248,13 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
       <ul class="navbar-nav ms-auto d-flex align-items-center">
         <li class="nav-item me-2">
-          <a class="btn btn-outline-danger btn-sm" href="../php/logout.php">Sair</a>
+        <a class="btn btn-outline-danger btn-sm" href="../php/logout.php" data-aos="fade-left" data-aos-delay="300">Sair</a>
         </li>
 
         <!-- Ícone de perfil com a foto do usuário -->
         <li class="nav-item">
-          <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil">
+        <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil" 
+        data-aos="zoom-in" data-aos-delay="350">
             <img 
               src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? ($usuario['foto'] ?? '../img/imagem_perfil.JPEG')); ?>" 
               alt="Foto de perfil" 
@@ -313,11 +315,11 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <!-- Sidebar lateral -->
 <div id="sidebar">
-  <a href="admin.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'admin.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
-  <a href="servicos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'servicos.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Serviços</a>
-  <a href="agendamentos.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>"><i class="bi bi-calendar-check"></i> Agendamentos</a>
-  <a href="usuarios.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'usuarios.php') ? 'active' : ''; ?>"><i class="bi bi-people"></i> Usuários</a>
-  <a href="prontuario.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>"><i class="bi bi-clipboard"></i> Prontuários</a>
+  <a href="admin.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="250" <?php echo (basename($_SERVER['PHP_SELF']) == 'admin.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
+  <a href="servicos.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="300" <?php echo (basename($_SERVER['PHP_SELF']) == 'servicos.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Serviços</a>
+  <a href="agendamentos.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="350" <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>"><i class="bi bi-calendar-check"></i> Agendamentos</a>
+  <a href="usuarios.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="400" <?php echo (basename($_SERVER['PHP_SELF']) == 'usuarios.php') ? 'active' : ''; ?>"><i class="bi bi-people"></i> Usuários</a>
+  <a href="prontuario.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="450" <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>"><i class="bi bi-clipboard"></i> Prontuários</a>
 </div>
 
 <!-- Modal de Pefil -->
@@ -392,7 +394,10 @@ window.addEventListener('click', (e) => {
 });
 
 </script>
-
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
+</script>
 <!-- Conteúdo principal -->
 <div id="main-content">
   <!-- Aqui vai todo o seu conteúdo -->

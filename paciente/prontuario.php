@@ -1,12 +1,11 @@
 <?php
-
 require_once '../php/db.php';
 
 // Processar envio do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $evolucao = trim($_POST['evolucao'] ?? '');
     $assinatura = trim($_POST['assinatura'] ?? '');
-    $data = date('Y-m-d'); // Data atual
+    $data = date('Y-m-d');
 
     if ($evolucao && $assinatura) {
         $stmt = $pdo->prepare("INSERT INTO prontuario (evolucao, data, assinatura) VALUES (?, ?, ?)");
@@ -30,12 +29,10 @@ include __DIR__ . '../partials/header.php';
   <meta charset="UTF-8">
   <title>Painel Administrativo - FisioVida</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    .container {
-      max-width: 1200px;
-    }
 
-    /* Cards de formulário */
+  <style>
+    .container { max-width: 1200px; }
+
     .form-card {
       background: #fff;
       border-radius: 12px;
@@ -43,11 +40,8 @@ include __DIR__ . '../partials/header.php';
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       transition: transform 0.2s;
     }
-    .form-card:hover {
-      transform: translateY(-5px);
-    }
+    .form-card:hover { transform: translateY(-5px); }
 
-    /* Cards de prontuário */
     .prontuario-card {
       background: #ffffffcc;
       border-radius: 12px;
@@ -60,29 +54,32 @@ include __DIR__ . '../partials/header.php';
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
-    h2, h5 {
-      color: #000000ff;
-    }
+    h2, h5 { color: #000000ff; }
   </style>
 </head>
-  <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Prontuários - FisioVida</h2>
 
-    <span class="badge text-bg-primary">Perfil: Paciente</span>
-  </div>
+<!-- CABEÇALHO -->
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel de Prontuários - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Paciente</span>
+</div>
+
 <div class="container mt-5 mb-5">
-    <div class="form-card mb-5">
-        <h2 class="mb-4 text-center">Sua Evolução</h2>
+
+    <!-- CARD DO FORMULÁRIO -->
+    <div class="form-card mb-5" data-aos="zoom-in">
+        <h2 class="mb-4 text-center" data-aos="fade-up">Sua Evolução</h2>
 
         <?php if(!empty($mensagem)) : ?>
-            <div class="alert alert-info"><?= htmlspecialchars($mensagem) ?></div>
+            <div class="alert alert-info" data-aos="fade-down"><?= htmlspecialchars($mensagem) ?></div>
         <?php endif; ?>
     </div>
 
+    <!-- LISTA DE PRONTUÁRIOS -->
     <div class="row g-4">
         <?php if($prontuarios): ?>
             <?php foreach($prontuarios as $p): ?>
-                <div class="col-lg-6 col-md-12">
+                <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="100">
                     <div class="prontuario-card">
                         <h5 class="mb-2">Data: <?= date('d/m/Y', strtotime($p['data'])) ?></h5>
                         <p class="mb-2"><strong>Evolução:</strong> <?= nl2br(htmlspecialchars($p['evolucao'])) ?></p>
@@ -90,16 +87,15 @@ include __DIR__ . '../partials/header.php';
                     </div>
                 </div>
             <?php endforeach; ?>
+
         <?php else: ?>
-            <div class="col-12">
+            <div class="col-12" data-aos="fade-up">
                 <p class="text-center text-white">Nenhum prontuário registrado ainda.</p>
             </div>
         <?php endif; ?>
     </div>
+
 </div>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
-
-
-
-
+</html>
