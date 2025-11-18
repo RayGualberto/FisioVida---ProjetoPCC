@@ -24,54 +24,53 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 25px;
+    padding: 35px; /* antes: 25px */
 }
 
 /* --- AUMENTO DE ESPAÇAMENTO PRINCIPAL --- */
 .auth-container {
     background: white;
-    padding: 50px 40px;       /* antes: 40px */
-    border-radius: 12px;
+    padding: 65px 50px;     /* antes: 50px 40px */
+    border-radius: 14px;    
     width: 100%;
-    max-width: 420px;         /* levemente maior */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    max-width: 440px;       /* um pouco maior */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.28);
 }
 
-/* --- ESPAÇO ENTRE A LOGO E O RESTANTE --- */
+/* --- LOGO COM MAIS RESPIRO --- */
 .logo {
     text-align: center;
-    margin-bottom: 35px;      /* antes menor */
+    margin-bottom: 45px;  /* antes: 35px */
 }
 
 .logo img {
     display: block;
-    margin: 0 auto 18px auto; /* centralizada + espaço abaixo */
+    margin: 0 auto 25px auto; /* antes: 18px */
 }
 
 .logo h1 {
-    margin-top: 8px;
-    font-size: 24px;
+    margin-top: 10px;
+    font-size: 26px;
 }
 
-/* --- FORMULÁRIO COM MAIS ESPAÇOS --- */
+/* --- FORMULÁRIO COM GRANDE ESPAÇAMENTO --- */
 .form-group {
-    margin-bottom: 25px;      /* antes: 20px */
+    margin-bottom: 32px;   /* antes: 25px */
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin-bottom: 12px;   /* antes: 10px */
+    font-size: 15px;
 }
 
-/* campo */
 .form-control {
     width: 100%;
-    padding: 14px 15px;       /* antes: 12px */
+    padding: 16px 18px;    /* antes: 14px */
     background: white;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    font-size: 15px;
+    border: 1px solid #d0d0d0;
+    border-radius: 7px;
+    font-size: 16px;
 }
 
 .form-control:focus {
@@ -79,17 +78,18 @@ body {
     border-color: var(--azul-escuro);
 }
 
-/* --- BOTÃO MAIOR E MAIS ESPAÇADO --- */
+/* --- BOTÃO MAIS ALTO --- */
 .btn {
     width: 100%;
-    padding: 14px;            /* antes: 12px */
+    padding: 16px;         /* antes: 14px */
     background-color: #0288d1;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 7px;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 10px;         /* separação do campo */
+    margin-top: 18px;      /* antes: 10px */
+    font-size: 16px;
 }
 
 .btn:hover {
@@ -98,11 +98,11 @@ body {
     color: white;
 }
 
-/* --- LINKS --- */
+/* --- LINKS MAIS DISTANTES --- */
 .auth-links {
-    margin-top: 30px;         /* antes: 20px */
+    margin-top: 40px;      /* antes: 30px */
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .auth-links a {
@@ -110,16 +110,12 @@ body {
     text-decoration: none;
 }
 
-.auth-links a:hover {
-    text-decoration: underline;
-}
-
-/* --- NOTIFICAÇÃO --- */
+/* --- MENSAGENS --- */
 .notification {
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 25px;      /* mais espaçamento */
-    font-size: 14px;
+    padding: 18px;         /* antes: 15px */
+    border-radius: 6px;
+    margin-bottom: 32px;   /* antes: 25px */
+    font-size: 15px;
 }
 
 .error {

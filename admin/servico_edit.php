@@ -154,8 +154,8 @@ label.form-label {
 </style>
 </head>
 <div class="d-flex align-items-center justify-content-between mb-4">
-  <h2 class="h4 mb-0">Editar Serviço #<?= (int)$servico['id_servico'] ?></h2>
-  <a class="btn btn-outline-primary btn-sm" href="servicos.php">Voltar</a>
+  <h2 class="h4 mb-0" data-aos="fade-right">Editar Serviço #<?= (int)$servico['id_servico'] ?></h2>
+  <a class="btn btn-outline-primary btn-sm" href="servicos.php" data-aos="fade-left">Voltar</a>
 </div>
 
 <?php if ($errors): ?>
@@ -166,19 +166,19 @@ label.form-label {
   </div>
 <?php endif; ?>
 
-<form method="post" class="card mb-5">
+<form method="post" class="card mb-5" data-aos="zoom-in">
   <div class="row g-4">
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="zoom-in" data-aos-delay="400">
       <label class="form-label">Nome do Serviço</label>
       <input type="text" name="nome_servico" class="form-control" value="<?= htmlspecialchars($nome_servico) ?>" required>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="zoom-in" data-aos-delay="500">
       <label class="form-label">Descrição</label>
       <input type="text" name="descricao_servico" class="form-control" value="<?= htmlspecialchars($descricao_servico) ?>" required>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3" data-aos="zoom-in" data-aos-delay="600">
       <label class="form-label">Status</label>
       <select name="status" class="form-select" required>
         <option value="Ativo" <?= $status==='Ativo'?'selected':''; ?>>Ativo</option>

@@ -252,7 +252,6 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.45);
-    padding-top: 41px;
   }
 
   .profile-content {
@@ -260,7 +259,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     margin: 4% auto;
     padding: 35px 45px;
     border-radius: 18px;
-    width: 50vh;
+    width: 100vh;
     max-width: 90%;
     box-shadow: 0 5px 25px rgba(0,0,0,0.3);
     animation: fadeIn 0.3s ease;
@@ -308,19 +307,6 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-      /* Footer */
-    footer {
-            background: #ffffff;
-            color: #243b4a;
-        }
-
-        footer .bg-secondary {
-            background: var(--azul-escuro) !important;
-        }
-
-    footer a:hover {
-      color: var(--azul-escuro);
-    }
 </style>
 </head>
 <body>

@@ -47,16 +47,16 @@ include __DIR__ . '/partials/header.php';
 }
 
 </style>
-  <div class="d-flex align-items-center justify-content-between mb-3">
-  <h2 class="h4 mb-0">Painel de Administrador - FisioVida</h2>
-  <span class="badge text-bg-primary">Perfil: Adiministrador</span>
-</div>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel Inicial - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Adiministrador</span>
+  </div>
 
 <div class="container mt-4">
   <div class="row g-4">
 
     <!-- Serviços -->
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
       <div class="card border-primary mb-3" style="min-height: 180px;">
         <div class="card-header text-white" style="background-color: #0078ff;">Serviços na Clínica</div>
         <div class="card-body">
@@ -67,7 +67,7 @@ include __DIR__ . '/partials/header.php';
     </div>
 
     <!-- Agendamentos -->
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
       <div class="card border-success mb-3" style="min-height: 180px;">
         <div class="card-header text-white" style="background-color: #28a745;">Agendamentos</div>
         <div class="card-body">
@@ -78,7 +78,7 @@ include __DIR__ . '/partials/header.php';
     </div>
 
     <!-- Pacientes -->
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
       <div class="card border-info mb-3" style="min-height: 180px;">
         <div class="card-header text-white" style="background-color: #17a2b8;">Pacientes</div>
         <div class="card-body">
@@ -89,7 +89,7 @@ include __DIR__ . '/partials/header.php';
     </div>
 
     <!-- Fisioterapeutas -->
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
       <div class="card border-warning mb-3" style="min-height: 180px;">
         <div class="card-header text-dark" style="background-color: #ffc107;">Fisioterapeutas</div>
         <div class="card-body">
@@ -100,7 +100,7 @@ include __DIR__ . '/partials/header.php';
     </div>
 
     <!-- Usuários -->
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
       <div class="card border-danger mb-3" style="min-height: 180px;">
         <div class="card-header text-white" style="background-color: #dc3545;">Usuários</div>
         <div class="card-body">
@@ -121,7 +121,7 @@ include __DIR__ . '/partials/header.php';
     const updateCount = () => {
       const target = +counter.getAttribute('data-target');
       const count = +counter.innerText;
-      const increment = target / 800; // animação mais lenta
+      const increment = target / 800;
 
       if(count < target) {
         counter.innerText = Math.ceil(count + increment);

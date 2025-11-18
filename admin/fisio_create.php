@@ -200,8 +200,8 @@ $(document).ready(function(){
 </script>
 </head>
 <div class="d-flex align-items-center justify-content-between mb-4">
-    <h2 class="h4 mb-0">Novo Fisioterapeuta</h2>
-    <a class="btn btn-outline-primary btn-sm" href="usuarios.php">Voltar</a>
+    <h2 class="h4 mb-0" data-aos="fade-right">Novo Fisioterapeuta</h2>
+    <a class="btn btn-outline-primary btn-sm" href="usuarios.php" data-aos="fade-left">Voltar</a>
 </div>
 
 <?php if ($errors): ?>
@@ -212,29 +212,29 @@ $(document).ready(function(){
     </div>
 <?php endif; ?>
 
-<form method="post" class="card shadow-sm p-4" style="border-radius: 15px;">
+<form method="post" class="card shadow-sm p-4" style="border-radius: 15px;" data-aos="zoom-in">
     <div class="row g-3">
-        <div class="col-md-6">
+        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="400">
             <label class="form-label fw-semibold">Nome</label>
             <input type="text" name="first_name" class="form-control form-control-lg" value="<?= htmlspecialchars($nome) ?>" required>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="500">
             <label class="form-label fw-semibold">E-mail</label>
             <input type="email" name="email" class="form-control form-control-lg" value="<?= htmlspecialchars($email) ?>" required>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="zoom-in" data-aos-delay="600">
             <label class="form-label fw-semibold">CPF</label>
             <input type="text" name="cpf" id="cpf" class="form-control form-control-lg" value="<?= htmlspecialchars($cpf) ?>" required>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="zoom-in" data-aos-delay="700">
             <label class="form-label fw-semibold">Telefone</label>
             <input type="text" name="telefone" id="telefone" class="form-control form-control-lg" value="<?= htmlspecialchars($telefone) ?>" required>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="zoom-in" data-aos-delay="800">
             <label class="form-label fw-semibold">CEP / Endereço</label>
             <input type="text" name="cep" id="cep" class="form-control form-control-lg" value="<?= htmlspecialchars($cep) ?>" required>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="zoom-in" data-aos-delay="900">
             <label class="form-label fw-semibold">Sexo</label>
             <select name="sexo" class="form-select form-select-lg" required>
                 <option value="" disabled <?= $sexo === '' ? 'selected' : '' ?>>Selecione...</option>
@@ -243,19 +243,19 @@ $(document).ready(function(){
                 <option value="Outro" <?= $sexo === 'Outro' ? 'selected' : '' ?>>Outro</option>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="zoom-in" data-aos-delay="1000">
             <label class="form-label fw-semibold">Data de Nascimento</label>
             <input type="date" name="data_nasc" class="form-control form-control-lg" value="<?= htmlspecialchars($data_nasc) ?>" required>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="zoom-in" data-aos-delay="1100">
             <label class="form-label fw-semibold">Senha</label>
             <input type="password" name="password" class="form-control form-control-lg" required>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="1200">
             <label class="form-label fw-semibold">Registro CREFITO</label>
             <input type="text" name="registro_crefito" class="form-control form-control-lg" value="<?= htmlspecialchars($registro_crefito) ?>" required>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="1300">
             <label class="form-label fw-semibold">Especialidade</label>
             <input type="text" name="especialidade" class="form-control form-control-lg" value="<?= htmlspecialchars($especialidade) ?>" required>
         </div>
