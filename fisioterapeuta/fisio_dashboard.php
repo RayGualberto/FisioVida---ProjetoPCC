@@ -30,10 +30,9 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     </style>
 </head>
-    <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Fisioterapeuta - FisioVida</h2>
-
-    <span class="badge text-bg-primary">Perfil: Fisioterapeuta</span>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel de Fisioterapeuta - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Fisioterapeuta</span>
   </div>
 <div class="main-content">
     <?php if (isset($_SESSION['msg'])): ?>
@@ -42,9 +41,9 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
 <?php endif; ?>
 
-    <h2><i class="fas fa-calendar-alt"></i> Agenda de Atendimentos</h2>
+    <h2 data-aos="fade-down"><i class="fas fa-calendar-alt"></i> Agenda de Atendimentos</h2>
 
-    <div id='calendar'></div>
+    <div id='calendar' data-aos="fade-up"></div>
 </div>
 </html>
 

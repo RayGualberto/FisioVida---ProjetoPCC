@@ -115,27 +115,26 @@ a {
   </style>
 </head>
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Úsuarios - FisioVida</h2>
-
-    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel de Úsuarios - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Adiministrador</span>
   </div>
 <div class="mt-5">
 
   <!-- Filtro com botões -->
-  <div class="container-filtro text-center">
+  <div class="container-filtro text-center" data-aos="zoom-in">
     <h4 class="mb-3">Filtrar Usuários</h4>
-    <div>
-      <a href="?tipo=" class="btn-filtro btn-todos <?= $tipoFiltro==='' ? 'shadow' : '' ?>">Todos</a>
-      <a href="?tipo=admin" class="btn-filtro btn-admin <?= $tipoFiltro==='admin' ? 'shadow' : '' ?>">Administradores</a>
-      <a href="?tipo=paciente" class="btn-filtro btn-paciente <?= $tipoFiltro==='paciente' ? 'shadow' : '' ?>">Pacientes</a>
-      <a href="?tipo=fisioterapeuta" class="btn-filtro btn-fisio <?= $tipoFiltro==='fisioterapeuta' ? 'shadow' : '' ?>">Fisioterapeutas</a>
-      <a href="usuario_create.php" class="btn-filtro btn-novo">+ Novo Usuário</a>
-      <a href="fisio_create.php" class="btn-filtro btn-novofisio">+ Novo Fisioterapeuta</a>
+    <div >
+      <a href="?tipo=" class="btn-filtro btn-todos" data-aos="fade" data-aos-delay="500" <?= $tipoFiltro==='' ? 'shadow' : '' ?>">Todos</a>
+      <a href="?tipo=admin" class="btn-filtro btn-admin" data-aos="fade" data-aos-delay="600" <?= $tipoFiltro==='admin' ? 'shadow' : '' ?>">Administradores</a>
+      <a href="?tipo=paciente" class="btn-filtro btn-paciente" data-aos="fade" data-aos-delay="700" <?= $tipoFiltro==='paciente' ? 'shadow' : '' ?>">Pacientes</a>
+      <a href="?tipo=fisioterapeuta" class="btn-filtro btn-fisio" data-aos="fade" data-aos-delay="800" <?= $tipoFiltro==='fisioterapeuta' ? 'shadow' : '' ?>">Fisioterapeutas</a>
+      <a href="usuario_create.php" class="btn-filtro btn-novo" data-aos="fade" data-aos-delay="900">+ Novo Usuário</a>
+      <a href="fisio_create.php" class="btn-filtro btn-novofisio" data-aos="fade" data-aos-delay="1000">+ Novo Fisioterapeuta</a>
     </div>
   </div>
 
   <!-- Campo de busca -->
-  <form method="get" class="mb-3 text-center">
+  <form method="get" class="mb-3 text-center" data-aos="zoom-in">
     <input type="hidden" name="tipo" value="<?= htmlspecialchars($tipoFiltro) ?>">
     <input type="text" name="q_usuario" class="form-control d-inline-block w-50" 
            placeholder="Buscar por nome, e-mail ou CPF"
@@ -151,7 +150,7 @@ a {
     <div class="card-body p-0">
       <div class="table-responsive">
         <table class="table table-striped table-hover mb-0 align-middle">
-          <thead>
+          <thead data-aos="fade-down">
             <tr>
               <th>#</th>
               <th>Nome</th>
@@ -163,7 +162,7 @@ a {
           </thead>
           <tbody>
             <?php foreach ($usuarios as $u): ?>
-              <tr>
+              <tr data-aos="fade-up" data-aos-delay="100">
                 <td><?= (int)$u['id'] ?></td>
                 <td><?= htmlspecialchars($u['nome']) ?></td>
                 <td><?= htmlspecialchars($u['email']) ?></td>

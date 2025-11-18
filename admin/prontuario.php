@@ -66,12 +66,11 @@ include __DIR__ . '/partials/header.php';
   </style>
 </head>
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Prontuários - FisioVida</h2>
-
-    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel de Prontuários - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Adiministrador</span>
   </div>
 <div class="container mt-5 mb-5">
-    <div class="form-card mb-5">
+    <div class="form-card mb-5" data-aos="zoom-in">
         <h2 class="mb-4 text-center">Evolução dos Pacientes</h2>
 
         <?php if(!empty($mensagem)) : ?>
@@ -79,7 +78,7 @@ include __DIR__ . '/partials/header.php';
         <?php endif; ?>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4" data-aos="fade-up">
         <?php if($prontuarios): ?>
             <?php foreach($prontuarios as $p): ?>
                 <div class="col-lg-6 col-md-12">

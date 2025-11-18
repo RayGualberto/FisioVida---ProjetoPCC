@@ -125,7 +125,7 @@ $agenda = $stmt->fetchAll();
       </div>
 
       <div class="col-md-4 text-end">
-        <a class="btn btn-outline-secondary mt-3" href="fisio_dashboard.php">Limpar</a>
+        <a class="btn btn-outline-secondary mt-3" href="agendamentos.php">Limpar</a>
         <button class="btn btn-primary mt-3">Filtrar</button>
       </div>
     </div>

@@ -85,12 +85,11 @@ $prontuarios = $stmt->fetchAll();
   </style>
 </head>
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Fisioterapeuta - FisioVida</h2>
-
-    <span class="badge text-bg-primary">Perfil: Fisioterapeuta</span>
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel de Fisioterapeuta - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Fisioterapeuta</span>
   </div>
 <div class="container mt-5 mb-5">
-    <div class="form-card mb-5">
+    <div class="form-card mb-5" data-aos="zoom-in">
         <h2 class="mb-4">Adicionar Evolução do Paciente</h2>
 
         <?php if(!empty($mensagem)) : ?>
@@ -98,21 +97,21 @@ $prontuarios = $stmt->fetchAll();
         <?php endif; ?>
 
         <form method="POST">
-            <div class="mb-3">
+            <div class="mb-3" data-aos="fade-down">
                 <label for="evolucao" class="form-label">Evolução do Paciente</label>
                 <textarea id="evolucao" name="evolucao" class="form-control" rows="5" placeholder="Descreva a evolução do paciente..."><?= htmlspecialchars($_POST['evolucao'] ?? '') ?></textarea>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3" data-aos="fade-up">
                 <label for="assinatura" class="form-label">Assinatura</label>
                 <input type="text" id="assinatura" name="assinatura" class="form-control" placeholder="Assinatura do fisioterapeuta" value="<?= htmlspecialchars($nomePaciente)?>" disabled>
             </div>
 
-            <button type="submit" class="btn btn-primary">Salvar Evolução</button>
+            <button type="submit" class="btn btn-primary" data-aos="fade-up">Salvar Evolução</button>
         </form>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4" data-aos="fade-up">
         <?php if($prontuarios): ?>
             <?php foreach($prontuarios as $p): ?>
                 <div class="col-lg-6 col-md-12">

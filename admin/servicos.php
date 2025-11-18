@@ -145,13 +145,12 @@ $servicos = $stmt->fetchAll();
 </head>
 
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Serviços - FisioVida</h2>
-
-    <span class="badge text-bg-primary">Perfil: Adiministrador</span>
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel de Serviços - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Adiministrador</span>
   </div>
 <div class=" mt-4">
   <!-- Filtro de serviços -->
-<form method="get" class="card card-body shadow-sm mb-3">
+<form method="get" class="card card-body shadow-sm mb-3" data-aos="zoom-in">
   <div class="row g-2 align-items-end">
     <div class="col-md-5">
       <label class="form-label">🔎 Buscar Serviço</label>
@@ -182,7 +181,7 @@ $servicos = $stmt->fetchAll();
       <div class="table-responsive" style="max-height: 500px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
         <table class="table table-striped table-hover align-middle mb-0">
           <thead class="sticky-top" style="background: #cde9ff; z-index: 10;">
-            <tr>
+            <tr data-aos="fade-down">
               <th>#</th>
               <th>Nome</th>
               <th>Descrição</th>
@@ -192,7 +191,7 @@ $servicos = $stmt->fetchAll();
           </thead>
           <tbody>
             <?php foreach ($servicos as $s): ?>
-              <tr>
+              <tr data-aos="fade-up" data-aos-delay="100">
                 <td class="text-center"><?= (int)$s['id_servico'] ?></td>
                 <td><?= htmlspecialchars($s['nome_servico']) ?></td>
                 <td><?= htmlspecialchars($s['descricao_servico']) ?></td>

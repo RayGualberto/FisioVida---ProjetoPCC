@@ -164,13 +164,12 @@ include __DIR__ . '/partials/header.php';
 </head>
 
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h2 class="h4 mb-0">Painel de Fisioterapeuta - FisioVida</h2>
-
-    <span class="badge text-bg-primary">Perfil: Fisioterapeuta</span>
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel de Fisioterapeuta - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Fisioterapeuta</span>
   </div>
 <div class=" mt-4">
   <!-- Filtro de Agenda -->
-  <form method="get" class="card card-body shadow-sm mb-3">
+  <form method="get" class="card card-body shadow-sm mb-3" data-aos="zoom-in">
     <div class="row g-2 align-items-end">
       <div class="col-md-5">
         <label class="form-label">Buscar Agendamento</label>
@@ -199,9 +198,9 @@ include __DIR__ . '/partials/header.php';
   <div class="card shadow-sm mb-4">
     <div class="card-header">Agendamentos encontrados (<?= $totalAgendamentos ?>)</div>
     <div class="card-body p-0">
-      <div class="table-responsive ">
+      <div class="table-responsive">
         <table class="table table-striped table-hover mb-0 align-middle">
-          <thead>
+          <thead data-aos="fade-down">
             <tr>
               <th>#</th>
               <th>Nome do Paciente</th>
@@ -226,7 +225,7 @@ include __DIR__ . '/partials/header.php';
                     default => 'secondary'
                 };
               ?>
-              <tr>
+              <tr data-aos="fade-up">
                 <td><?= (int)$a['id_Agenda'] ?></td>
                 <td><?= htmlspecialchars($a['nome_paciente']) ?></td>
                 <td><?= htmlspecialchars($a['data']) ?></td>
