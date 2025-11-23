@@ -431,7 +431,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 <script>
 // Função para buscar notificações do paciente
 function carregarNotificacoes() {
-    fetch('../php/buscar_notificacao.php')
+    fetch('../php/buscar_notificacao_paciente.php')
     .then(res => res.json())
     .then(data => {
         const lista = document.getElementById('listaNotificacoes');
@@ -466,7 +466,7 @@ function carregarNotificacoes() {
 
 // Marcar todas como lidas
 document.getElementById('marcarLidas').addEventListener('click', () => {
-    fetch('../php/marcar_lida.php')
+    fetch('../php/marcar_lida_paciente.php')
     .then(res => res.json())
     .then(() => carregarNotificacoes());
 });

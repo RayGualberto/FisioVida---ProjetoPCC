@@ -1,15 +1,19 @@
 <?php
 require_once '../php/db.php';
 include __DIR__ . '/partials/header.php';
+
+// ID e nome do fisioterapeuta logado
+$idFisioterapeuta = $_SESSION['usuario_id'] ?? null;
+$nomeFisioterapeuta = $_SESSION['nome'] ?? ''; // fallback
+
 // Processar envio do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $evolucao = trim($_POST['evolucao'] ?? '');
-    $nomePaciente = $_SESSION['usuario_nome'];
-    $data = date('Y-m-d'); // Data atual
+    $data = date('Y-m-d');
 
-    if ($evolucao && $nomePaciente) {
+    if ($evolucao) {
         $stmt = $pdo->prepare("INSERT INTO prontuario (evolucao, data, assinatura) VALUES (?, ?, ?)");
-        $stmt->execute([$evolucao, $data, $nomePaciente]);
+        $stmt->execute([$evolucao, $data, $nomeFisioterapeuta]);
         $_SESSION['msg'] = "Prontuário salvo com sucesso!";
         $_SESSION['msg_tipo'] = "sucesso";
     } else {
@@ -17,78 +21,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Seleciona o nome do fisioterapeuta Logado
-$stmtPaciente = $pdo->prepare("SELECT nome FROM fisioterapeuta WHERE id_fisioterapeuta = ?");
-$stmtPaciente->execute([$idUsuario]);
-$paciente = $stmtPaciente->fetch(PDO::FETCH_ASSOC);
-
-// Buscar registros já salvos
+// Buscar prontuários já salvos
 $stmt = $pdo->query("SELECT * FROM prontuario ORDER BY data DESC, id_prontuario DESC");
 $prontuarios = $stmt->fetchAll();
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Painel Administrativo - FisioVida</title>
+  <title>Painel de Fisioterapeuta - FisioVida</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    .container {
-      max-width: 1200px;
-    }
-
-    /* Cards de formulário */
-    .form-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-    .form-card:hover {
-      transform: translateY(-5px);
-    }
-
-    /* Cards de prontuário */
-    .prontuario-card {
-      background: #ffffffcc;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .prontuario-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-
-    h2, h5 {
-      color: #000000ff;
-    }
-
-    textarea.form-control {
-      resize: none;
-    }
-
-    .alert {
-      border-radius: 10px;
-    }
-
-    @media (max-width: 767px) {
-      .prontuario-card {
-        margin-bottom: 15px;
-      }
-    }
+    .container { max-width: 1200px; }
+    .form-card { background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: transform 0.2s; }
+    .form-card:hover { transform: translateY(-5px); }
+    .prontuario-card { background: #ffffffcc; border-radius: 12px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+    .prontuario-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    h2, h5 { color: #000000ff; }
+    textarea.form-control { resize: none; }
+    .alert { border-radius: 10px; }
+    @media (max-width: 767px) { .prontuario-card { margin-bottom: 15px; } }
   </style>
 </head>
+<body>
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h2 class="h4 mb-0" data-aos="fade-right">Painel de Fisioterapeuta - FisioVida</h2>
     <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Fisioterapeuta</span>
   </div>
-<div class="container mt-5 mb-5">
+
+  <div class="container mt-5 mb-5">
     <div class="form-card mb-5" data-aos="zoom-in">
         <h2 class="mb-4">Adicionar Evolução do Paciente</h2>
 
@@ -104,7 +66,9 @@ $prontuarios = $stmt->fetchAll();
 
             <div class="mb-3" data-aos="fade-up">
                 <label for="assinatura" class="form-label">Assinatura</label>
-                <input type="text" id="assinatura" name="assinatura" class="form-control" placeholder="Assinatura do fisioterapeuta" value="<?= htmlspecialchars($nomePaciente)?>" disabled>
+                <input type="text" id="assinatura" name="assinatura" class="form-control" 
+                       placeholder="Assinatura do fisioterapeuta" 
+                       value="<?= htmlspecialchars($nomeFisioterapeuta) ?>" disabled>
             </div>
 
             <button type="submit" class="btn btn-primary" data-aos="fade-up">Salvar Evolução</button>
@@ -128,10 +92,11 @@ $prontuarios = $stmt->fetchAll();
             </div>
         <?php endif; ?>
     </div>
-</div>
+  </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
+</body>
 </html>

@@ -1,0 +1,215 @@
+#contadorNotificacoes {
+  font-size: 0.7rem;
+  padding: 3px 6px;
+}
+
+#listaNotificacoes li {
+  list-style: none;
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
+}
+
+#listaNotificacoes li:last-child {
+  border-bottom: none;
+}
+
+#listaNotificacoes .nao-lida {
+  background-color: #e9f5ff;
+  font-weight: 600;
+}
+
+         :root {
+            --azul-base: #b3e5fc;
+            /* pedido */
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+  /* Sidebar lateral moderna */
+  #sidebar {
+    width: 230px;
+    background: #0b8ecb; /* azul escuro elegante */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+
+  #sidebar .nav-link {
+    width: 85%;
+    color: #e6e6e6;
+    padding: 12px 15px;
+    margin: 6px 0;
+    border-radius: 10px;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+  }
+
+  #sidebar .nav-link i {
+    font-size: 1.2rem;
+  }
+
+  #sidebar .nav-link:hover {
+    background-color: #0078ff;
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+  }
+
+  #sidebar .nav-link.active {
+    background-color: #0078ff;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Conteúdo principal */
+  #main-content {
+    margin-left: 230px;
+    padding: 25px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+  }
+
+        /* Navbar */
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+            position: relative;
+            z-index: 2000;
+        }
+        
+        .navbar .nav-link {
+            color: #0b3b56;
+            font-weight: 600;
+        }
+        
+        .navbar .btn-outline-primary {
+            border-color: transparent;
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 30px;
+        }
+        
+        .navbar .btn-outline-primary:hover {
+            background: var(--azul-base);
+            color: #033748;
+        }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    #sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      justify-content: space-around;
+      padding-top: 10px;
+    }
+
+    #sidebar .nav-link {
+      flex: 1;
+      text-align: center;
+      margin: 0 5px;
+      border-radius: 6px;
+    }
+
+    #main-content {
+      margin-left: 0;
+    }
+  }
+
+  #sidebar .nav-link:active,
+  #sidebar .nav-link:focus,
+  #sidebar .nav-link:visited {
+    font-weight: normal;
+  }
+
+ /* Modal */
+  .profile-modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.45);
+  }
+
+  .profile-content {
+    background-color: #fff;
+    margin: 4% auto;
+    padding: 35px 45px;
+    border-radius: 18px;
+    width: 100vh;
+    max-width: 90%;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .profile-content p {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 15px;
+  }
+
+  .profile-content strong {
+    color: #004b87;
+  }
+
+  .close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+  }
+
+  .close-btn:hover { color: #000; }
+
+  .profile-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-photo img {
+    border-radius: 50%;
+    border: 3px solid #0b8ecb;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  label[for="novaFoto"] {
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }

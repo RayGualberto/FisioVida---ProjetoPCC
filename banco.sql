@@ -1,9 +1,7 @@
 CREATE DATABASE IF NOT EXISTS fisiovida CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE fisiovida;
 
--- ==============================
--- TABELA USUARIO
--- ==============================
+-- Tabela usuário
 CREATE TABLE usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
@@ -18,9 +16,7 @@ CREATE TABLE usuario (
     tipo_usuario ENUM('paciente', 'fisioterapeuta', 'admin') NOT NULL
 );
 
--- ==============================
--- TABELA PACIENTE
--- ==============================
+-- Tabela paciente
 CREATE TABLE paciente (
     id_paciente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),  
@@ -30,9 +26,7 @@ CREATE TABLE paciente (
     cpf VARCHAR(14)
 );
 
--- ==============================
--- TABELA ADMIN
--- ==============================
+-- Tabela admin
 CREATE TABLE admin (
     id_admin INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
@@ -42,11 +36,9 @@ CREATE TABLE admin (
     senha VARCHAR(100)
 );
 
--- ==============================
--- TABELA FISIOTERAPEUTA
--- ==============================
+-- Tabela fisioterapeuta
 CREATE TABLE fisioterapeuta (
-    id_Fisioterapeuta INT PRIMARY KEY AUTO_INCREMENT,
+    id_fisioterapeuta INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     telefone VARCHAR(20),
     endereco VARCHAR(200),
@@ -55,19 +47,17 @@ CREATE TABLE fisioterapeuta (
     especialidade VARCHAR(100)
 );
 
--- ==============================
--- TABELA SERVICO
--- ==============================
+-- Tabela servico
 CREATE TABLE servico (
     id_servico INT PRIMARY KEY AUTO_INCREMENT,
     nome_servico VARCHAR(100),
-    descricao_servico VARCHAR(100),
-    status ENUM('Ativo', 'Inativo')
+    descricao_servico VARCHAR(255),
+    status ENUM('Ativo', 'Inativo'),
+    fisioterapeuta_id INT NULL,
+    FOREIGN KEY (fisioterapeuta_id) REFERENCES fisioterapeuta(id_fisioterapeuta)
 );
 
--- ==============================
--- TABELA AGENDA
--- ==============================
+-- Tabela agenda
 CREATE TABLE agenda (
     id_Agenda INT PRIMARY KEY AUTO_INCREMENT,
     nome_paciente VARCHAR(100),
@@ -78,15 +68,13 @@ CREATE TABLE agenda (
     status ENUM('pendente', 'confirmado', 'remarcado', 'recusado','cancelado','concluido') DEFAULT 'pendente',
     paciente_id_paciente INT,
     servico_id_servico INT,
-    fisioterapeuta_id INT,
+    fisioterapeuta_id INT NULL,
     FOREIGN KEY (paciente_id_paciente) REFERENCES paciente(id_paciente),
     FOREIGN KEY (servico_id_servico) REFERENCES servico(id_servico),
-    FOREIGN KEY (fisioterapeuta_id) REFERENCES fisioterapeuta(id_Fisioterapeuta)
+    FOREIGN KEY (fisioterapeuta_id) REFERENCES fisioterapeuta(id_fisioterapeuta)
 );
 
--- ==============================
--- TABELA AVALIACAO
--- ==============================
+-- Tabela avaliacao
 CREATE TABLE avaliacao (
     id_avaliacao INT PRIMARY KEY AUTO_INCREMENT,
     nome_paciente VARCHAR(100),
@@ -95,9 +83,7 @@ CREATE TABLE avaliacao (
     avaliacao VARCHAR(255)
 );
 
--- ==============================
--- TABELA PRONTUARIO
--- ==============================
+-- Tabela prontuario
 CREATE TABLE prontuario (
     id_prontuario INT PRIMARY KEY AUTO_INCREMENT,
     evolucao VARCHAR(255),
@@ -105,27 +91,23 @@ CREATE TABLE prontuario (
     assinatura VARCHAR(255)
 );
 
--- ==============================
--- TABELA ATENDIMENTO
--- ==============================
+-- Tabela atendimento
 CREATE TABLE atendimento (
     id_atendimento INT PRIMARY KEY AUTO_INCREMENT,
     data DATETIME,
     agenda_id INT,
     fisioterapeuta_id INT,
     FOREIGN KEY (agenda_id) REFERENCES agenda(id_Agenda),
-    FOREIGN KEY (fisioterapeuta_id) REFERENCES fisioterapeuta(id_Fisioterapeuta)
+    FOREIGN KEY (fisioterapeuta_id) REFERENCES fisioterapeuta(id_fisioterapeuta)
 );
 
--- ==============================
--- TABELA NOTIFICACAO 
--- ==============================
+-- Tabela notificacoes
 CREATE TABLE IF NOT EXISTS notificacoes (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  destinatario_id INT NOT NULL,      -- id do paciente ou usuário que receberá a notificação
-  remetente_id INT NOT NULL,         -- id do usuário que enviou a notificação (ex: fisioterapeuta)
-  mensagem VARCHAR(255) NOT NULL,    -- texto da notificação
-  tipo VARCHAR(50),                  -- tipo de notificação (ex: aceito, recusado, remarcado)
-  data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,  -- data e hora do envio
-  lida TINYINT(1) DEFAULT 0          -- 0 = não lida, 1 = lida
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    destinatario_id INT NULL,
+    remetente_id INT NOT NULL,
+    mensagem VARCHAR(255) NOT NULL,
+    tipo VARCHAR(50),
+    data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    lida TINYINT(1) DEFAULT 0
 );
