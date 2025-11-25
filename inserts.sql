@@ -19,7 +19,6 @@ INSERT INTO usuario (nome, email, senha, cpf, data_nasc, telefone, cep, sexo, ti
 VALUES
 ('Ray', 'admin1@gmail.com', '$2y$10$JP6BCvg97qkC48Gy/sIi8u5ozLkE1A6WshEZO9cB8udpVyOIHFzqK', '08522233361', '2006-01-26', '61994475245', '72236800', 'M', 'admin'),
 ('Miguel', 'admin2@gmail.com', '$2y$10$JP6BCvg97qkC48Gy/sIi8u5ozLkE1A6WshEZO9cB8udpVyOIHFzqK', '00199288445', '2005-01-01', '61982084371', '72235226', 'M', 'admin'),
-('Pedro', 'pedro123@gmail.com', '$2y$10$JP6BCvg97qkC48Gy/sIi8u5ozLkE1A6WshEZO9cB8udpVyOIHFzqK', '58870839052', '2005-01-01', '61982084371', '72235226', 'M', 'fisioterapeuta');
 
 -- ADMINS
 INSERT INTO admin (nome, sexo, cpf, email, senha)

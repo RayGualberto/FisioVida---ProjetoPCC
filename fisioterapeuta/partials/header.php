@@ -73,10 +73,18 @@ try {
           <a class="btn btn-outline-danger btn-sm" href="../php/logout.php" data-aos="fade-left" data-aos-delay="300">Sair</a>
         </li>
 
-        <!-- Ícone de perfil -->
+        <!-- Ícone de perfil com a foto do usuário -->
         <li class="nav-item">
-          <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil" data-aos="zoom-in" data-aos-delay="350">
-            <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Foto de perfil" class="rounded-circle border border-secondary" width="38" height="38" style="object-fit: cover;">
+        <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil" 
+        data-aos="zoom-in" data-aos-delay="350">
+            <img 
+              src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? ($usuario['foto'] ?? '../img/imagem_perfil.JPEG')); ?>" 
+              alt="Foto de perfil" 
+              class="rounded-circle border border-secondary" 
+              width="38" 
+              height="38" 
+              style="object-fit: cover;"
+            >
           </button>
         </li>
 
@@ -100,6 +108,49 @@ try {
     </div>
   </div>
 </nav>
+
+<!-- Modal de Perfil -->
+<div id="profileModal" class="profile-modal">
+  <div class="profile-content">
+    <span class="close-btn">&times;</span>
+    <h5 class="mb-3 text-center">Perfil do Usuário</h5>
+
+<!-- Foto de perfil -->
+<div class="text-center mb-3">
+  <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Foto de perfil" class="rounded-circle shadow-sm" width="300" height="300" id="userPhoto">
+
+  <div class="mt-2 d-flex justify-content-center gap-2">
+    <!-- Botão Alterar Foto -->
+    <form id="formFoto" action="upload_foto.php" method="post" enctype="multipart/form-data">
+      <label for="novaFoto" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-camera"></i> Alterar foto
+      </label>
+      <input type="file" name="novaFoto" id="novaFoto" accept="image/*" style="display:none">
+    </form>
+
+    <!-- Botão Remover Foto -->
+    <button type="button" id="removerFotoBtn" class="btn btn-sm btn-outline-danger">
+      <i class="bi bi-x-circle"></i> Remover foto
+    </button>
+  </div>
+</div>
+
+    <hr>
+
+    <div class="user-info">
+      <p><strong>Nome:</strong> <?= htmlspecialchars($usuario['nome']) ?></p>
+      <p><strong>Email:</strong> <?= htmlspecialchars($usuario['email']) ?></p>
+      <p><strong>CPF:</strong> <?= htmlspecialchars($usuario['cpf']) ?></p>
+      <p><strong>Data de Nascimento:</strong> <?= date('d/m/Y', strtotime($usuario['data_nasc'])) ?></p>
+      <p><strong>Telefone:</strong> <?= htmlspecialchars($usuario['telefone']) ?></p>
+      <p><strong>CEP:</strong> <?= htmlspecialchars($usuario['cep']) ?></p>
+      <p><strong>Sexo:</strong> <?= htmlspecialchars($usuario['sexo']) ?></p>
+      <p><strong>Tipo de Usuário:</strong> 
+        <span class="badge bg-primary"><?= ucfirst($usuario['tipo_usuario']) ?></span>
+      </p>
+    </div>
+  </div>
+</div>
 
 <!-- Sidebar lateral -->
 <div id="sidebar" data-aos="fade-right" data-aos-delay="200">
@@ -153,6 +204,75 @@ document.getElementById('marcarLidas').addEventListener('click', () => {
 // Atualiza notificações a cada 30 segundos
 setInterval(carregarNotificacoes, 30000);
 carregarNotificacoes();
+</script>
+<script>
+const removerFotoBtn = document.getElementById('removerFotoBtn');
+const novaFoto = document.getElementById('novaFoto');
+const userPhoto = document.getElementById('userPhoto');
+const profileBtnPhoto = document.querySelector('#profileBtn img');
+const FOTO_PADRAO = '../img/imagem_perfil.JPEG';
+
+novaFoto.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('novaFoto', file);
+
+  // Mostra preview imediato
+  const reader = new FileReader();
+  reader.onload = e => {
+    userPhoto.src = e.target.result;
+    profileBtnPhoto.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+
+  // Envia via AJAX
+  fetch('upload_foto.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log('Upload concluído:', data);
+  })
+  .catch(err => {
+    console.error('Erro no upload:', err);
+    alert('Erro ao enviar a foto.');
+  });
+});
+
+// Botão Remover Foto
+removerFotoBtn.addEventListener('click', () => {
+    // Atualiza a imagem no modal e no ícone
+    userPhoto.src = FOTO_PADRAO;
+    profileBtnPhoto.src = FOTO_PADRAO;
+
+    // Envia requisição para o PHP remover a foto no banco
+    fetch('remover_foto.php', {
+        method: 'POST'
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Foto removida:', data);
+        alert('Foto removida com sucesso!');
+    })
+    .catch(err => {
+        console.error('Erro ao remover foto:', err);
+        alert('Erro ao remover a foto.');
+    });
+});
+
+// Abrir e fechar modal
+const profileBtn = document.getElementById('profileBtn');
+const modal = document.getElementById('profileModal');
+const closeBtn = document.querySelector('.close-btn');
+
+profileBtn.addEventListener('click', () => modal.style.display = 'block');
+closeBtn.addEventListener('click', () => modal.style.display = 'none');
+window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+});
 </script>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>

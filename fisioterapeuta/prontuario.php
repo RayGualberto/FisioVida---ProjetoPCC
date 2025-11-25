@@ -2,9 +2,25 @@
 require_once '../php/db.php';
 include __DIR__ . '/partials/header.php';
 
-// ID e nome do fisioterapeuta logado
+// ID do fisioterapeuta logado
 $idFisioterapeuta = $_SESSION['usuario_id'] ?? null;
-$nomeFisioterapeuta = $_SESSION['nome'] ?? ''; // fallback
+
+if (!$idFisioterapeuta) {
+    die("Usuário não autenticado.");
+}
+
+// Buscar nome do fisioterapeuta no banco
+$cpfFisio = $_SESSION['cpf'] ?? null;
+
+if (!$cpfFisio) {
+    die("CPF do usuário não encontrado na sessão.");
+}
+
+$stmt = $pdo->prepare("SELECT nome FROM fisioterapeuta WHERE cpf = ?");
+$stmt->execute([$cpfFisio]);
+$dadosFisio = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$nomeFisioterapeuta = $dadosFisio['nome'] ?? '';
 
 // Processar envio do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,19 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = date('Y-m-d');
 
     if ($evolucao) {
-        $stmt = $pdo->prepare("INSERT INTO prontuario (evolucao, data, assinatura) VALUES (?, ?, ?)");
+        $stmt = $pdo->prepare("
+            INSERT INTO prontuario (evolucao, data, assinatura)
+            VALUES (?, ?, ?)
+        ");
         $stmt->execute([$evolucao, $data, $nomeFisioterapeuta]);
+
         $_SESSION['msg'] = "Prontuário salvo com sucesso!";
         $_SESSION['msg_tipo'] = "sucesso";
+
     } else {
         $mensagem = "Por favor, preencha todos os campos.";
     }
 }
 
-// Buscar prontuários já salvos
+// Buscar prontuários
 $stmt = $pdo->query("SELECT * FROM prontuario ORDER BY data DESC, id_prontuario DESC");
 $prontuarios = $stmt->fetchAll();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -64,12 +86,11 @@ $prontuarios = $stmt->fetchAll();
                 <textarea id="evolucao" name="evolucao" class="form-control" rows="5" placeholder="Descreva a evolução do paciente..."><?= htmlspecialchars($_POST['evolucao'] ?? '') ?></textarea>
             </div>
 
-            <div class="mb-3" data-aos="fade-up">
-                <label for="assinatura" class="form-label">Assinatura</label>
-                <input type="text" id="assinatura" name="assinatura" class="form-control" 
-                       placeholder="Assinatura do fisioterapeuta" 
-                       value="<?= htmlspecialchars($nomeFisioterapeuta) ?>" disabled>
-            </div>
+        <div class="mb-3" data-aos="fade-up">
+            <label for="assinatura" class="form-label">Assinatura</label>
+            <input type="text" id="assinatura" name="assinatura" class="form-control"
+                value="<?= htmlspecialchars($nomeFisioterapeuta) ?>" readonly>
+        </div>
 
             <button type="submit" class="btn btn-primary" data-aos="fade-up">Salvar Evolução</button>
         </form>
