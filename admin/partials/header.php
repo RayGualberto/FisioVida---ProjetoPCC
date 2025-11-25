@@ -314,12 +314,22 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 </div>
 
 <!-- Sidebar lateral -->
-<div id="sidebar">
-  <a href="admin.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="250" <?php echo (basename($_SERVER['PHP_SELF']) == 'admin.php') ? 'active' : ''; ?>"><i class="bi bi-house-door"></i> Início</a>
-  <a href="servicos.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="300" <?php echo (basename($_SERVER['PHP_SELF']) == 'servicos.php') ? 'active' : ''; ?>"><i class="bi bi-briefcase"></i> Serviços</a>
-  <a href="agendamentos.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="350" <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>"><i class="bi bi-calendar-check"></i> Agendamentos</a>
-  <a href="usuarios.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="400" <?php echo (basename($_SERVER['PHP_SELF']) == 'usuarios.php') ? 'active' : ''; ?>"><i class="bi bi-people"></i> Usuários</a>
-  <a href="prontuario.php" class="nav-link ..." data-aos="fade-right" data-aos-delay="450" <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>"><i class="bi bi-clipboard"></i> Prontuários</a>
+<div id="sidebar" data-aos="fade-right" data-aos-delay="200">
+  <a href="admin.php" class="nav-link ... <?php echo (basename($_SERVER['PHP_SELF']) == 'admin.php') ? 'active' : ''; ?>">
+  <i class="bi bi-house-door"></i> Início</a>
+
+  <a href="servicos.php" class="nav-link ... <?php echo (basename($_SERVER['PHP_SELF']) == 'servicos.php') ? 'active' : ''; ?>">
+  <i class="bi bi-briefcase"></i> Serviços</a>
+
+  <a href="agendamentos.php" class="nav-link ... <?php echo (basename($_SERVER['PHP_SELF']) == 'agendamentos.php') ? 'active' : ''; ?>">
+  <i class="bi bi-calendar-check"></i> Agendamentos</a>
+
+  <a href="usuarios.php" class="nav-link ... <?php echo (basename($_SERVER['PHP_SELF']) == 'usuarios.php') ? 'active' : ''; ?>">
+  <i class="bi bi-people"></i> Usuários</a>
+
+  <a href="prontuario.php" class="nav-link ... <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>">
+  <i class="bi bi-clipboard"></i> Prontuários</a>
+
 </div>
 
 <!-- Modal de Pefil -->

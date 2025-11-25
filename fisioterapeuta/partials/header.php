@@ -154,10 +154,19 @@ try {
 
 <!-- Sidebar lateral -->
 <div id="sidebar" data-aos="fade-right" data-aos-delay="200">
-  <a href="fisio_dashboard.php" class="nav-link" <?php echo (basename($_SERVER['PHP_SELF']) == 'fisio_dashboard.php') ? 'active' : ''; ?>><i class="bi bi-house-door"></i> Início</a>
-  <a href="prontuario.php" class="nav-link" <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>><i class="bi bi-briefcase"></i> Prontuários</a>
-  <a href="agenda.php" class="nav-link" <?php echo (basename($_SERVER['PHP_SELF']) == 'agenda.php') ? 'active' : ''; ?>><i class="bi bi-calendar3"></i> Agendamentos</a>
-  <a href="relatorio.php" class="nav-link" <?php echo (basename($_SERVER['PHP_SELF']) == 'relatorio.php') ? 'active' : ''; ?>><i class="bi bi-bar-chart"></i> Relatórios</a>
+
+  <a href="fisio_dashboard.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'fisio_dashboard.php') ? 'active' : ''; ?>">
+  <i class="bi bi-house-door"></i> Início</a>
+  
+  <a href="prontuario.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>">
+  <i class="bi bi-briefcase"></i> Prontuários</a>
+
+  <a href="agenda.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agenda.php') ? 'active' : ''; ?>">
+  <i class="bi bi-calendar3"></i> Agendamentos</a>
+
+  <a href="relatorio.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'relatorio.php') ? 'active' : ''; ?>">
+  <i class="bi bi-bar-chart"></i> Relatórios</a>
+
 </div>
 
 <!-- Script notificações -->
