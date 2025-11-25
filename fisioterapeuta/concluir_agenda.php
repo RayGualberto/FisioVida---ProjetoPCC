@@ -73,6 +73,9 @@ try {
     // Commit
     $pdo->commit();
 
+    $_SESSION['msg'] = "Sessão concluída com sucesso!";
+    $_SESSION['msg_tipo'] = "sucesso";
+
     header('Location: agenda.php');
     exit;
 
