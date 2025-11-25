@@ -2,11 +2,12 @@
 require_once '../php/db.php';
 include __DIR__ . '/partials/header.php';
 
-// ID do fisioterapeuta logado
-$idFisioterapeuta = $_SESSION['usuario_id'] ?? null;
+// Verifica login
+$cpf = $_SESSION['cpf_fisioterapeuta'] ?? null;
 
-if (!$idFisioterapeuta) {
-    die("Usuário não autenticado.");
+if (!$cpf) {
+    header('Location: logar.php');
+    exit;
 }
 
 // Buscar nome do fisioterapeuta no banco
@@ -73,28 +74,31 @@ $prontuarios = $stmt->fetchAll();
   </div>
 
   <div class="container mt-5 mb-5">
-    <div class="form-card mb-5" data-aos="zoom-in">
-        <h2 class="mb-4">Adicionar Evolução do Paciente</h2>
+<!-- CARD DO FORMULÁRIO -->
+<div class="form-card mb-5" data-aos="zoom-in">
+    <h2 class="mb-4 text-center" data-aos="fade-up">Sua Evolução</h2>
 
-        <?php if(!empty($mensagem)) : ?>
-            <div class="alert alert-info"><?= htmlspecialchars($mensagem) ?></div>
-        <?php endif; ?>
+    <?php if(!empty($mensagem)) : ?>
+        <div class="alert alert-info" data-aos="fade-down"><?= htmlspecialchars($mensagem) ?></div>
+    <?php endif; ?>
 
-        <form method="POST">
-            <div class="mb-3" data-aos="fade-down">
-                <label for="evolucao" class="form-label">Evolução do Paciente</label>
-                <textarea id="evolucao" name="evolucao" class="form-control" rows="5" placeholder="Descreva a evolução do paciente..."><?= htmlspecialchars($_POST['evolucao'] ?? '') ?></textarea>
-            </div>
+    <form method="post">
 
-        <div class="mb-3" data-aos="fade-up">
-            <label for="assinatura" class="form-label">Assinatura</label>
-            <input type="text" id="assinatura" name="assinatura" class="form-control"
-                value="<?= htmlspecialchars($nomeFisioterapeuta) ?>" readonly>
+        <div class="mb-3">
+            <label class="form-label">Evolução</label>
+            <textarea name="evolucao" class="form-control" rows="5" required></textarea>
         </div>
 
-            <button type="submit" class="btn btn-primary" data-aos="fade-up">Salvar Evolução</button>
-        </form>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Assinatura do Fisioterapeuta</label>
+            <input type="text" class="form-control" name="assinatura" 
+                   value="<?= htmlspecialchars($nomeFisioterapeuta) ?>" readonly>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Salvar Evolução</button>
+
+    </form>
+</div>
 
     <div class="row g-4" data-aos="fade-up">
         <?php if($prontuarios): ?>

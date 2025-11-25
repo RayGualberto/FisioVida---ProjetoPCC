@@ -153,48 +153,61 @@ $agenda = $stmt->fetchAll();
             </tr>
           </thead>
 
-          <tbody>
-            <?php if ($agenda): ?>
-              <?php foreach ($agenda as $a): ?>
-                <?php
-                  $status = htmlspecialchars($a['status']);
-                  $badgeClass = match ($status) {
-                      'concluido' => 'primary',
-                      'confirmado' => 'success',
-                      'recusado' => 'danger',
-                      'remarcado' => 'info',
-                      'pendente' => 'warning',
-                      default => 'secondary'
-                  };
-                ?>
-                <tr data-aos="fade-up" data-aos-delay="100">
-                  <td><?= (int)$a['id_Agenda'] ?></td>
-                  <td><?= htmlspecialchars($a['nome_paciente']) ?></td>
-                  <td><?= htmlspecialchars($a['data']) ?></td>
-                  <td><?= htmlspecialchars($a['data_agendamento']) ?></td>
-                  <td><?= htmlspecialchars($a['hora']) ?></td>
-                  <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
-                  <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
-                  <td class="text-end">
-                    <form action="cancelar_agenda.php" method="post" class="d-inline">
-                      <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                      <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>
-                    </form>
+<tbody>
+    <?php if ($agenda): ?>
+        <?php foreach ($agenda as $a): ?>
+            <?php
+                $status = htmlspecialchars($a['status']);
+                $badgeClass = match ($status) {
+                    'concluido' => 'primary',
+                    'confirmado' => 'success',
+                    'recusado'   => 'danger',
+                    'remarcado'  => 'info',
+                    'pendente'   => 'warning',
+                    default      => 'secondary'
+                };
+            ?>
+            <tr data-aos="fade-up" data-aos-delay="100">
+                <td><?= (int)$a['id_Agenda'] ?></td>
+                <td><?= htmlspecialchars($a['nome_paciente']) ?></td>
+                <td><?= htmlspecialchars($a['data']) ?></td>
+                <td><?= htmlspecialchars($a['data_agendamento']) ?></td>
+                <td><?= htmlspecialchars($a['hora']) ?></td>
+                <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
+                <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
 
-                    <form action="remarcar_agenda.php" method="post" class="d-inline">
-                      <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                      <button type="submit" class="btn btn-sm btn-outline-warning text-dark">Remarcar</button>
-                    </form>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <tr data-aos="fade-up">
-                <td colspan="8" class="text-center no-results">Nenhum agendamento encontrado.</td>
-              </tr>
-            <?php endif; ?>
-          </tbody>
+                <td class="text-end">
 
+                    <?php if ($status === 'concluido'): ?>
+
+                        <!-- Quando já concluído -->
+                        <span class="badge text-bg-primary">Sessão concluída</span>
+
+                    <?php else: ?>
+
+                        <!-- (Pendente / Remarcado / Recusado) → apenas Remarcar e Cancelar -->
+                        <form action="cancelar_agenda.php" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>
+                        </form>
+
+                        <form action="remarcar_agenda.php" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-warning text-dark">Remarcar</button>
+                        </form>
+
+                    <?php endif; ?>
+
+                </td>
+            </tr>
+        <?php endforeach; ?>
+
+    <?php else: ?>
+        <tr data-aos="fade-up">
+            <td colspan="8" class="text-center no-results">Nenhum agendamento encontrado.</td>
+        </tr>
+    <?php endif; ?>
+</tbody>
         </table>
       </div>
     </div>
