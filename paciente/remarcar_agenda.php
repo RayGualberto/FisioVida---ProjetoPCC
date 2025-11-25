@@ -9,7 +9,11 @@ if ($id <= 0) {
 }
 
 // Buscar agendamento atual
-$stmt = $pdo->prepare("SELECT nome_paciente, descricao_servico, data, hora, paciente_id_paciente, fisioterapeuta_id FROM agenda WHERE id_Agenda = ?");
+$stmt = $pdo->prepare("
+    SELECT nome_paciente, descricao_servico, data, hora, paciente_id_paciente, fisioterapeuta_id
+    FROM agenda
+    WHERE id_Agenda = ?
+");
 $stmt->execute([$id]);
 $agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -24,27 +28,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     $novaHora = $_POST['nova_hora'];
 
     // Atualizar agendamento
-    $stmtUpdate = $pdo->prepare("UPDATE agenda SET data = ?, hora = ?, status = 'remarcado' WHERE id_Agenda = ?");
+    $stmtUpdate = $pdo->prepare("
+        UPDATE agenda
+        SET data = ?, hora = ?, status = 'remarcado'
+        WHERE id_Agenda = ?
+    ");
     $stmtUpdate->execute([$novaData, $novaHora, $id]);
 
     // Criar mensagem de notificação
     $mensagem = "🔁 O paciente {$agendamento['nome_paciente']} remarcou a sessão de {$agendamento['descricao_servico']} para $novaData às $novaHora.";
 
-    // Preparar inserção de notificação
+    // Buscar CPF do paciente (remetente)
+    $stmtCpf = $pdo->prepare("SELECT cpf FROM paciente WHERE id_paciente = ?");
+    $stmtCpf->execute([$agendamento['paciente_id_paciente']]);
+    $remetenteCpf = $stmtCpf->fetchColumn();
+
+    // Preparar inserção de notificação (agora usando CPF)
     $stmtNotif = $pdo->prepare("
-        INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo)
+        INSERT INTO notificacoes (remetente_cpf, destinatario_cpf, mensagem, tipo)
         VALUES (?, ?, ?, 'remarcar')
     ");
 
     if ($agendamento['fisioterapeuta_id']) {
         // Notificação para fisioterapeuta vinculado
-        $stmtNotif->execute([$agendamento['paciente_id_paciente'], $agendamento['fisioterapeuta_id'], $mensagem]);
+        $stmtCpfFisio = $pdo->prepare("SELECT cpf FROM fisioterapeuta WHERE id_fisioterapeuta = ?");
+        $stmtCpfFisio->execute([$agendamento['fisioterapeuta_id']]);
+        $destinatarioCpf = $stmtCpfFisio->fetchColumn();
+
+        $stmtNotif->execute([$remetenteCpf, $destinatarioCpf, $mensagem]);
     } else {
         // Notificação para todos os fisioterapeutas
-        $stmtFisio = $pdo->query("SELECT id_Fisioterapeuta FROM fisioterapeuta");
+        $stmtFisio = $pdo->query("SELECT cpf FROM fisioterapeuta");
         $todosFisio = $stmtFisio->fetchAll(PDO::FETCH_ASSOC);
         foreach ($todosFisio as $f) {
-            $stmtNotif->execute([$agendamento['paciente_id_paciente'], $f['id_Fisioterapeuta'], $mensagem]);
+            $stmtNotif->execute([$remetenteCpf, $f['cpf'], $mensagem]);
         }
     }
 
@@ -55,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">

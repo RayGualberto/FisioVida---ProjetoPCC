@@ -11,29 +11,44 @@ if (isset($_POST['id'])) {
         $stmt->execute([$id]);
 
         // Buscar dados do paciente
-        $stmtInfo = $pdo->prepare("SELECT paciente_id_paciente, nome_paciente FROM agenda WHERE id_Agenda = ?");
+        $stmtInfo = $pdo->prepare("
+            SELECT paciente_id_paciente, nome_paciente
+            FROM agenda
+            WHERE id_Agenda = ?
+        ");
         $stmtInfo->execute([$id]);
         $agenda = $stmtInfo->fetch(PDO::FETCH_ASSOC);
 
         if ($agenda) {
+            // Buscar CPF do remetente (usuário logado)
+            $stmtCpfRem = $pdo->prepare("SELECT cpf FROM usuario WHERE id = ?");
+            $stmtCpfRem->execute([$_SESSION['usuario_id']]);
+            $remetenteCpf = $stmtCpfRem->fetchColumn();
+
+            // Buscar CPF do destinatário (paciente)
+            $stmtCpfDest = $pdo->prepare("SELECT cpf FROM paciente WHERE id_paciente = ?");
+            $stmtCpfDest->execute([$agenda['paciente_id_paciente']]);
+            $destinatarioCpf = $stmtCpfDest->fetchColumn();
+
             // Envia notificação ao paciente
             $msg = "❌ Sua sessão foi recusada.";
             $stmtNotif = $pdo->prepare("
-                INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo, lida)
-                VALUES (?, ?, ?, ?, 0)
+                INSERT INTO notificacoes (remetente_cpf, destinatario_cpf, mensagem, tipo, lida)
+                VALUES (?, ?, ?, 'recusado', 0)
             ");
             $stmtNotif->execute([
-                $_SESSION['usuario_id'],             // remetente
-                $agenda['paciente_id_paciente'],  // destinatário
-                $msg,
-                'recusado'
+                $remetenteCpf,
+                $destinatarioCpf,
+                $msg
             ]);
         }
 
         $_SESSION['msg'] = "Sessão recusada!";
         $_SESSION['msg_tipo'] = "erro";
+
     } catch (PDOException $e) {
         $_SESSION['msg'] = "⚠️ Erro ao recusar: " . $e->getMessage();
+        $_SESSION['msg_tipo'] = "erro";
     }
 }
 

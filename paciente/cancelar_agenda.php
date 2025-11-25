@@ -22,21 +22,30 @@ if (isset($_POST['id'])) {
         if ($ag) {
             $mensagem = "❌ O paciente {$ag['nome_paciente']} cancelou a sessão de {$ag['descricao_servico']} marcada para {$ag['data']} às {$ag['hora']}.";
 
-            // Preparar inserção de notificação
+            // Buscar CPF do paciente (remetente)
+            $stmtCpf = $pdo->prepare("SELECT cpf FROM paciente WHERE id_paciente = ?");
+            $stmtCpf->execute([$ag['paciente_id_paciente']]);
+            $remetenteCpf = $stmtCpf->fetchColumn();
+
+            // Preparar inserção de notificação (usando CPF)
             $stmtNotif = $pdo->prepare("
-                INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo)
+                INSERT INTO notificacoes (remetente_cpf, destinatario_cpf, mensagem, tipo)
                 VALUES (?, ?, ?, 'cancelamento')
             ");
 
             if ($ag['fisioterapeuta_id']) {
                 // Notificação para fisioterapeuta vinculado
-                $stmtNotif->execute([$ag['paciente_id_paciente'], $ag['fisioterapeuta_id'], $mensagem]);
+                $stmtCpfFisio = $pdo->prepare("SELECT cpf FROM fisioterapeuta WHERE id_fisioterapeuta = ?");
+                $stmtCpfFisio->execute([$ag['fisioterapeuta_id']]);
+                $destinatarioCpf = $stmtCpfFisio->fetchColumn();
+
+                $stmtNotif->execute([$remetenteCpf, $destinatarioCpf, $mensagem]);
             } else {
                 // Notificação para todos os fisioterapeutas
-                $stmtFisio = $pdo->query("SELECT id_Fisioterapeuta FROM fisioterapeuta");
+                $stmtFisio = $pdo->query("SELECT cpf FROM fisioterapeuta");
                 $todosFisio = $stmtFisio->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($todosFisio as $f) {
-                    $stmtNotif->execute([$ag['paciente_id_paciente'], $f['id_Fisioterapeuta'], $mensagem]);
+                    $stmtNotif->execute([$remetenteCpf, $f['cpf'], $mensagem]);
                 }
             }
         }

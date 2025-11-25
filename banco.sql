@@ -101,13 +101,14 @@ CREATE TABLE atendimento (
     FOREIGN KEY (fisioterapeuta_id) REFERENCES fisioterapeuta(id_fisioterapeuta)
 );
 
--- Tabela notificacoes
+-- Tabela de Notificações 
 CREATE TABLE IF NOT EXISTS notificacoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    destinatario_id INT NULL,
-    remetente_id INT NOT NULL,
+    destinatario_cpf VARCHAR(14) NULL,   -- CPF de quem vai receber a notificação
+    remetente_cpf VARCHAR(14) NOT NULL,  -- CPF de quem enviou a notificação
     mensagem VARCHAR(255) NOT NULL,
     tipo VARCHAR(50),
     data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
     lida TINYINT(1) DEFAULT 0
 );
+

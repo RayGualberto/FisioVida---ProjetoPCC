@@ -26,9 +26,9 @@ if (!$data || !$hora || !$idServico) {
     exit;
 }
 
-// Buscar paciente
+// Buscar CPF e nome do paciente
 $stmt = $pdo->prepare("
-    SELECT p.id_paciente, p.nome
+    SELECT p.id_paciente, p.nome, p.cpf
     FROM paciente p
     JOIN usuario u ON u.cpf = p.cpf
     WHERE u.id = ?
@@ -42,7 +42,7 @@ if (!$paciente) {
 }
 
 $nomePaciente = $paciente['nome'];
-$idPaciente = $paciente['id_paciente'];
+$cpfPaciente = $paciente['cpf'];
 
 // Buscar descrição do serviço
 $stmt = $pdo->prepare("SELECT descricao_servico, fisioterapeuta_id FROM servico WHERE id_servico = ?");
@@ -59,31 +59,41 @@ try {
             (nome_paciente, data, hora, descricao_servico, paciente_id_paciente, servico_id_servico, fisioterapeuta_id)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     ");
-    $stmt->execute([$nomePaciente, $data, $hora, $descricaoServico, $idPaciente, $idServico, $idFisio]);
+    $stmt->execute([$nomePaciente, $data, $hora, $descricaoServico, $paciente['id_paciente'], $idServico, $idFisio]);
     $novoId = $pdo->lastInsertId();
 
     // Criar mensagem de notificação
     $mensagem = "📅 Novo agendamento: $nomePaciente marcou $descricaoServico em $data às $hora";
 
+    // Busca CPF do remetente (paciente)
+    $remetenteCpf = $cpfPaciente;
+
     // Verifica se há fisioterapeuta vinculado
     if ($idFisio) {
-        // Se houver fisioterapeuta específico, envia para ele
+        // Se houver fisioterapeuta específico, busca CPF dele
+        $stmtCpf = $pdo->prepare("SELECT cpf FROM fisioterapeuta WHERE id_fisioterapeuta = ?");
+        $stmtCpf->execute([$idFisio]);
+        $destinatarioCpf = $stmtCpf->fetchColumn();
+
+        // Insere notificação
         $stmtNotif = $pdo->prepare("
-            INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo)
+            INSERT INTO notificacoes (remetente_cpf, destinatario_cpf, mensagem, tipo)
             VALUES (?, ?, ?, 'agendamento')
         ");
-        $stmtNotif->execute([$idPaciente, $idFisio, $mensagem]);
+        $stmtNotif->execute([$remetenteCpf, $destinatarioCpf, $mensagem]);
+
     } else {
-        // Se não houver fisioterapeuta vinculado, envia para todos os fisioterapeutas cadastrados
-        $stmtFisio = $pdo->query("SELECT id_Fisioterapeuta FROM fisioterapeuta");
+        // Se não houver fisioterapeuta específico, envia para todos os fisioterapeutas
+        $stmtFisio = $pdo->query("SELECT cpf FROM fisioterapeuta");
         $todosFisio = $stmtFisio->fetchAll(PDO::FETCH_ASSOC);
 
         $stmtNotif = $pdo->prepare("
-            INSERT INTO notificacoes (remetente_id, destinatario_id, mensagem, tipo)
+            INSERT INTO notificacoes (remetente_cpf, destinatario_cpf, mensagem, tipo)
             VALUES (?, ?, ?, 'agendamento')
         ");
+
         foreach ($todosFisio as $f) {
-            $stmtNotif->execute([$idPaciente, $f['id_Fisioterapeuta'], $mensagem]);
+            $stmtNotif->execute([$remetenteCpf, $f['cpf'], $mensagem]);
         }
     }
 

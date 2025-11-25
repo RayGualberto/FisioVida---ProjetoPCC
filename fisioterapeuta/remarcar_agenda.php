@@ -8,9 +8,14 @@ if ($id <= 0) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT nome_paciente, descricao_servico, data, hora FROM agenda WHERE id_Agenda = ?");
+// Buscar agendamento atual
+$stmt = $pdo->prepare("
+    SELECT nome_paciente, descricao_servico, data, hora, paciente_id_paciente
+    FROM agenda
+    WHERE id_Agenda = ?
+");
 $stmt->execute([$id]);
-$agendamento = $stmt->fetch();
+$agendamento = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$agendamento) {
     header('Location: agenda.php');
@@ -22,14 +27,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nova_data'], $_POST['
     $novaData = $_POST['nova_data'];
     $novaHora = $_POST['nova_hora'];
 
+    // Atualizar agendamento
     $stmtUpdate = $pdo->prepare("UPDATE agenda SET data = ?, hora = ?, status = 'remarcado' WHERE id_Agenda = ?");
     $stmtUpdate->execute([$novaData, $novaHora, $id]);
+
+    // --- INÍCIO NOTIFICAÇÃO PARA O PACIENTE ---
+    try {
+        // Buscar CPF do paciente (destinatário)
+        $stmtCpf = $pdo->prepare("SELECT cpf FROM paciente WHERE id_paciente = ?");
+        $stmtCpf->execute([$agendamento['paciente_id_paciente']]);
+        $cpfPaciente = $stmtCpf->fetchColumn();
+
+        // Mensagem para o paciente
+        $mensagem = "✅ Sua sessão de {$agendamento['descricao_servico']} foi remarcada para $novaData às $novaHora.";
+
+        $stmtNotif = $pdo->prepare("
+            INSERT INTO notificacoes (remetente_cpf, destinatario_cpf, mensagem, tipo, lida)
+            VALUES (?, ?, ?, 'remarcado', 0)
+        ");
+
+        // Envia a notificação, remetente e destinatário sendo o paciente
+        $stmtNotif->execute([$cpfPaciente, $cpfPaciente, $mensagem]);
+
+    } catch (PDOException $e) {
+        // Log de erro opcional
+    }
+    // --- FIM NOTIFICAÇÃO ---
+
     $_SESSION['msg'] = "Sessão remarcada com sucesso!";
     $_SESSION['msg_tipo'] = "sucesso";
 
     header('Location: agenda.php');
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
