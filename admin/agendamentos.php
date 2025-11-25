@@ -43,7 +43,28 @@ $sqlagendamentos = "SELECT id_Agenda, nome_paciente, data, data_agendamento, hor
 $stmt = $pdo->prepare($sqlagendamentos);
 $stmt->execute($agendaParams);
 $agenda = $stmt->fetchAll();
+
+// ==== Buscar atendimentos concluídos ====
+// Pegando somente atendimentos aos quais o agendamento foi concluído
+$sqlAtendimentos = "
+    SELECT 
+        a.id_atendimento,
+        a.data,
+        ag.nome_paciente,
+        ag.descricao_servico,
+        ag.data AS data_consulta,
+        ag.hora
+    FROM atendimento a
+    INNER JOIN agenda ag ON a.agenda_id = ag.id_Agenda
+    WHERE ag.status = 'concluido'
+    ORDER BY a.data DESC
+";
+$stmt = $pdo->prepare($sqlAtendimentos);
+$stmt->execute();
+$atendimentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -219,6 +240,7 @@ $agenda = $stmt->fetchAll();
                           // Define cor do status
                           $status = htmlspecialchars($a['status']);
                           $badgeClass = match ($status) {
+                              'concluido' => 'primary',
                               'confirmado' => 'success',
                               'recusado' => 'danger',
                               'remarcado' => 'info',
@@ -259,6 +281,51 @@ $agenda = $stmt->fetchAll();
     </div>
   </div>
 </div>
+
+<!-- Lista de Atendimentos Concluídos -->
+<div class="card shadow-sm mb-4" data-aos="fade-up">
+    <div class="card-header">
+        Atendimentos Concluídos (<?= count($atendimentos) ?>)
+    </div>
+
+    <div class="card-body">
+        <?php if (count($atendimentos) === 0): ?>
+            <p class="text-muted mb-0">Nenhum atendimento concluído ainda.</p>
+        <?php else: ?>
+            <div class="row g-3">
+                <?php foreach ($atendimentos as $at): ?>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100" data-aos="zoom-in">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <?= htmlspecialchars($at['nome_paciente']) ?>
+                                </h5>
+
+                                <p class="mb-1">
+                                    <strong>Serviço:</strong><br>
+                                    <?= htmlspecialchars($at['descricao_servico']) ?>
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Data da Consulta:</strong><br>
+                                    <?= htmlspecialchars($at['data_consulta']) ?> às <?= htmlspecialchars($at['hora']) ?>
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Data do Atendimento:</strong><br>
+                                    <?= htmlspecialchars($at['data']) ?>
+                                </p>
+
+                                <span class="badge text-bg-primary mt-2">Concluído</span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
 </html>

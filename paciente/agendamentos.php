@@ -159,6 +159,7 @@ $agenda = $stmt->fetchAll();
                 <?php
                   $status = htmlspecialchars($a['status']);
                   $badgeClass = match ($status) {
+                      'concluido' => 'primary',
                       'confirmado' => 'success',
                       'recusado' => 'danger',
                       'remarcado' => 'info',

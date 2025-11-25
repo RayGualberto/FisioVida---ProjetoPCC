@@ -1,5 +1,22 @@
 <?php
+session_start();
 require_once '../php/db.php';
+
+// Verifica login
+$cpf = $_SESSION['cpf_fisioterapeuta'] ?? null;
+
+if (!$cpf) {
+    header('Location: logar.php');
+    exit;
+}
+
+// Buscar nome do fisioterapeuta pelo CPF
+$stmtFis = $pdo->prepare("SELECT nome FROM fisioterapeuta WHERE cpf = ?");
+$stmtFis->execute([$cpf]);
+$fisio = $stmtFis->fetch();
+
+$nomeFisio = $fisio['nome'] ?? 'Fisioterapeuta';
+
 
 // Processar envio do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -66,34 +83,31 @@ include __DIR__ . '../partials/header.php';
 
 <div class="container mt-5 mb-5">
 
-    <!-- CARD DO FORMULÁRIO -->
-    <div class="form-card mb-5" data-aos="zoom-in">
-        <h2 class="mb-4 text-center" data-aos="fade-up">Sua Evolução</h2>
+<!-- CARD DO FORMULÁRIO -->
+<div class="form-card mb-5" data-aos="zoom-in">
+    <h2 class="mb-4 text-center" data-aos="fade-up">Sua Evolução</h2>
 
-        <?php if(!empty($mensagem)) : ?>
-            <div class="alert alert-info" data-aos="fade-down"><?= htmlspecialchars($mensagem) ?></div>
-        <?php endif; ?>
-    </div>
+    <?php if(!empty($mensagem)) : ?>
+        <div class="alert alert-info" data-aos="fade-down"><?= htmlspecialchars($mensagem) ?></div>
+    <?php endif; ?>
 
-    <!-- LISTA DE PRONTUÁRIOS -->
-    <div class="row g-4">
-        <?php if($prontuarios): ?>
-            <?php foreach($prontuarios as $p): ?>
-                <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="100">
-                    <div class="prontuario-card">
-                        <h5 class="mb-2">Data: <?= date('d/m/Y', strtotime($p['data'])) ?></h5>
-                        <p class="mb-2"><strong>Evolução:</strong> <?= nl2br(htmlspecialchars($p['evolucao'])) ?></p>
-                        <p class="mb-0"><strong>Assinatura:</strong> <?= htmlspecialchars($p['assinatura']) ?></p>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+    <form method="post">
 
-        <?php else: ?>
-            <div class="col-12" data-aos="fade-up">
-                <p class="text-center text-white">Nenhum prontuário registrado ainda.</p>
-            </div>
-        <?php endif; ?>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Evolução</label>
+            <textarea name="evolucao" class="form-control" rows="5" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Assinatura do Fisioterapeuta</label>
+            <input type="text" class="form-control" name="assinatura" 
+                   value="<?= htmlspecialchars($nomeFisio) ?>" readonly>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Salvar Evolução</button>
+
+    </form>
+</div>
 
 </div>
 

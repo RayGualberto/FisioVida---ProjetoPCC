@@ -23,12 +23,17 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 try {
-    // Consulta com PDO, agora incluindo a coluna 'foto'
-    $stmt = $pdo->prepare("SELECT id, nome, senha, cpf, tipo_usuario, foto FROM usuario WHERE email = ?");
+
+    // Busca usuário
+    $stmt = $pdo->prepare("
+        SELECT id, nome, senha, cpf, tipo_usuario, foto 
+        FROM usuario 
+        WHERE email = ?
+    ");
     $stmt->execute([$email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$usuario) {
+    if (!$usuario || !password_verify($senha, $usuario['senha'])) {
         echo "<script>
                 alert('Email ou senha inválido.');
                 window.history.back();
@@ -36,22 +41,38 @@ try {
         exit;
     }
 
-    // Verifica senha
-    if (!password_verify($senha, $usuario['senha'])) {
-        echo "<script>
-                alert('Email ou senha inválido.');
-                window.history.back();
-              </script>";
-        exit;
-    }
-
-    // Login OK - grava dados na sessão
+    // --- LOGIN OK - SALVA DADOS GERAIS ---
     $_SESSION['usuario_id']      = $usuario['id'];
     $_SESSION['usuario_nome']    = $usuario['nome'];
     $_SESSION['usuario_tipo']    = $usuario['tipo_usuario'];
     $_SESSION['foto_perfil']     = $usuario['foto'] ?? '../img/imagem_perfil.JPEG';
     $_SESSION['cpf']             = $usuario['cpf'];
-    // Redireciona conforme tipo de usuário
+
+    // --- SE FOR FISIOTERAPEUTA ---
+    if ($usuario['tipo_usuario'] === 'fisioterapeuta') {
+
+        // Buscar ID do fisioterapeuta na tabela apropriada
+        $stmtFisio = $pdo->prepare("
+            SELECT id_fisioterapeuta 
+            FROM fisioterapeuta 
+            WHERE cpf = ?
+        ");
+        $stmtFisio->execute([$usuario['cpf']]);
+        $fisio = $stmtFisio->fetch(PDO::FETCH_ASSOC);
+
+        if ($fisio) {
+            $_SESSION['fisioterapeuta_id'] = $fisio['id_fisioterapeuta'];
+            $_SESSION['cpf_fisioterapeuta'] = $usuario['cpf'];
+        } else {
+            echo "<script>
+                    alert('Erro: CPF não encontrado na tabela de fisioterapeuta.');
+                    window.history.back();
+                </script>";
+            exit;
+        }
+    }
+
+    // Redireciona
     switch ($usuario['tipo_usuario']) {
         case 'paciente':
             header("Location: ../paciente/paciente_dashboard.php");

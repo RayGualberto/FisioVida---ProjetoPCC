@@ -1,7 +1,6 @@
 <?php
-
 require_once '../php/db.php';
-
+session_start();
 // Parâmetros de filtro e paginação
 $qAgenda = trim($_GET['q_agenda'] ?? '');
 $statusFiltro = $_GET['status'] ?? ''; // Novo filtro de status
@@ -44,7 +43,27 @@ $stmt = $pdo->prepare($sqlAgendamentos);
 $stmt->execute($agendaParams);
 $agenda = $stmt->fetchAll();
 
+// ==== Buscar atendimentos concluídos ====
+// Pegando somente atendimentos aos quais o agendamento foi concluído
+$sqlAtendimentos = "
+    SELECT 
+        a.id_atendimento,
+        a.data,
+        ag.nome_paciente,
+        ag.descricao_servico,
+        ag.data AS data_consulta,
+        ag.hora
+    FROM atendimento a
+    INNER JOIN agenda ag ON a.agenda_id = ag.id_Agenda
+    WHERE ag.status = 'concluido'
+    ORDER BY a.data DESC
+";
+$stmt = $pdo->prepare($sqlAtendimentos);
+$stmt->execute();
+$atendimentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 include __DIR__ . '/partials/header.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -163,6 +182,7 @@ include __DIR__ . '/partials/header.php';
 
 </head>
 
+
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h2 class="h4 mb-0" data-aos="fade-right">Painel de Fisioterapeuta - FisioVida</h2>
     <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Fisioterapeuta</span>
@@ -188,7 +208,7 @@ include __DIR__ . '/partials/header.php';
         </select>
       </div>
       <div class="col-md-4 text-end">
-        <a class="btn btn-outline-secondary mt-3" href="fisio_dashboard.php">Limpar</a>
+        <a class="btn btn-outline-secondary mt-3" href="agenda.php">Limpar</a>
         <button class="btn btn-primary mt-3">Filtrar</button>
       </div>
     </div>
@@ -218,6 +238,7 @@ include __DIR__ . '/partials/header.php';
                 // Define cor do status
                 $status = htmlspecialchars($a['status']);
                 $badgeClass = match ($status) {
+                    'concluido' => 'primary',
                     'confirmado' => 'success',
                     'recusado' => 'danger',
                     'remarcado' => 'info',
@@ -234,19 +255,38 @@ include __DIR__ . '/partials/header.php';
                 <td><?= htmlspecialchars($a['descricao_servico']) ?></td>
                 <td><span class="badge text-bg-<?= $badgeClass ?>"><?= ucfirst($status) ?></span></td>
                 <td class="text-end">
-                  <form action="confirmar_agenda.php" method="post" class="d-inline">
-                    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                    <button type="submit" class="btn btn-sm btn-outline-success">Confirmar</button>
-                  </form>
-                  <form action="recusar_agenda.php" method="post" class="d-inline">
-                    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Recusar</button>
-                  </form>
-                  <form action="remarcar_agenda.php" method="post" class="d-inline">
-                    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
-                    <button type="submit" class="btn btn-sm btn-outline-warning text-dark">Remarcar</button>
-                  </form>
-                </td>
+
+    
+  <!-- Botão CONCLUIR (Azul) -->
+  <?php if ($status === 'concluido'): ?>
+
+<span class="badge text-bg-primary">Sessão concluída</span>
+  <?php elseif ($status === 'confirmado'): ?>
+  <form action="concluir_agenda.php" method="post" class="d-inline">
+    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+    <button type="submit" class="btn btn-sm btn-outline-primary">Concluir</button>
+  </form>
+<?php else: ?>
+  
+  <!-- Botões padrão (Confirmar / Recusar / Remarcar) -->
+  <form action="confirmar_agenda.php" method="post" class="d-inline">
+    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+    <button type="submit" class="btn btn-sm btn-outline-success">Confirmar</button>
+  </form>
+
+  <form action="recusar_agenda.php" method="post" class="d-inline">
+    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+    <button type="submit" class="btn btn-sm btn-outline-danger">Recusar</button>
+  </form>
+
+  <form action="remarcar_agenda.php" method="post" class="d-inline">
+    <input type="hidden" name="id" value="<?= (int)$a['id_Agenda'] ?>">
+    <button type="submit" class="btn btn-sm btn-outline-warning text-dark">Remarcar</button>
+  </form>
+
+<?php endif; ?>
+
+</td>
               </tr>
             <?php endforeach; ?>
 
@@ -263,5 +303,49 @@ include __DIR__ . '/partials/header.php';
     </div>
   </div>
 </div>
+<!-- Lista de Atendimentos Concluídos -->
+<div class="card shadow-sm mb-4" data-aos="fade-up">
+    <div class="card-header">
+        Atendimentos Concluídos (<?= count($atendimentos) ?>)
+    </div>
+
+    <div class="card-body">
+        <?php if (count($atendimentos) === 0): ?>
+            <p class="text-muted mb-0">Nenhum atendimento concluído ainda.</p>
+        <?php else: ?>
+            <div class="row g-3">
+                <?php foreach ($atendimentos as $at): ?>
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-sm h-100" data-aos="zoom-in">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">
+                                    <?= htmlspecialchars($at['nome_paciente']) ?>
+                                </h5>
+
+                                <p class="mb-1">
+                                    <strong>Serviço:</strong><br>
+                                    <?= htmlspecialchars($at['descricao_servico']) ?>
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Data da Consulta:</strong><br>
+                                    <?= htmlspecialchars($at['data_consulta']) ?> às <?= htmlspecialchars($at['hora']) ?>
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Data do Atendimento:</strong><br>
+                                    <?= htmlspecialchars($at['data']) ?>
+                                </p>
+
+                                <span class="badge text-bg-primary mt-2">Concluído</span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
   <?php include __DIR__ . '/partials/footer.php'; ?>
 </html>
