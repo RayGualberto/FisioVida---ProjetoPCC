@@ -14,7 +14,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <link rel="stylesheet" href="../css/logincadastro.css"/>
-
+    <style>
+    button:disabled,
+    button[disabled] {
+        background-color: #b8b8b8 !important; 
+        border-color: #9a9a9a !important;
+        cursor: not-allowed !important;
+        opacity: 1 !important;
+    }
+    </style>
   <!-- Adicionando JQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
@@ -210,8 +218,10 @@ $(document).ready(function() {
       </div>
     
       <div class="col-12">
-        <input type="radio">
-                <label for="tpp">Concordo com <a href="politica de privacidade.html">Termos de Política de Privacidade</a></label>
+          <input type="checkbox" id="aceiteLGPD" required>
+          <label for="aceiteLGPD">
+              Concordo com a <a href="politica de privacidade.html">Política de Privacidade</a>
+          </label>
       </div>
 
       <div class="col-12 text-center">
@@ -228,7 +238,20 @@ $(document).ready(function() {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   
-  <!-- Flatpickr JS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkbox = document.getElementById('aceiteLGPD');
+    const btn = document.querySelector('button[type="submit"]');
+
+    // botão inicia desabilitado
+    btn.disabled = true;
+
+    checkbox.addEventListener('change', function() {
+        btn.disabled = !checkbox.checked;
+    });
+});
+</script>
+
 </body>
 
 <!-- Modal de erro -->
@@ -263,6 +286,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-
-
 </html>
