@@ -225,7 +225,7 @@ $(document).ready(function() {
       </div>
 
       <div class="col-12 text-center">
-        <button type="submit" class="btn btn-primary px-5">Cadastrar</button>
+        <button id="btnCadastrar" type="submit" class="btn btn-primary px-5">Cadastrar</button>
       </div>
     
       <div class="col-12 text-center">
@@ -238,19 +238,24 @@ $(document).ready(function() {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   
+  <!-- Trava do botão Cadastrar -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const checkbox = document.getElementById('aceiteLGPD');
-    const btn = document.querySelector('button[type="submit"]');
+    const btn = document.getElementById('btnCadastrar');
 
-    // botão inicia desabilitado
-    btn.disabled = true;
+    btn.setAttribute("disabled", true);
 
     checkbox.addEventListener('change', function() {
-        btn.disabled = !checkbox.checked;
+        if (checkbox.checked) {
+            btn.removeAttribute("disabled");
+        } else {
+            btn.setAttribute("disabled", true);
+        }
     });
 });
 </script>
+
 
 </body>
 
@@ -264,9 +269,10 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="modal-body">
         <?php
-        if (!empty($_SESSION['error_msg'])) {
-            echo htmlspecialchars($_SESSION['error_msg']);
-            unset($_SESSION['error_msg']);
+        if (!empty($_SESSION['msg']) && $_SESSION['msg_tipo'] === "erro") {
+            echo htmlspecialchars($_SESSION['msg']);
+            unset($_SESSION['msg']);
+            unset($_SESSION['msg_tipo']);
         }
         ?>
       </div>
@@ -280,6 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var modalEl = document.getElementById('errorModal');
+
     if (modalEl && modalEl.querySelector('.modal-body').textContent.trim() !== '') {
         var modal = new bootstrap.Modal(modalEl);
         modal.show();

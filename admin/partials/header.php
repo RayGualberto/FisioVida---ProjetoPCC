@@ -329,8 +329,12 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
   <a href="prontuario.php" class="nav-link ... <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>">
   <i class="bi bi-clipboard"></i> Prontuários</a>
+
   <a href="log.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'log.php') ? 'active' : ''; ?>">
   <i class="bi bi-list-check"></i> LOG</a>
+
+  <a href="relatorio.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'relatorio.php') ? 'active' : ''; ?>">
+  <i class="bi bi-bar-chart"></i> Relatórios</a>
 
 </div>
 

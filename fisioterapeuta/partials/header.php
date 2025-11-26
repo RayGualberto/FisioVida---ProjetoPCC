@@ -164,9 +164,6 @@ try {
   <a href="agenda.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'agenda.php') ? 'active' : ''; ?>">
   <i class="bi bi-calendar3"></i> Agendamentos</a>
 
-  <a href="relatorio.php" class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'relatorio.php') ? 'active' : ''; ?>">
-  <i class="bi bi-bar-chart"></i> Relatórios</a>
-
 </div>
 
 <!-- Script notificações -->

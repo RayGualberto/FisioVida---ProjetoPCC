@@ -45,10 +45,14 @@ $concluidos = $stmtConcluidos->fetch()['total'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatórios - Fisioterapeuta</title>
+    <title>Relatórios - Adiministrador</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../css/fisioterapeuta.css">
 </head>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0" data-aos="fade-right">Painel De Relatórios - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Adiministrador</span>
+  </div>
 <div class="main-content">
     <h2>📊 Relatórios de Agendamentos</h2>
 
