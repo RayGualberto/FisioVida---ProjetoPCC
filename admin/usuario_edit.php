@@ -1,6 +1,6 @@
 <?php
 require_once '../php/db.php';
-
+session_start();
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) {
     header('Location: usuarios.php');
@@ -104,6 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 $pdo->commit();
+
+            $_SESSION['msg'] = "Usuario editado com sucesso!";
+            $_SESSION['msg_tipo'] = "sucesso";
 
                 header('Location: usuarios.php');
                 exit;
