@@ -298,18 +298,46 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <hr>
 
-    <div class="user-info">
-      <p><strong>Nome:</strong> <?= htmlspecialchars($usuario['nome']) ?></p>
-      <p><strong>Email:</strong> <?= htmlspecialchars($usuario['email']) ?></p>
-      <p><strong>CPF:</strong> <?= htmlspecialchars($usuario['cpf']) ?></p>
-      <p><strong>Data de Nascimento:</strong> <?= date('d/m/Y', strtotime($usuario['data_nasc'])) ?></p>
-      <p><strong>Telefone:</strong> <?= htmlspecialchars($usuario['telefone']) ?></p>
-      <p><strong>CEP:</strong> <?= htmlspecialchars($usuario['cep']) ?></p>
-      <p><strong>Sexo:</strong> <?= htmlspecialchars($usuario['sexo']) ?></p>
-      <p><strong>Tipo de Usuário:</strong> 
-        <span class="badge bg-primary"><?= ucfirst($usuario['tipo_usuario']) ?></span>
-      </p>
-    </div>
+<div id="userInfo">
+
+  <div class="mb-2">
+    <strong>Nome:</strong>
+    <span class="view-mode"><?= htmlspecialchars($usuario['nome']) ?></span>
+    <input class="form-control edit-mode d-none" id="editNome" value="<?= htmlspecialchars($usuario['nome']) ?>">
+  </div>
+
+  <div class="mb-2">
+    <strong>Email:</strong>
+    <span class="view-mode"><?= htmlspecialchars($usuario['email']) ?></span>
+    <input class="form-control edit-mode d-none" id="editEmail" value="<?= htmlspecialchars($usuario['email']) ?>">
+  </div>
+
+  <div class="mb-2">
+    <strong>Telefone:</strong>
+    <span class="view-mode"><?= htmlspecialchars($usuario['telefone']) ?></span>
+    <input class="form-control edit-mode d-none" id="editTelefone" value="<?= htmlspecialchars($usuario['telefone']) ?>">
+  </div>
+
+  <div class="mb-2">
+    <strong>CEP:</strong>
+    <span class="view-mode"><?= htmlspecialchars($usuario['cep']) ?></span>
+    <input class="form-control edit-mode d-none" id="editCep" value="<?= htmlspecialchars($usuario['cep']) ?>">
+  </div>
+
+  <!-- Estes dados não podem ser editados -->
+  <p><strong>CPF:</strong> <?= htmlspecialchars($usuario['cpf']) ?></p>
+  <p><strong>Data de Nascimento:</strong> <?= date('d/m/Y', strtotime($usuario['data_nasc'])) ?></p>
+  <p><strong>Sexo:</strong> <?= htmlspecialchars($usuario['sexo']) ?></p>
+</div>
+
+<hr>
+
+<!-- Botões -->
+<div class="text-center">
+  <button class="btn btn-outline-primary" id="btnEditarPerfil">Editar Perfil</button>
+  <button class="btn btn-outline-success d-none" id="btnSalvarPerfil">Salvar Alterações</button>
+  <button class="btn btn-outline-secondary d-none" id="btnCancelarEdicao">Cancelar</button>
+</div>
   </div>
 </div>
 
@@ -414,6 +442,70 @@ window.addEventListener('click', (e) => {
 <script>
   AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
 </script>
+
+<script>
+// Botões
+const btnEditar = document.getElementById('btnEditarPerfil');
+const btnSalvar = document.getElementById('btnSalvarPerfil');
+const btnCancelar = document.getElementById('btnCancelarEdicao');
+
+// Alternar modos
+btnEditar.addEventListener('click', () => {
+    document.querySelectorAll('.view-mode').forEach(el => el.classList.add('d-none'));
+    document.querySelectorAll('.edit-mode').forEach(el => el.classList.remove('d-none'));
+
+    btnEditar.classList.add('d-none');
+    btnSalvar.classList.remove('d-none');
+    btnCancelar.classList.remove('d-none');
+});
+
+btnCancelar.addEventListener('click', () => {
+    document.querySelectorAll('.view-mode').forEach(el => el.classList.remove('d-none'));
+    document.querySelectorAll('.edit-mode').forEach(el => el.classList.add('d-none'));
+
+    btnEditar.classList.remove('d-none');
+    btnSalvar.classList.add('d-none');
+    btnCancelar.classList.add('d-none');
+});
+
+// Salvar alterações via AJAX
+btnSalvar.addEventListener('click', () => {
+
+    const dados = {
+        nome: document.getElementById('editNome').value,
+        email: document.getElementById('editEmail').value,
+        telefone: document.getElementById('editTelefone').value,
+        cep: document.getElementById('editCep').value
+    };
+
+    fetch('editar_perfil.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'ok') {
+            alert('Perfil atualizado com sucesso!');
+
+            // Atualiza os textos nos spans
+            document.querySelectorAll('.view-mode')[0].textContent = dados.nome;
+            document.querySelectorAll('.view-mode')[1].textContent = dados.email;
+            document.querySelectorAll('.view-mode')[2].textContent = dados.telefone;
+            document.querySelectorAll('.view-mode')[3].textContent = dados.cep;
+
+            btnCancelar.click(); // Volta para o modo de visualização
+        } else {
+            alert('Erro ao atualizar: ' + data.mensagem);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Erro inesperado.');
+    });
+});
+</script>
+
 <!-- Conteúdo principal -->
 <div id="main-content">
   <!-- Aqui vai todo o seu conteúdo -->
