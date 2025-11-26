@@ -1,0 +1,175 @@
+           :root {
+            --azul-base: #b3e5fc;
+            /* pedido */
+            --azul-escuro: #0288d1;
+            --bg-soft: linear-gradient(135deg, #f5fbff, #eaf8ff);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6b7280;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg-soft);
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+/* Estilo geral para seções da página contato */
+.container.my-5 {
+  background-color: #e8f8ff; /* verde clarinho */
+  border-radius: 12px;
+  padding: 50px 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-bottom: 3rem;
+}
+
+/* Títulos principais */
+h2.text-center {
+  color: #0b8ecb;
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Parágrafos principais */
+.container p.text-center {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: #333;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Cards de contato */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: white;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: #198754;
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container.my-5 {
+    padding: 30px 20px;
+  }
+
+  form.row.g-3 {
+    padding: 25px 20px;
+  }
+
+  h2.text-center {
+    font-size: 2rem;
+  }
+
+  form button.btn-primary {
+    width: 100%;
+  }
+}
+/* Botões de Login e Agendar responsivos */
+@media (max-width: 991px) {
+  .navbar .btn {
+    width: 100%; /* ocupa toda a largura no mobile */
+  }
+}
+/* Animação suave ao abrir */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ====== ANIMAÇÃO GERAL ====== */
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Container do formulário surgindo */
+.container {
+    animation: fadeSlideUp 0.8s ease-in-out forwards;
+}
+
+/* Container principal animado ao carregar */
+.container {
+    animation: fadeSlideUp 0.9s ease forwards;
+}
+
+/* Container geral */
+.politica-container {
+    max-width: 900px;
+    line-height: 1.7;
+}
+
+/* Parágrafos gerais */
+.text-desc {
+    font-size: 1.05rem;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+/* Listas básicas */
+.politica-list li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+
+/* Caixas organizadas */
+.politica-box {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid #0d6efd;
+}
+
+/* Lista de destaque */
+.politica-ul-destaque li {
+    margin-bottom: 12px;
+}
+
+.politica-ul-destaque p {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+/* Títulos */
+h2, h4 {
+    font-weight: 700;
+}
+
+/* Botão voltar */
+.btn-primary {
+    border-radius: 8px;
+    font-size: 1.1rem;
+}

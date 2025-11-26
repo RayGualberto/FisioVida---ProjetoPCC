@@ -209,6 +209,11 @@ $(document).ready(function() {
         </select>
       </div>
     
+      <div class="col-12">
+        <input type="radio">
+                <label for="tpp">Concordo com <a href="politica de privacidade.html">Termos de Política de Privacidade</a></label>
+      </div>
+
       <div class="col-12 text-center">
         <button type="submit" class="btn btn-primary px-5">Cadastrar</button>
       </div>
