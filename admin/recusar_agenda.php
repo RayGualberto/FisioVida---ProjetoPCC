@@ -28,11 +28,9 @@ if (isset($_POST['id'])) {
                 'recusado'
             ]);
         }
-
+    } catch (PDOException $e) {
         $_SESSION['msg'] = "Sessão recusada!";
         $_SESSION['msg_tipo'] = "erro";
-    } catch (PDOException $e) {
-        $_SESSION['msg'] = "⚠️ Erro ao recusar: " . $e->getMessage();
     }
 }
 
