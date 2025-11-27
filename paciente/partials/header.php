@@ -375,6 +375,28 @@ li {
   list-style: none;
 }
 
+.nova-notificacao {
+    animation: sinoBalanco 0.7s ease;
+}
+
+@keyframes sinoBalanco {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    50% { transform: rotate(15deg); }
+    75% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.badge-pulso {
+    animation: pulso 1s ease-out;
+}
+
+@keyframes pulso {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
 </style>
 </head>
 <body>
@@ -552,38 +574,63 @@ li {
 
 <script>
 // Função para buscar notificações do paciente
+let notificacoesAnterioresPaciente = 0;
+
 function carregarNotificacoes() {
     fetch('../php/buscar_notificacao_paciente.php')
-    .then(res => res.json())
-    .then(data => {
-        const lista = document.getElementById('listaNotificacoes');
-        const contador = document.getElementById('contadorNotificacoes');
-        lista.innerHTML = '';
+        .then(res => res.json())
+        .then(data => {
 
-        if (!data.notificacoes || data.notificacoes.length === 0) {
-            lista.innerHTML = '<li class="text-center text-muted small py-2">Nenhuma notificação</li>';
-            contador.classList.add('d-none');
-            return;
-        }
+            const lista = document.getElementById('listaNotificacoes');
+            const contador = document.getElementById('contadorNotificacoes');
+            const sino = document.querySelector('#notificacoesDropdown i');
 
-        data.notificacoes.forEach(n => {
-            const li = document.createElement('li');
-            li.classList.add('dropdown-item', 'small', n.lida == 0 ? 'nao-lida' : '');
-            li.innerHTML = `
-                <div>${n.mensagem}</div>
-                <small class="text-muted">Enviado por: ${n.remetente_nome} | ${new Date(n.data_envio).toLocaleString('pt-BR')}</small>
-            `;
-            lista.appendChild(li);
-        });
+            lista.innerHTML = '';
 
-        if (data.total_nao_lidas > 0) {
-            contador.textContent = data.total_nao_lidas;
-            contador.classList.remove('d-none');
-        } else {
-            contador.classList.add('d-none');
-        }
-    })
-    .catch(err => console.error('Erro ao buscar notificações:', err));
+            let totalAtual = Number(data.total_nao_lidas) || 0;
+
+            // 🔔 Detectar nova notificação
+            if (totalAtual > notificacoesAnterioresPaciente) {
+                sino.classList.add('nova-notificacao');
+                contador.classList.add('badge-pulso');
+
+                setTimeout(() => {
+                    sino.classList.remove('nova-notificacao');
+                    contador.classList.remove('badge-pulso');
+                }, 1500);
+            }
+
+            notificacoesAnterioresPaciente = totalAtual;
+
+            // 🔵 Atualizar badge
+            if (totalAtual > 0) {
+                contador.textContent = totalAtual;
+                contador.classList.remove('d-none');
+            } else {
+                contador.classList.add('d-none');
+            }
+
+            // 📝 Renderizar lista
+            if (!data.notificacoes || data.notificacoes.length === 0) {
+                lista.innerHTML = '<li class="text-center text-muted small py-2">Nenhuma notificação</li>';
+                return;
+            }
+
+            data.notificacoes.forEach(n => {
+                const li = document.createElement('li');
+                li.classList.add('dropdown-item', 'small', n.lida == 0 ? 'nao-lida' : '');
+                li.innerHTML = `
+                    <div>${n.mensagem}</div>
+                    <small class="text-muted">
+                        Enviado por: ${n.remetente_nome} |
+                        ${new Date(n.data_envio).toLocaleString('pt-BR')}
+                    </small>
+                `;
+                lista.appendChild(li);
+            });
+
+        })
+        .catch(err => console.error('Erro ao buscar notificações:', err));
 }
 
 // Marcar todas como lidas

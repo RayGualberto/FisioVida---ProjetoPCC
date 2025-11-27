@@ -326,6 +326,27 @@ li {
   list-style: none;
 }
 
+.nova-notificacao {
+    animation: sinoBalanco 0.7s ease;
+}
+
+@keyframes sinoBalanco {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    50% { transform: rotate(15deg); }
+    75% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.badge-pulso {
+    animation: pulso 1s ease-out;
+}
+
+@keyframes pulso {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
 </style>
 
 </head>
@@ -483,33 +504,59 @@ li {
 <!-- Script notificações -->
 <script>
 // Função para buscar notificações
+let notificacoesAnteriores = 0;
+
 function carregarNotificacoes() {
+
   fetch('../php/buscar_notificacao_fisioterapeuta.php')
     .then(res => res.json())
     .then(data => {
+
       const lista = document.getElementById('listaNotificacoes');
       const contador = document.getElementById('contadorNotificacoes');
+      const sino = document.querySelector('#notificacoesDropdown i');
+
       lista.innerHTML = '';
 
-      if (!data.notificacoes || data.notificacoes.length === 0) {
+      let totalAtual = Number(data.total_nao_lidas) || 0;
+
+      // 🔔 Detectar nova notificação
+      if (totalAtual > notificacoesAnteriores) {
+          sino.classList.add('nova-notificacao');
+          contador.classList.add('badge-pulso');
+
+          setTimeout(() => {
+              sino.classList.remove('nova-notificacao');
+              contador.classList.remove('badge-pulso');
+          }, 1500);
+      }
+
+      notificacoesAnteriores = totalAtual;
+
+      // 🔵 Atualizar badge
+      if (totalAtual > 0) {
+          contador.textContent = totalAtual;
+          contador.classList.remove('d-none');
+      } else {
+          contador.classList.add('d-none');
+      }
+
+      // Renderizar notificações
+      if (data.notificacoes.length === 0) {
         lista.innerHTML = '<li class="text-center text-muted small py-2">Nenhuma notificação</li>';
-        contador.classList.add('d-none');
         return;
       }
 
       data.notificacoes.forEach(n => {
-        const li = document.createElement('li');
-        li.classList.add('dropdown-item', 'small', n.lida == 0 ? 'nao-lida' : '');
-        li.innerHTML = `<div>${n.mensagem}</div><small class="text-muted">${new Date(n.data_envio).toLocaleString('pt-BR')}</small>`;
-        lista.appendChild(li);
+          const li = document.createElement('li');
+          li.classList.add('dropdown-item', 'small', n.lida == 0 ? 'nao-lida' : '');
+          li.innerHTML = `
+              <div>${n.mensagem}</div>
+              <small class="text-muted">${new Date(n.data_envio).toLocaleString('pt-BR')}</small>
+          `;
+          lista.appendChild(li);
       });
 
-      if (data.total_nao_lidas > 0) {
-        contador.textContent = data.total_nao_lidas;
-        contador.classList.remove('d-none');
-      } else {
-        contador.classList.add('d-none');
-      }
     })
     .catch(err => console.error('Erro ao buscar notificações:', err));
 }
