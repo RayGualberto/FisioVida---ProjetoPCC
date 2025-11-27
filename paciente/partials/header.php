@@ -109,32 +109,45 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             padding: .35rem .9rem;
             font-weight: 600;
         }
-        /* Navbar */
-        
-        .navbar {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(6px);
-            box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
-            position: relative;
-            z-index: 2000;
-        }
-        
-        .navbar .nav-link {
-            color: #0b3b56;
-            font-weight: 600;
-        }
-        
-        .navbar .btn-outline-primary {
-            border-color: transparent;
-            background: transparent;
-            color: var(--azul-escuro);
-            border-radius: 30px;
-        }
-        
-        .navbar .btn-outline-primary:hover {
-            background: var(--azul-base);
-            color: #033748;
-        }
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 18px rgba(9, 30, 63, 0.06);
+    position: relative;
+    z-index: 2000;
+}
+
+.navbar .btn-outline-primary {
+    border-color: transparent;
+    background: transparent;
+    color: var(--azul-escuro);
+    border-radius: 30px;
+}
+
+.navbar .btn-outline-primary:hover {
+    background: var(--azul-base);
+    color: #033748;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .navbar-brand img {
+        width: 85px;
+        height: auto;
+    }
+
+    nav .btn {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+    }
+
+    #profileBtn img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
 
 #contadorNotificacoes {
   font-size: 0.7rem;
@@ -241,6 +254,35 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
   #sidebar .nav-link:visited {
     font-weight: normal;
   }
+  @media (max-width: 768px) {
+
+  #sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;        /* permite quebrar linha */
+    flex-direction: row;    /* botões ficam lado a lado */
+    justify-content: center;
+    gap: 8px;
+  }
+
+  #sidebar .nav-link {
+    flex: 1;                /* cada botão ocupa o mesmo espaço */
+    min-width: 120px;       /* evita ficar espremido demais */
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  #main-content {
+    margin-left: 0 !important;
+    padding-top: 15px;
+  }
+}
+
 
 /* Modal */
 .profile-modal {
@@ -329,6 +371,9 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 .dropdown-menu {
     z-index: 3000 !important;
 }
+li {
+  list-style: none;
+}
 
 </style>
 </head>
@@ -347,39 +392,36 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     </div>
 
 <!-- Navbar superior -->
-<nav class="navbar navbar-expand-md bg-light sticky-top py-3" data-aos="fade-down" data-aos-delay="150">
-  <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 61px;">
-    <a href="paciente_dashboard.php" class="navbar-brand">
+<nav class="navbar bg-light sticky-top py-2" data-aos="fade-down" data-aos-delay="150">
+  <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+
+    <!-- LOGO -->
+    <a href="paciente_dashboard.php" class="navbar-brand me-3">
       <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- Botões e Ícones -->
+    <div class="d-flex flex-wrap align-items-center gap-2">
 
-    <div class="collapse navbar-collapse justify-content-end" id="menunavbar">
-      <ul class="navbar-nav ms-auto d-flex align-items-center">
-        <li class="nav-item me-2">
-        <a class="btn btn-outline-primary btn-sm" href="Agendar.php" data-aos="fade-left" data-aos-delay="250"></i> Agendar</a>
-        </li>
-        <li class="nav-item me-2">
-        <a class="btn btn-outline-danger btn-sm" href="../php/logout.php" data-aos="fade-left" data-aos-delay="300">Sair</a>
-        </li>
+      <!-- Botão Agendar -->
+      <a class="btn btn-outline-primary btn-sm" href="Agendar.php">
+        Agendar
+      </a>
 
-        <!-- Ícone de perfil com a foto do usuário -->
-        <li class="nav-item">
-        <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil" 
-        data-aos="zoom-in" data-aos-delay="350">
-            <img 
-              src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? ($usuario['foto'] ?? '../img/imagem_perfil.JPEG')); ?>" 
-              alt="Foto de perfil" 
-              class="rounded-circle border border-secondary" 
-              width="38" 
-              height="38" 
-              style="object-fit: cover;"
-            >
-          </button>
-        </li>
+      <!-- Botão Sair -->
+      <a class="btn btn-outline-danger btn-sm" href="../php/logout.php">
+        Sair
+      </a>
+
+      <!-- Foto de Perfil -->
+      <button class="btn p-0 border-0 bg-transparent" id="profileBtn" title="Perfil">
+        <img 
+          src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? ($usuario['foto'] ?? '../img/imagem_perfil.JPEG')); ?>" 
+          alt="Foto de perfil" 
+          class="rounded-circle border border-secondary" 
+          width="38" height="38" 
+          style="object-fit: cover;">
+      </button>
 
 <!-- Ícone de notificações -->
 <li class="nav-item dropdown me-3">

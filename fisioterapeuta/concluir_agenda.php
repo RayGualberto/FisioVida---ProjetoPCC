@@ -3,26 +3,15 @@ session_start();
 require '../php/db.php'; // conexão
 
 // ======= PEGAR CPF DO FISIOTERAPEUTA =======
-// Aqui você escolhe de onde vem o CPF:
-
-// 1. da sessão:
 $cpfFisioterapeuta = $_SESSION['cpf_fisioterapeuta'] ?? null;
 
-// 2. ou do formulário:
-// $cpfFisioterapeuta = $_POST['cpf'] ?? null;
-
-// Se não houver CPF → não deixa continuar
 if (!$cpfFisioterapeuta) {
     header('Location: agenda.php');
     exit;
 }
 
-// ======= BUSCAR O ID DO FISIO PELO CPF =======
-$stmtFisio = $pdo->prepare("
-    SELECT id_fisioterapeuta 
-    FROM fisioterapeuta 
-    WHERE cpf = ?
-");
+// ======= BUSCAR ID DO FISIO =======
+$stmtFisio = $pdo->prepare("SELECT id_fisioterapeuta FROM fisioterapeuta WHERE cpf = ?");
 $stmtFisio->execute([$cpfFisioterapeuta]);
 $fisioterapeuta = $stmtFisio->fetch(PDO::FETCH_ASSOC);
 
@@ -34,7 +23,7 @@ if (!$fisioterapeuta) {
 $fisioterapeutaId = (int)$fisioterapeuta['id_fisioterapeuta'];
 
 
-// ======= PEGAR O ID DA AGENDA =======
+// ======= PEGAR ID DA AGENDA =======
 if (!isset($_POST['id']) || empty($_POST['id'])) {
     header('Location: agenda.php');
     exit;
@@ -43,47 +32,88 @@ if (!isset($_POST['id']) || empty($_POST['id'])) {
 $idAgenda = (int)$_POST['id'];
 
 try {
-    // Verificar se a agenda existe
-    $stmt = $pdo->prepare("SELECT id_Agenda FROM agenda WHERE id_Agenda = ?");
+
+    // ================================
+    // 1️⃣ BUSCAR ID DO PACIENTE
+    // ================================
+    $stmt = $pdo->prepare("
+        SELECT paciente_id_paciente
+        FROM agenda
+        WHERE id_Agenda = ?
+        LIMIT 1
+    ");
     $stmt->execute([$idAgenda]);
     $agenda = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$agenda) {
-        header('Location: agenda.php');
-        exit;
+        throw new Exception("Agenda não encontrada.");
     }
 
-    // Iniciar transação
+    $idPaciente = $agenda['paciente_id_paciente'];
+
+    // ================================
+    // 2️⃣ BUSCAR CPF DO PACIENTE
+    // ================================
+    $stmtPac = $pdo->prepare("
+        SELECT cpf 
+        FROM paciente 
+        WHERE id_paciente = ?
+    ");
+    $stmtPac->execute([$idPaciente]);
+    $paciente = $stmtPac->fetch(PDO::FETCH_ASSOC);
+
+    if (!$paciente) {
+        throw new Exception("Paciente não encontrado.");
+    }
+
+    $cpfPaciente = $paciente['cpf']; // CPF REAL do paciente
+
+
+
+    // === INICIAR TRANSAÇÃO ===
     $pdo->beginTransaction();
 
-    // Inserir atendimento COM fisioterapeuta
+    // 3️⃣ INSERIR ATENDIMENTO
     $stmtInsert = $pdo->prepare("
         INSERT INTO atendimento (data, agenda_id, fisioterapeuta_id)
         VALUES (NOW(), ?, ?)
     ");
     $stmtInsert->execute([$idAgenda, $fisioterapeutaId]);
 
-    // Atualizar status
+    // 4️⃣ MARCAR AGENDA COMO CONCLUÍDA
     $stmtUpdate = $pdo->prepare("
-        UPDATE agenda SET status = 'concluido'
+        UPDATE agenda 
+        SET status = 'concluido'
         WHERE id_Agenda = ?
     ");
     $stmtUpdate->execute([$idAgenda]);
 
-    // Commit
+    // 5️⃣ ENVIAR NOTIFICAÇÃO AO PACIENTE
+    $mensagem = "Sua sessão foi concluída pelo fisioterapeuta.";
+    $tipo = "sessao_concluida";
+
+    $stmtNotif = $pdo->prepare("
+        INSERT INTO notificacoes (destinatario_cpf, remetente_cpf, mensagem, tipo)
+        VALUES (?, ?, ?, ?)
+    ");
+    $stmtNotif->execute([$cpfPaciente, $cpfFisioterapeuta, $mensagem, $tipo]);
+
+    // Confirmar tudo
     $pdo->commit();
 
     $_SESSION['msg'] = "Sessão concluída com sucesso!";
     $_SESSION['msg_tipo'] = "sucesso";
 
-    header('Location: agenda.php');
+    header("Location: agenda.php?concluido=1&id=$idAgenda");
     exit;
 
 } catch (Exception $e) {
-    $pdo->rollBack();
-    header('Location: agenda.php');
+
+    // rollback só se houver transação ativa
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    echo "Erro: " . $e->getMessage();
     exit;
 }
-header("Location: agenda.php?concluido=1&id=$idAgenda");
-exit;
-
