@@ -69,7 +69,7 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </button>
 
             <div class="collapse navbar-collapse" id="menunavbar">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center text-center">
                     <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
                     <li class="nav-item"><a class="nav-link" href="servico.html">SERVIÇOS</a></li>
                     <li class="nav-item"><a class="nav-link" href="sobre.html">SOBRE</a></li>

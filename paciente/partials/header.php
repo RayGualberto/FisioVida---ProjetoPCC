@@ -326,6 +326,9 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     height: 140px;
   }
 }
+.dropdown-menu {
+    z-index: 3000 !important;
+}
 
 </style>
 </head>
@@ -380,19 +383,37 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <!-- Ícone de notificações -->
 <li class="nav-item dropdown me-3">
-  <a class="btn position-relative" href="#" id="notificacoesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-aos="zoom-in" data-aos-delay="400">
+  <a class="btn position-relative" href="#" id="notificacoesDropdown" role="button" 
+     data-bs-toggle="dropdown" aria-expanded="false">
     <i class="bi bi-bell fs-5"></i>
-    <span id="contadorNotificacoes" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
+    <span id="contadorNotificacoes" 
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
   </a>
-  <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificacoesDropdown" style="width: 320px; max-height: 400px; overflow-y: auto;">
+
+  <ul class="dropdown-menu dropdown-menu-end shadow"
+      aria-labelledby="notificacoesDropdown"
+      style="width: 320px; max-height: 400px; overflow-y: auto;">
+
     <li class="dropdown-header text-center fw-bold">Notificações</li>
-    <div id="listaNotificacoes">
-      <li class="text-center text-muted small py-2">Carregando...</li>
-    </div>
+
+    <!-- Lista correta -->
+    <li>
+      <ul id="listaNotificacoes" class="list-group list-group-flush">
+        <li class="list-group-item text-center text-muted">Carregando...</li>
+      </ul>
+    </li>
+
     <li><hr class="dropdown-divider"></li>
-    <li><button id="marcarLidas" class="dropdown-item text-center text-primary">Marcar todas como lidas</button></li>
+
+    <li>
+      <button id="marcarLidas" class="dropdown-item text-center text-primary">
+        Marcar todas como lidas
+      </button>
+    </li>
+
   </ul>
 </li>
+
 </nav>
 
 <!-- Modal de Perfil -->
@@ -525,7 +546,7 @@ function carregarNotificacoes() {
 
 // Marcar todas como lidas
 document.getElementById('marcarLidas').addEventListener('click', () => {
-    fetch('..php/marcar_lida_paciente.php')
+    fetch('../php/marcar_lida_paciente.php')
     .then(res => res.json())
     .then(() => carregarNotificacoes());
 });
