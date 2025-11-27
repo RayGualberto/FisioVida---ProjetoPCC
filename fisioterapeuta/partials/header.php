@@ -52,7 +52,212 @@ try {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
-<link rel="stylesheet" href="../css/header.css">
+
+<style>
+  #contadorNotificacoes {
+  font-size: 0.7rem;
+  padding: 3px 6px;
+}
+
+#listaNotificacoes li {
+  list-style: none;
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
+}
+
+#listaNotificacoes li:last-child {
+  border-bottom: none;
+}
+
+#listaNotificacoes .nao-lida {
+  background-color: #e9f5ff;
+  font-weight: 600;
+}
+
+  body {
+    background-color: whitesmoke;
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  /* Sidebar lateral moderna */
+  #sidebar {
+    width: 230px;
+    background: #0b8ecb; /* azul escuro elegante */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+
+  #sidebar .nav-link {
+    width: 85%;
+    color: #e6e6e6;
+    padding: 12px 15px;
+    margin: 6px 0;
+    border-radius: 10px;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+  }
+
+  #sidebar .nav-link i {
+    font-size: 1.2rem;
+  }
+
+  #sidebar .nav-link:hover {
+    background-color: #0078ff;
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+  }
+
+  #sidebar .nav-link.active {
+    background-color: #0078ff;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Conteúdo principal */
+  #main-content {
+    margin-left: 230px;
+    padding: 25px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+  }
+
+  /* Navbar superior */
+  .navbar {
+    z-index: 1100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    #sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      justify-content: space-around;
+      padding-top: 10px;
+    }
+
+    #sidebar .nav-link {
+      flex: 1;
+      text-align: center;
+      margin: 0 5px;
+      border-radius: 6px;
+    }
+
+    #main-content {
+      margin-left: 0;
+    }
+  }
+
+  #sidebar .nav-link:active,
+  #sidebar .nav-link:focus,
+  #sidebar .nav-link:visited {
+    font-weight: normal;
+  }
+
+/* Modal de Perfil */
+.profile-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.45);
+  overflow-y: auto;
+
+  padding-top: 80px;         /* 🔥 empurra o modal para baixo */
+  padding-bottom: 40px;
+
+  z-index: 9999 !important;
+}
+
+.profile-content {
+  position: relative;
+  z-index: 10000;
+  
+  background-color: #fff;
+  margin: auto;
+  padding: 35px 45px;
+  border-radius: 18px;
+
+  width: clamp(320px, 70vw, 900px);
+  max-width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+  .profile-content p {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 15px;
+  }
+
+  .profile-content strong {
+    color: #004b87;
+  }
+
+  .close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+  }
+
+  .close-btn:hover { color: #000; }
+
+  .profile-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-photo img {
+    border-radius: 50%;
+    border: 3px solid #0b8ecb;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  label[for="novaFoto"] {
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 480px) {
+  .profile-content {
+    padding: 25px 20px;
+  }
+
+  .profile-photo img {
+    width: 140px;
+    height: 140px;
+  }
+}
+</style>
+
 </head>
 <body>
 

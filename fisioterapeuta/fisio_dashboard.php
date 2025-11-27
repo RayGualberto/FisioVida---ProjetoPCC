@@ -13,9 +13,9 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute();
 $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+include __DIR__ . '/partials/header.php';
 ?>
 
-<?php include 'partials/header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

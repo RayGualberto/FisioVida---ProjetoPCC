@@ -141,29 +141,39 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </section>
 
-  <!-- Rodapé -->
-  <footer class="text-center text-lg-start mt-auto">
+ <!-- Rodapé -->
+ <footer class="bg-light text-center text-lg-start mt-auto">
     <div class="container p-4">
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4">
-          <h5>Fisiovida</h5>
-          <p>Rua Exemplo, 123 - Cidade, Estado<br>Telefone: (12) 3456-7890<br>Email: contato@fisiovida.com.br</p>
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-right">
+          <h5 class="text-uppercase">Fisiovida</h5>
+          <p>
+            Endereço: Rua Exemplo, 123 - Cidade, Estado<br>
+            Telefone: +55 12 3456-7890<br>
+            Email: fisiovidarmnf@gmail.com
+          </p>
         </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-          <h5>Redes Sociais</h5>
-          <div class="d-flex justify-content-center gap-3 fs-4 mt-3">
-            <a href="#" class="text-dark"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="text-dark"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="text-dark"><i class="bi bi-twitter"></i></a>
-          </div>
+
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+          <h5 class="text-uppercase mb-0">Redes sociais</h5>
+          <ul class="list-unstyled d-flex justify-content-start gap-3 mt-3">
+            <li><a href="#!" class="text-dark"><i class="bi bi-facebook fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-instagram fs-4"></i></a></li>
+            <li><a href="#!" class="text-dark"><i class="bi bi-twitter fs-4"></i></a></li>
+          </ul>
         </div>
-        <div class="col-lg-4 col-md-12">
-          <h5>Slogan</h5>
-          <p>Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão.</p>
+
+        <div class="col-lg-3 col-md-12 mb-4 mb-md-0" data-aos="fade-left" data-aos-delay="400">
+          <h5 class="text-uppercase">Slogan</h5>
+          <p>
+            Conectamos você a fisioterapeutas qualificados, oferecendo praticidade no agendamento e cuidado humano em cada sessão
+          </p>
         </div>
       </div>
     </div>
-    <div class="bg-bottom text-center p-3">© 2025 Fisiovida. Todos os direitos reservados.</div>
+    <div class="text-center p-3 bg-secondary text-white">
+        © 2025 Fisiovida. Todos os direitos reservados.
+    </div>
   </footer>
 
   <!-- Scripts -->

@@ -91,7 +91,7 @@ include __DIR__ . '/partials/header.php';
             <?php endforeach; ?>
         <?php else: ?>
             <div class="col-12">
-                <p class="text-center text-white">Nenhum prontuário registrado ainda.</p>
+                <p class="text-center text-dark">Nenhum prontuário registrado ainda.</p>
             </div>
         <?php endif; ?>
     </div>

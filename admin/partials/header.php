@@ -163,29 +163,37 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     font-weight: normal;
   }
 
- /* Modal */
-  .profile-modal {
-    display: none;
-    position: fixed;
-    z-index: 1050;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.45);
-  }
+/* Modal de Perfil */
+.profile-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.45);
+  overflow-y: auto;
 
-  .profile-content {
-    background-color: #fff;
-    margin: 4% auto;
-    padding: 35px 45px;
-    border-radius: 18px;
-    width: 100vh;
-    max-width: 90%;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-    animation: fadeIn 0.3s ease;
-  }
+  padding-top: 80px;         /* 🔥 empurra o modal para baixo */
+  padding-bottom: 40px;
 
+  z-index: 9999 !important;
+}
+
+.profile-content {
+  position: relative;
+  z-index: 10000;
+  
+  background-color: #fff;
+  margin: auto;
+  padding: 35px 45px;
+  border-radius: 18px;
+
+  width: clamp(320px, 70vw, 900px);
+  max-width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
+}
   .profile-content p {
     margin-bottom: 10px;
     color: #333;
@@ -228,6 +236,16 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  @media (max-width: 480px) {
+  .profile-content {
+    padding: 25px 20px;
+  }
+
+  .profile-photo img {
+    width: 140px;
+    height: 140px;
+  }
+}
 </style>
 
 </head>

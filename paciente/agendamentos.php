@@ -215,4 +215,3 @@ $agenda = $stmt->fetchAll();
 </div>
 
 <?php include __DIR__ . '/partials/footer.php'; ?>
-</html>

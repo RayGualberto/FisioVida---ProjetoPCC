@@ -1,26 +1,81 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-
 require_once '../php/db.php'; 
-include __DIR__ . '../partials/header.php'; 
 
-$nomePaciente = $_SESSION['usuario_nome'] ?? 'Paciente';
+include __DIR__ . '../partials/header.php';
 ?>
-
-<div id="main-content" class="container py-4">
-
-    <!-- Cabeçalho do painel -->
-    <div class="d-flex align-items-center justify-content-between mb-4" data-aos="fade-down">
-        <h2 class="h4 mb-0" data-aos="fade-right" data-aos-delay="150">
-            Painel Paciente - FisioVida
-        </h2>
-        <span class="badge text-bg-primary fs-6" data-aos="zoom-in" data-aos-delay="300">
-            Perfil: paciente
-        </span>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    /* Cards fisioterapeutas */
+    .fisioterapeuta-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 300px;
+    }
+    .fisioterapeuta-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+    }
+    .fisioterapeuta-card .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .overlay-text {
+        background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        text-align: left;
+    }
+    .overlay-text h5, .overlay-text p {
+        margin: 0;
+    }
+    
+    /* Carrossel de serviços */
+    .carousel-card {
+        max-width: 800px;
+        margin: 0 auto;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .carousel-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .carousel-card img.card-img-top {
+        height: 400px;
+        object-fit: cover;
+    }
+    .carousel-card .card-body {
+        padding: 1rem;
+    }
+    
+    /* Responsividade */
+    @media(max-width:768px){
+        .fisioterapeuta-card { height: 250px; }
+        .carousel-card img.card-img-top { height: 150px; }
+    }
+    @media(max-width:480px){
+        .fisioterapeuta-card { height: 200px; }
+        .carousel-card img.card-img-top { height: 120px; }
+    }
+    </style>
+</head>
+        <!-- Cabeçalho do painel -->
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 mb-0" data-aos="fade-right">Inicio - FisioVida</h2>
+    <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Paciente</span>
+</div>
 
     <!-- Boas-vindas -->
-    <div class="text-center mb-5">
+    <div class="mb-5">
         <h1 class="display-5 fw-bold" data-aos="fade-right" data-aos-delay="250">
             Bem-vindo à Fisiovida, <?= htmlspecialchars($nomePaciente); ?>!
         </h1>
@@ -66,7 +121,7 @@ $nomePaciente = $_SESSION['usuario_nome'] ?? 'Paciente';
 
 
     <!-- Carrossel de Serviços -->
-    <section id="servicos" class="container my-5" data-aos="fade-up">
+    <section id="servicos" class="contaner-fluid my-5" data-aos="fade-up">
         <h1 class="mb-4 text-center">Nossos Serviços de Fisioterapia</h1>
 
         <div id="carouselServicos" class="carousel slide" data-bs-ride="carousel">
@@ -192,67 +247,6 @@ $nomePaciente = $_SESSION['usuario_nome'] ?? 'Paciente';
             </button>
         </div>
     </section>
-
-</div>
-
-<style>
-/* Cards fisioterapeutas */
-.fisioterapeuta-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
-    height: 300px;
-}
-.fisioterapeuta-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 25px rgba(0,0,0,0.3);
-}
-.fisioterapeuta-card .card-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.overlay-text {
-    background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
-    text-align: left;
-}
-.overlay-text h5, .overlay-text p {
-    margin: 0;
-}
-
-/* Carrossel de serviços */
-.carousel-card {
-    max-width: 800px;
-    margin: 0 auto;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.carousel-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-.carousel-card img.card-img-top {
-    height: 400px;
-    object-fit: cover;
-}
-.carousel-card .card-body {
-    padding: 1rem;
-}
-
-/* Responsividade */
-@media(max-width:768px){
-    .fisioterapeuta-card { height: 250px; }
-    .carousel-card img.card-img-top { height: 150px; }
-}
-@media(max-width:480px){
-    .fisioterapeuta-card { height: 200px; }
-    .carousel-card img.card-img-top { height: 120px; }
-}
-</style>
-
 <?php include __DIR__ . '/partials/footer.php'; ?>
 
 <!-- Bootstrap 5 JS -->
