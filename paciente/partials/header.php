@@ -546,10 +546,23 @@ function carregarNotificacoes() {
 
 // Marcar todas como lidas
 document.getElementById('marcarLidas').addEventListener('click', () => {
-    fetch('../php/marcar_lida_paciente.php')
+  fetch('../php/marcar_lida_paciente.php', { method: 'POST' })
     .then(res => res.json())
-    .then(() => carregarNotificacoes());
+    .then(data => {
+      console.log('marcar_lida_paciente response:', data);
+      if (data.success) {
+        // Força recarregar notificações para refletir o novo estado
+        carregarNotificacoes();
+      } else {
+        alert('Não foi possível marcar as notificações: ' + (data.error || 'erro desconhecido'));
+      }
+    })
+    .catch(err => {
+      console.error('Fetch error marcar_lida_paciente:', err);
+      alert('Erro na requisição. Veja console para mais detalhes.');
+    });
 });
+
 
 // Atualiza notificações a cada 30 segundos
 setInterval(carregarNotificacoes, 30000);

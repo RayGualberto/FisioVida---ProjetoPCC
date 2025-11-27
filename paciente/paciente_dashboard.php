@@ -1,8 +1,8 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once '../php/db.php'; 
-
 include __DIR__ . '../partials/header.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +68,7 @@ include __DIR__ . '../partials/header.php';
     }
     </style>
 </head>
+
         <!-- Cabeçalho do painel -->
 <div class="d-flex align-items-center justify-content-between mb-3">
     <h2 class="h4 mb-0" data-aos="fade-right">Inicio - FisioVida</h2>
@@ -249,8 +250,6 @@ include __DIR__ . '../partials/header.php';
     </section>
 <?php include __DIR__ . '/partials/footer.php'; ?>
 
-<!-- Bootstrap 5 JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- AOS JS -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>

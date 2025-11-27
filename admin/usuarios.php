@@ -112,6 +112,29 @@ a {
   text-decoration: none;
 }
 
+/* Container dos botões vira flex e quebra linha */
+.container-filtro div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* espaço entre botões */
+}
+
+/* Botões ajustam o tamanho automaticamente */
+.btn-filtro {
+  flex: 1 1 auto;
+  min-width: 140px; /* largura mínima para não ficarem pequenos demais */
+  text-align: center;
+}
+
+/* Em telas muito pequenas */
+@media (max-width: 480px) {
+  .btn-filtro {
+    width: 100%;        /* cada botão ocupa toda a linha */
+    min-width: unset;   /* remove largura mínima */
+  }
+}
+
   </style>
 </head>
   <div class="d-flex align-items-center justify-content-between mb-3">

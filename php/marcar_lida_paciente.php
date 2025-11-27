@@ -2,26 +2,46 @@
 require_once 'db.php';
 session_start();
 
+header('Content-Type: application/json; charset=utf-8');
+
+// Verifica login
 if (!isset($_SESSION['usuario_id'])) {
-    echo json_encode(['error' => 'Usuário não logado']);
+    echo json_encode(['success' => false, 'error' => 'Usuário não logado']);
     exit;
 }
 
-$usuarioId = $_SESSION['usuario_id'];
+$usuarioId = (int) $_SESSION['usuario_id'];
 
 try {
-    // Buscar id_paciente associado ao usuário
-    $stmt = $pdo->prepare("SELECT id_paciente FROM paciente WHERE cpf = (SELECT cpf FROM usuario WHERE id = ?)");
-    $stmt->execute([$usuarioId]);
-    $id_paciente = $stmt->fetchColumn();
 
-    if ($id_paciente) {
-        // Marcar todas notificações como lidas
-        $stmt = $pdo->prepare("UPDATE notificacoes SET lida = 1 WHERE destinatario_id = ?");
-        $stmt->execute([$id_paciente]);
+    // Buscar CPF do usuário logado
+    $stmt = $pdo->prepare("SELECT cpf FROM usuario WHERE id = ?");
+    $stmt->execute([$usuarioId]);
+    $cpf = $stmt->fetchColumn();
+
+    if (!$cpf) {
+        echo json_encode(['success' => false, 'error' => 'CPF não encontrado']);
+        exit;
     }
 
-    echo json_encode(['success' => true]);
+    // Atualizar notificações pelo CPF
+    $stmt = $pdo->prepare("UPDATE notificacoes SET lida = 1 WHERE destinatario_cpf = ?");
+    $stmt->execute([$cpf]);
+
+    $rows = $stmt->rowCount();
+
+    echo json_encode([
+        'success' => true,
+        'rows_updated' => $rows,
+        'cpf' => $cpf
+    ]);
+    exit;
+
 } catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
+
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
+    exit;
 }

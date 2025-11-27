@@ -4,9 +4,7 @@ include('partials/header.php');
 
 // Contagem dos status dos agendamentos
 $stmt = $pdo->query("
-    SELECT 
-        status, 
-        COUNT(*) AS total
+    SELECT status, COUNT(*) AS total
     FROM agenda
     GROUP BY status
 ");
@@ -29,113 +27,227 @@ foreach ($resultados as $row) {
     }
 }
 
-// Pacientes concluídos (todos confirmados com data passada)
-$stmtConcluidos = $pdo->query("
-    SELECT COUNT(*) AS total 
-    FROM agenda 
-    WHERE status = 'concluido'
-");
+$stmtConcluidos = $pdo->query("SELECT COUNT(*) AS total FROM agenda WHERE status = 'concluido'");
 $concluidos = (int)$stmtConcluidos->fetch()['total'];
-// 🔥 Ajuste necessário
 $dados['concluido'] = $concluidos;
-
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatórios - Administrador</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-.chart-container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 20px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatórios - Administrador</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+/* ======= ESTILO GLOBAL ======= */
+body {
+    background: #f4f7fb;
 }
 
-#statusChart {
+/* TITULO */
+.page-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* CARD DO GRÁFICO */
+.chart-wrapper {
     background: #ffffff;
-    border-radius: 18px;
-    padding: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-    transition: transform .3s ease;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 650px;
+    margin: 0 auto;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.09);
 }
 
-#statusChart:hover {
-    transform: scale(1.02);
+/* CONTÊINER DO GRÁFICO */
+.chart-container {
+    position: relative;
+    height: 380px;
 }
+
+/* CARDS DO RESUMO */
+.summary {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.summary-card {
+    background: #ffffff;
+    padding: 18px 25px;
+    width: 180px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-4px);
+}
+
+.summary-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.summary-card p {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    color: #0099ff;
+}
+
+/* ========================= */
+/*   RESPONSIVIDADE MOBILE   */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .page-title {
+        font-size: 1.3rem;
+    }
+
+    .chart-wrapper {
+        padding: 18px;
+        margin: 0 12px;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    .summary-card {
+        width: 45%;
+        padding: 15px 10px;
+    }
+
+    .summary-card h3 {
+        font-size: 1rem;
+    }
+
+    .summary-card p {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page-title {
+        font-size: 1.15rem;
+        text-align: center;
+    }
+
+    .chart-wrapper {
+        padding: 15px;
+        margin: 0 8px;
+    }
+
+    .chart-container {
+        height: 260px;
+    }
+
+    .summary {
+        gap: 12px;
+    }
+
+    .summary-card {
+        width: 100%;
+    }
+
+    .summary-card p {
+        font-size: 1.3rem;
+    }
+}
+
+.chart-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 400px; /* para manter o gráfico com tamanho ideal */
+}
+
+
+
 </style>
 </head>
+
 <body>
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2 class="h4 mb-0" data-aos="fade-right">Painel De Relatórios - FisioVida</h2>
-        <span class="badge text-bg-primary" data-aos="fade-left">Perfil: Administrador</span>
+
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h2 class="page-title"> Relatórios de Agendamentos - FisioVida</h2>
+    <span class="badge text-bg-primary">Perfil: Administrador</span>
+</div>
+
+<div class="main-content" data-aos="fade-up" data-aos-delay="200">
+
+    <!-- CARD DO GRÁFICO -->
+<h3 class="text-center mb-4" style="font-weight:600;">Distribuição de Agendamentos</h3>
+
+<div class="chart-wrapper">
+    <div class="chart-container">
+        <canvas id="statusChart"></canvas>
     </div>
+</div>
 
-    <div class="main-content" data-aos="fade-up" data-aos-delay="200">
-        <h2>📊 Relatórios de Agendamentos</h2>
 
-        <div class="chart-container" style="max-width:600px; margin: 0 auto;">
-            <canvas id="statusChart" width="400" height="400"></canvas>
+    <!-- CARDS RESUMO -->
+    <div class="summary">
+        <div class="summary-card">
+            <h3>Concluídos</h3>
+            <p><?= $concluidos ?></p>
         </div>
 
-        <div class="summary" style="display:flex; gap:16px; flex-wrap:wrap; margin-top:20px;">
-            <div class="summary-card">
-                <h3>✅ Concluídos</h3>
-                <p><?= $concluidos ?></p>
-            </div>
-            <div class="summary-card">
-                <h3>📅 Confirmados</h3>
-                <p><?= $dados['confirmado'] ?></p>
-            </div>
-            <div class="summary-card">
-                <h3>🔁 Remarcados</h3>
-                <p><?= $dados['remarcado'] ?></p>
-            </div>
-            <div class="summary-card">
-                <h3>❌ Recusados</h3>
-                <p><?= $dados['recusado'] ?></p>
-            </div>
-            <div class="summary-card">
-                <h3>⏳ Pendentes</h3>
-                <p><?= $dados['pendente'] ?></p>
-            </div>
+        <div class="summary-card">
+            <h3>Confirmados</h3>
+            <p><?= $dados['confirmado'] ?></p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Pendentes</h3>
+            <p><?= $dados['pendente'] ?></p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Remarcados</h3>
+            <p><?= $dados['remarcado'] ?></p>
+        </div>
+
+        <div class="summary-card">
+            <h3>Recusados</h3>
+            <p><?= $dados['recusado'] ?></p>
         </div>
     </div>
+
+</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const ctx = document.getElementById('statusChart').getContext('2d');
 
-    // Cores em gradiente
-    const gradientConcluido   = ctx.createLinearGradient(0, 0, 0, 250);
-    gradientConcluido.addColorStop(0, "#1abc9c");
-    gradientConcluido.addColorStop(1, "#16a085");
-
-    const gradientConfirmado  = ctx.createLinearGradient(0, 0, 0, 250);
-    gradientConfirmado.addColorStop(0, "#2ecc71");
-    gradientConfirmado.addColorStop(1, "#27ae60");
-
-    const gradientPendente    = ctx.createLinearGradient(0, 0, 0, 250);
-    gradientPendente.addColorStop(0, "#f1c40f");
-    gradientPendente.addColorStop(1, "#d4ac0d");
-
-    const gradientRemarcado   = ctx.createLinearGradient(0, 0, 0, 250);
-    gradientRemarcado.addColorStop(0, "#3498db");
-    gradientRemarcado.addColorStop(1, "#2e86c1");
-
-    const gradientRecusado    = ctx.createLinearGradient(0, 0, 0, 250);
-    gradientRecusado.addColorStop(0, "#e74c3c");
-    gradientRecusado.addColorStop(1, "#cb4335");
+    // Gradientes
+    const createGradient = (c1, c2) => {
+        let grad = ctx.createLinearGradient(0, 0, 0, 300);
+        grad.addColorStop(0, c1);
+        grad.addColorStop(1, c2);
+        return grad;
+    };
 
     new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: ['Concluídos', 'Confirmados', 'Pendentes', 'Remarcados', 'Recusados'],
             datasets: [{
-                label: 'Agendamentos',
                 data: [
                     <?= $concluidos ?>,
                     <?= $dados['confirmado'] ?>,
@@ -144,46 +256,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     <?= $dados['recusado'] ?>
                 ],
                 backgroundColor: [
-                    gradientConcluido,
-                    gradientConfirmado,
-                    gradientPendente,
-                    gradientRemarcado,
-                    gradientRecusado
+                    createGradient('#16a085', '#1abc9c'),
+                    createGradient('#27ae60', '#2ecc71'),
+                    createGradient('#f1c40f', '#f39c12'),
+                    createGradient('#3498db', '#2980b9'),
+                    createGradient('#e74c3c', '#c0392b')
                 ],
-                borderColor: "#ffffff",
                 borderWidth: 3,
-                hoverOffset: 18,
-                hoverBorderColor: "#f7f7f7"
+                borderColor: "#fff",
+                hoverOffset: 18
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            cutout: "68%", // donut mais elegante
-            animation: {
-                animateRotate: true,
-                animateScale: true,
-                duration: 1400,
-                easing: 'easeOutElastic'
-            },
+            cutout: "65%",
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: "bottom",
                     labels: {
-                        padding: 20,
-                        font: {
-                            size: 14,
-                            family: 'Arial'
-                        }
-                    }
-                },
-                title: {
-                    display: true,
-                    text: 'Distribuição de Agendamentos por Status',
-                    padding: 20,
-                    font: {
-                        size: 18,
-                        weight: '600'
+                        font: { size: 14 }
                     }
                 }
             }
