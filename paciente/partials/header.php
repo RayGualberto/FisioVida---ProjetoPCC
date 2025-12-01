@@ -184,7 +184,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     align-items: center;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
     z-index: 900;
-    padding-top: 140px;
+    padding-top: 170px;
   }
 
   #sidebar .nav-link {
@@ -565,7 +565,7 @@ li {
   <i class="bi bi-calendar-check"></i> Agendamentos</a>
 
   <a href="prontuario.php"class="nav-link <?php echo (basename($_SERVER['PHP_SELF']) == 'prontuario.php') ? 'active' : ''; ?>">
-  <i class="bi bi-clipboard"></i> Prontuário</a>
+  <i class="bi bi-clipboard"></i> Prontuários</a>
 
 </div>
 

@@ -96,6 +96,7 @@ try {
     align-items: center;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    padding-top: 140px;
   }
 
   #sidebar .nav-link {
