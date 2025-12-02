@@ -48,6 +48,7 @@ session_start();
               required
             />
           </div>
+          
           <div class="col-12 d-flex justify-content-between align-items-center">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="lembrar" name="lembrar" />
@@ -95,5 +96,83 @@ session_start();
   unset($_SESSION['msg_tipo']);
   endif;
   ?>
+
+<script>
+// Quando a página carregar
+document.addEventListener("DOMContentLoaded", function() {
+
+    const inputSenha = document.getElementById("senha");
+
+    if (!inputSenha) return;
+
+    // Criar um container (input-group) em volta do input existente
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("input-group", "mb-3");
+
+    // Inserir wrapper antes do campo original
+    inputSenha.parentNode.insertBefore(wrapper, inputSenha);
+
+    // Mover o input para dentro
+    wrapper.appendChild(inputSenha);
+
+    // Criar o botão de mostrar senha
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.classList.add("btn", "btn-outline-secondary");
+    btn.innerHTML = '<i class="bi bi-eye"></i>';
+
+    wrapper.appendChild(btn);
+
+    // Alternar tipo da senha
+    btn.addEventListener("click", function () {
+        const icon = btn.querySelector("i");
+
+        if (inputSenha.type === "password") {
+            inputSenha.type = "text";
+            icon.classList.replace("bi-eye", "bi-eye-slash");
+        } else {
+            inputSenha.type = "password";
+            icon.classList.replace("bi-eye-slash", "bi-eye");
+        }
+    });
+
+});
+</script>
+
+<!-- Bootstrap Icons (se ainda não estiver carregado) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const email = document.getElementById("email");
+    const lembrar = document.getElementById("lembrar");
+
+    // Se houver email salvo, preencher e marcar o checkbox
+    if (localStorage.getItem("lembrar_email") === "true") {
+        email.value = localStorage.getItem("email_salvo") ?? "";
+        lembrar.checked = true;
+    }
+
+    // Quando o usuário marcar ou desmarcar o checkbox
+    lembrar.addEventListener("change", function () {
+        if (this.checked) {
+            localStorage.setItem("email_salvo", email.value);
+            localStorage.setItem("lembrar_email", "true");
+        } else {
+            localStorage.removeItem("email_salvo");
+            localStorage.removeItem("lembrar_email");
+        }
+    });
+
+    // Atualiza o email salvo caso o usuário edite o campo
+    email.addEventListener("input", function () {
+        if (lembrar.checked) {
+            localStorage.setItem("email_salvo", email.value);
+        }
+    });
+});
+</script>
+
+
 </body>
 </html>

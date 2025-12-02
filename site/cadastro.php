@@ -173,7 +173,14 @@ $(document).ready(function() {
 
       <div class="col-md-6">
         <label for="senha" class="form-label">Senha:</label>
-        <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required />
+
+        <div class="input-group">
+          <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required />
+
+          <button class="btn btn-outline-secondary" type="button" id="toggleSenha">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
       </div>
 
       <div class="col-md-6">
@@ -253,6 +260,59 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.setAttribute("disabled", true);
         }
     });
+});
+</script>
+
+<script>
+// Lista de campos que deseja preservar
+const campos = [
+    "nome", "email", "senha", "telefone",
+    "data_nasc", "cep", "rua", "bairro",
+    "cidade", "uf", "cpf", "sexo"
+];
+
+// Salvar no localStorage sempre que o usuário digitar
+campos.forEach(campo => {
+    const input = document.getElementById(campo);
+    if (input) {
+        input.addEventListener("input", () => {
+            localStorage.setItem("cadastro_" + campo, input.value);
+        });
+    }
+});
+
+// Recolocar os valores ao entrar na página
+window.addEventListener("DOMContentLoaded", () => {
+    campos.forEach(campo => {
+        const input = document.getElementById(campo);
+        const valorSalvo = localStorage.getItem("cadastro_" + campo);
+
+        if (input && valorSalvo !== null) {
+            input.value = valorSalvo;
+        }
+    });
+});
+
+// Limpar tudo depois que o cadastro for enviado com sucesso
+document.querySelector("form").addEventListener("submit", () => {
+    campos.forEach(campo => localStorage.removeItem("cadastro_" + campo));
+});
+</script>
+
+<script>
+document.getElementById("toggleSenha").addEventListener("click", function () {
+    const input = document.getElementById("senha");
+    const icon = this.querySelector("i");
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("bi-eye");
+        icon.classList.add("bi-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("bi-eye-slash");
+        icon.classList.add("bi-eye");
+    }
 });
 </script>
 
