@@ -43,7 +43,9 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         
             html,
             body {
-            height: 100%;
+            min-height: 100vh;
+            height: auto !important;
+            overflow-y: auto !important;
             font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
             background: var(--bg-soft);
             color: #0f172a;
@@ -529,9 +531,18 @@ window.addEventListener('click', (e) => {
 });
 
 </script>
+
+<!-- Animação -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
+  document.addEventListener('DOMContentLoaded', function () {
+    AOS.init({
+        once: true,
+        offset: 0
+    });
+    AOS.refreshHard();
+});
 </script>
 
 <script>

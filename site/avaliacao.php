@@ -27,6 +27,7 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Fisiovida - Avaliações</title>
+  <link rel="icon" href="../img/Icone fisiovida.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Font -->
@@ -60,8 +61,8 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top py-3">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="110" height="78" style="object-fit:contain;">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="../img/Fisiovida logo.png" alt="Fisiovida" width="150" height="100" style="object-fit:contain;">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menunavbar" aria-controls="menunavbar" aria-expanded="false" aria-label="Toggle navigation">

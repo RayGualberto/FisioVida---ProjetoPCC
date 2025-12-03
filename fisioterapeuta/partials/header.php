@@ -643,9 +643,17 @@ window.addEventListener('click', (e) => {
 });
 </script>
 
+<!-- Animação -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
+  AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic' });
+  document.addEventListener('DOMContentLoaded', function () {
+    AOS.init({
+        once: true,
+        offset: 0
+    });
+    AOS.refreshHard();
+});
 </script>
 
 <script>

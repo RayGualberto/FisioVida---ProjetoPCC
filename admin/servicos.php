@@ -53,10 +53,11 @@ $servicos = $stmt->fetchAll();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Serviços FisioVida</title>
   <style>
+    
     .card {
       border: none;
       border-radius: 15px;
-      overflow: hidden;
+      overflow: visible !important;
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(8px);
     }
@@ -140,7 +141,6 @@ $servicos = $stmt->fetchAll();
       box-shadow: 0 0 5px rgba(0, 153, 255, 0.5);
       border-color: #0099ff;
     }
-
   </style>
 </head>
 
@@ -180,7 +180,7 @@ $servicos = $stmt->fetchAll();
       <!-- Div com rolagem vertical -->
       <div class="table-responsive" style="max-height: 500px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
         <table class="table table-striped table-hover align-middle mb-0">
-          <thead class="sticky-top" style="background: #cde9ff; z-index: 10;">
+          <thead style="position: sticky; top: 0; background: #cde9ff; z-index: 20;">
             <tr data-aos="fade-down">
               <th>#</th>
               <th>Nome</th>
